@@ -1,0 +1,333 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "SageAPIContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data",
+   "OutputPath": "Models\/SageAPI",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "EtendueERP",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[F_ABOENTETE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTCLIENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTCOMPO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTCOMPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTENUMREF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTFOURNISS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTGAMME]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTICLE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTPRIX]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTSTOCK]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTSTOCKEMPL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_BANQUE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_BANQUET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CAISSE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CATALOGUE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COLLABORATEUR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEGA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTETG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CONTACTT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CREGLEMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DEPOT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DEPOTCONTACT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DEPOTEMPL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DEPOTUSER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCCURRENTPIECE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCENTETE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCLIGNE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCLIGNEEMPL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCREGL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_EBANQUE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ECRITUREA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ECRITUREC]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ECRITUREF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ECRITURER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ENUMCOND]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ENUMGAMME]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMCLIENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMCOMPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMFOURNISS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMILLE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMTARIF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_GAMSTOCK]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_GAMSTOCKEMPL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_JMOUV]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_JOURNAUX]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_JOURNAUXA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_LIVRAISON]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_LOTFIFO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_LOTSERIE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_NOMENCLAT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PAYS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PIECE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PIECEA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PIECEG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PROTECTIONCIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PROTECTIONCPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_REGLEARCHIVE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_REGLECH]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_REGLEMENTT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_TARIF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_TAXE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CATCOMPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_DOSSIER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_DOSSIERCIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_GAMME]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERNE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_TIERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_UNITE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[V_ARTICLE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[V_DOCLIGNE]",
+         "ObjectType": 3
+      }
+   ],
+   "UiHint": "sql1.SageAPI",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

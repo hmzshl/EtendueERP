@@ -1,0 +1,151 @@
+@using EtendueERP.Models.SageAPI
+@using Microsoft.EntityFrameworkCore
+@using Data
+@inject DialogService DialogService
+
+<RadzenAccordion>
+    <Items>
+        <RadzenAccordionItem Expanded="True" Text="Filtrer">
+            <div class="row">
+                <div class="col-md-2">Recherche</div>
+                <div class="col-md-10">
+                    <RadzenTextBox Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))">
+
+                    </RadzenTextBox>
+                </div>
+            </div>
+        </RadzenAccordionItem>
+    </Items>
+</RadzenAccordion>
+@if (@items == null)
+{
+    
+}
+else
+{
+    <RadzenDataGrid RowSelect="@DataGridRowSelect" AllowFiltering="false" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="40" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                Data="@items" TItem="V_ARTICLE" LogicalFilterOperator="LogicalFilterOperator.Or" Style="font-size: 9px; font-weight: normal; font-family: Arial; min-height: 300px;" PagerAlwaysVisible="true" AllowColumnPicking="false" AllowColumnReorder="false" Responsive="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="AR_Ref" Title="Reference" Width="100px" Visible="@ARRef"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="AR_Design" Title="Designation" Width="250px" Visible="@ARDesign"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="U_Intitule" Title="Unite" Width="100px" Visible="@UIntitule"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="FA_CodeFamille" Title="Code Famille" Width="100px" Visible="@FACodeFamille"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="FA_Intitule" Title="Famille" Width="150px" Visible="@FAIntitule"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="SuiviStockIntitule" Title="Suivi Stock" Width="100px" Visible="@SuiviStockIntitule"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="AR_PrixAch" Title="Prix Achat" Width="100px" Visible="@ARPrixAch" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="AR_PrixVen" Title="Prix Vente" Width="100px" Visible="@ARPrixVen" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="SommeilIntitule" Title="Sommeil" Width="100px" Visible="@SommeilIntitule"></RadzenDataGridColumn>
+            <!--Stock-->
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="EtatStock" Title="Etat Stock" Width="100px" Visible="@EtatStock">
+                <Template Context="data">
+                    @if (data.EtatStock == "Stock �puis�")
+                    {
+                        <span style='color: #df1111'>@data.EtatStock</span>
+                    }
+                    else if (data.EtatStock == "En stock")
+                    {
+                        <span style='color: #089f52'>@data.EtatStock</span>
+                    }
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="AS_QteSto" Title="Qte Stock" Width="100px" Visible="@ASQteSto" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="AS_MontSto" Title="Montant Stock" Width="100px" Visible="@ASMontSto" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <!--Achats-->
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_Qte_Achat" Title="Qte Achetee Totale" Width="100px" Visible="@DLQteAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_MontantHT_Achat" Title="Achats HT" Width="100px" Visible="@DLMontantHTAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_MontantTTC_Achat" Title="Achats TTC" Width="100px" Visible="@DLMontantTTCAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_DateBL_Achat" Title="Der. Date Achat" Width="100px" Visible="@DLDateBLAchat" FormatString="{0:d}"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_Dernier_Qte_Achat" Title="Der. Qte Achetee" Width="100px" Visible="@DLDernierQteAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_PU_Achat" Title="Der. PU Achat" Width="100px" Visible="@DLPUAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_Dernier_MontantHT_Achat" Title="Der. Achat HT" Width="100px" Visible="@DLDernierMontantHTAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_Dernier_MontantTTC_Achat" Width="100px" Title="Der. Achat TTC" Visible="@DLDernierMontantTTCAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="FR_Intitule" Title="Der. Fournisseur" Width="200px" Visible="@FRIntitule"></RadzenDataGridColumn>
+            <!--Ventes-->
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_Qte_Vente" Title="Qte Vendues Totale" Width="100px" Visible="@DLQteVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_MontantHT_Vente" Title="CA HT" Width="100px" Visible="@DLMontantHTVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_MontantTTC_Vente" Title="CA TTC" Width="100px" Visible="@DLMontantTTCVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_DateBL_Vente" Title="Der. Date Vente" Width="100px" Visible="@DLDateBLVente" FormatString="{0:d}"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_Dernier_Qte_Vente" Title="Der. Qte Venduee" Width="100px" Visible="@DLDernierQteVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_PU_Vente" Title="Der. PU Vente" Width="100px" Visible="@DLPUVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_Dernier_MontantHT_Vente" Title="Der. Vente HT" Width="100px" Visible="@DLDernierMontantHTVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_Dernier_MontantTTC_Vente" Width="100px" Title="Der. Vente TTC" Visible="@DLDernierMontantTTCVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_ARTICLE" Property="CL_Intitule" Title="Der. Client" Width="200px" Visible="@CLIntitule"></RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+
+}
+
+@code
+{
+
+    //Parameters
+    [Parameter] public ICollection<V_ARTICLE> data { get; set; }
+    [Parameter] public bool ARRef { get; set; } = true;
+    [Parameter] public bool ARDesign { get; set; } = true;
+    [Parameter] public bool FAIntitule { get; set; } = true;
+    [Parameter] public bool FACodeFamille { get; set; } = true;
+    [Parameter] public bool ARPrixAch { get; set; } = true;
+    [Parameter] public bool ARPrixVen { get; set; } = true;
+    [Parameter] public bool UIntitule { get; set; } = true;
+    [Parameter] public bool DLQteVente { get; set; } = false;
+    [Parameter] public bool DLMontantHTVente { get; set; } = false;
+    [Parameter] public bool DLMontantTTCVente { get; set; } = false;
+    [Parameter] public bool DLQteAchat { get; set; } = false;
+    [Parameter] public bool DLMontantHTAchat { get; set; } = false;
+    [Parameter] public bool DLMontantTTCAchat { get; set; } = false;
+    [Parameter] public bool CLIntitule { get; set; } = false;
+    [Parameter] public bool CLNum { get; set; } = false;
+    [Parameter] public bool DLDateBLVente { get; set; } = false;
+    [Parameter] public bool DLDernierMontantHTVente { get; set; } = false;
+    [Parameter] public bool DLDernierMontantTTCVente { get; set; } = false;
+    [Parameter] public bool DLPUVente { get; set; } = false;
+    [Parameter] public bool DLDernierQteVente { get; set; } = false;
+    [Parameter] public bool FRIntitule { get; set; } = false;
+    [Parameter] public bool FRNum { get; set; } = false;
+    [Parameter] public bool DLDateBLAchat { get; set; } = false;
+    [Parameter] public bool DLDernierMontantHTAchat { get; set; } = false;
+    [Parameter] public bool DLDernierMontantTTCAchat { get; set; } = false;
+    [Parameter] public bool DLPUAchat { get; set; } = false;
+    [Parameter] public bool DLDernierQteAchat { get; set; } = false;
+    [Parameter] public bool SuiviStockIntitule { get; set; } = true;
+    [Parameter] public bool SommeilIntitule { get; set; } = true;
+    [Parameter] public bool ASQteSto { get; set; } = true;
+    [Parameter] public bool ASMontSto { get; set; } = true;
+    [Parameter] public bool EtatStock { get; set; } = true;
+    //End Parameters
+
+
+
+    SageAPIContext db = new SageAPIContext();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(LoadData);
+    }
+    private void LoadData()
+    {
+        System.Threading.Thread.Sleep(3000);
+        if (data == null)
+        {
+            data = db.V_ARTICLE.ToList();
+        }
+        items = data;
+    }
+
+    private ICollection<V_ARTICLE> items;
+
+    void OnInput(string value)
+    {
+        items = data.Where(a => a.AR_Design.ToUpper().Contains(value.ToUpper())).ToList();
+    }
+    protected async Task DataGridRowSelect(V_ARTICLE args)
+    {
+       /* await DialogService.OpenAsync<ArticleFiche>($"{args.AR_Design}",
+     new Dictionary<string, object>() { { "row", args } },
+     new DialogOptions() { Width = "1000px", Height = "700px", Resizable = true });*/
+    }
+
+
+
+
+}
