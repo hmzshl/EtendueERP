@@ -19,7 +19,4 @@
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.3" />
     <PackageReference Include="RestSharp" Version="108.0.2" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\Components\" />
-  </ItemGroup>
 </Project>

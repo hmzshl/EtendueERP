@@ -148,8 +148,8 @@ input, .rz-dropdown {
 
 
 .rz-button-md {
-    padding-bottom: 2px !important;
-    padding-top: 2px !important;
+    padding-bottom: 4px !important;
+    padding-top: 4px !important;
     min-height: 15px !important;
 }
 
@@ -157,4 +157,28 @@ input, .rz-dropdown {
     font-size: 12px !important;
     padding-right: 2px !important;
     padding-left: 2px !important;
+}
+.spin-center {
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 30px 50px;
+    margin: 20px 0;
+}
+
+.ant-row {
+    padding: 2px;
+}
+.ant-form-item {
+    margin-bottom: 0px !important;
+
+}
+.ant-form-item-label > label {
+    font-weight: bold;
+}
+.ant-tabs-tab-btn {
+    font-weight: bold;
+}
+.ant-card-body {
+    padding: 10px;
 }

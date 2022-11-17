@@ -2,6 +2,7 @@
 @using Microsoft.EntityFrameworkCore
 @using Data
 @inject DialogService DialogService
+@using AntDesign
 
 <RadzenAccordion>
     <Items>
@@ -19,7 +20,9 @@
 </RadzenAccordion>
 @if (@items == null)
 {
-    
+ <div class="spin-center">
+    <Spin size="large" />
+</div>
 }
 else
 {
@@ -140,9 +143,9 @@ else
     }
     protected async Task DataGridRowSelect(V_ARTICLE args)
     {
-       /* await DialogService.OpenAsync<ArticleFiche>($"{args.AR_Design}",
+       await DialogService.OpenAsync<ArticleFiche>($"{args.AR_Design}",
      new Dictionary<string, object>() { { "row", args } },
-     new DialogOptions() { Width = "1000px", Height = "700px", Resizable = true });*/
+     new Radzen.DialogOptions() { Width = "1000px", Height = "700px", Resizable = true });
     }
 
 
