@@ -69,22 +69,16 @@
                     <TabPane Key="4" Tab="Achats">
                         <GridRow>
                             <GridCol Xs="24" Md="8">
-                                <Statistic Title="Total quantitée achetée" Value="@((row.DL_Qte_Achat ?? 0).ToString("### ### ### ##0.00 DH"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="%"/>
+                                <Statistic Title="Total quantitée achetée" Value="@((row.DL_Qte_Achat ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="@row.U_Intitule"/>
                             </GridCol>
                             <GridCol Xs="24" Md="8">
-                                 <FormItem Label="CA Achats HT" LabelColSpan="9">
-                                        <Tag Color="#873e23">@((row.DL_MontantHT_Achat ?? 0).ToString("### ### ### ##0.00 DH"))</Tag>
-                                </FormItem>
+                                <Statistic Title="CA Achats HT" Value="@((row.DL_MontantHT_Achat ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="DH" />
                             </GridCol>
                              <GridCol Xs="24" Md="8">
-                                    <FormItem Label="CA Achats TTC" LabelColSpan="9">
-                                        <Tag Color="#873e23">@((row.DL_MontantTTC_Achat ?? 0).ToString("### ### ### ##0.00 DH"))</Tag>
-                                    </FormItem>
+                                <Statistic Title="CA Achats TTC" Value="@((row.DL_MontantTTC_Achat ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="DH" />
                             </GridCol>
                             <GridCol Xs="24" Md="24">
-                                <FormItem Label="Fournisseur" LabelColSpan="3">
-                                    <Input @bind-Value="@row.FR_Intitule" />
-                                </FormItem>
+                                <Statistic Title="Fourisseur" Value="@row.FR_Intitule" Precision="2" ValueStyle="color: #3f8600;"/>
                             </GridCol>
                             <GridCol Xs="24" Md="12">
                                 <FormItem Label="Prix d'achat'">
