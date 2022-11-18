@@ -9,7 +9,7 @@
 <div>
     <GridRow>
         <GridCol Xs="24" Md="24">
-            <RadzenButton>Primary</RadzenButton>
+            <RadzenButton>Enregistrer</RadzenButton>
             <RadzenButton>Annuler</RadzenButton>
         </GridCol>
     </GridRow>
@@ -67,7 +67,42 @@
                         Tab 3
                     </TabPane>
                     <TabPane Key="4" Tab="Achats">
-                        Tab 3
+                        <GridRow>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="Total quantitée achetée" Value="@((row.DL_Qte_Achat ?? 0).ToString("### ### ### ##0.00 DH"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="%"/>
+                            </GridCol>
+                            <GridCol Xs="24" Md="8">
+                                 <FormItem Label="CA Achats HT" LabelColSpan="9">
+                                        <Tag Color="#873e23">@((row.DL_MontantHT_Achat ?? 0).ToString("### ### ### ##0.00 DH"))</Tag>
+                                </FormItem>
+                            </GridCol>
+                             <GridCol Xs="24" Md="8">
+                                    <FormItem Label="CA Achats TTC" LabelColSpan="9">
+                                        <Tag Color="#873e23">@((row.DL_MontantTTC_Achat ?? 0).ToString("### ### ### ##0.00 DH"))</Tag>
+                                    </FormItem>
+                            </GridCol>
+                            <GridCol Xs="24" Md="24">
+                                <FormItem Label="Fournisseur" LabelColSpan="3">
+                                    <Input @bind-Value="@row.FR_Intitule" />
+                                </FormItem>
+                            </GridCol>
+                            <GridCol Xs="24" Md="12">
+                                <FormItem Label="Prix d'achat'">
+                                    <AntDesign.InputNumber @bind-Value="@row.AR_PrixAch" />
+                                </FormItem>
+                                <FormItem Label="Prix de vente'">
+                                    <AntDesign.InputNumber @bind-Value="@row.AR_PrixVen" />
+                                </FormItem>
+                            </GridCol>
+                            <GridCol Xs="24" Md="12">
+                                <FormItem Label="Prix d'achat'">
+                                    <AntDesign.InputNumber @bind-Value="@row.AR_PrixAch" />
+                                </FormItem>
+                                <FormItem Label="Prix de vente'">
+                                    <AntDesign.InputNumber @bind-Value="@row.AR_PrixVen" />
+                                </FormItem>
+                            </GridCol>
+                        </GridRow>
                     </TabPane>
                     <TabPane Key="5" Tab="Ventes">
                         Tab 3
