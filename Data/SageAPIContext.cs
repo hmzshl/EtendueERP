@@ -4509,6 +4509,8 @@ namespace EtendueERP.Data
 
                 entity.Property(e => e.PUTTC).HasColumnType("numeric(38, 14)");
 
+                entity.Property(e => e.QteMvt).HasColumnType("numeric(24, 6)");
+
                 entity.Property(e => e.RP_Code)
                     .HasMaxLength(11)
                     .IsUnicode(false);

@@ -101,5 +101,7 @@ namespace EtendueERP.Models.SageAPI
         public decimal? MontantTVA { get; set; }
         public decimal? Remise { get; set; }
         public decimal? PUNet { get; set; }
+        public decimal? QteMvt { get; set; }
+        public bool? IsStock { get; set; }
     }
 }

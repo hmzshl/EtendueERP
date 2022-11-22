@@ -3,7 +3,8 @@
 @using Data
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
-@using EtendueERP.Pages.Components
+@using EtendueERP.Pages.Components.Documents
+@using EtendueERP.Pages.Components.Articles
 @using AntDesign
 
 <div>
@@ -60,11 +61,25 @@
                                     </GridCol>
                             </GridRow>
                     </TabPane>
-                    <TabPane Key="2" Tab="Tarifs">
-                        Tab 2
-                    </TabPane>
                     <TabPane Key="3" Tab="Stock">
-                        Tab 3
+                        <GridRow>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="Etat de stock" Value="@((row.EtatStock ?? ""))" ValueStyle="color: #3f8600;"/>
+                            </GridCol>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="Quantitee de stock" Value="@((row.AS_QteSto ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="@row.U_Intitule" />
+                            </GridCol>
+                             <GridCol Xs="24" Md="8">
+                                <Statistic Title="Montant du stock" Value="@((row.AS_MontSto ?? 0).ToString ("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="DH" />
+                            </GridCol>
+
+                            <GridCol Xs="24" Md="24">
+                                <DocligneDataGrid AR_Ref="@row.AR_Ref" Page="14" IsStock="true" Remise="false" DLPrixUnitaire="false" DEIntitule="false" ARRef="false"
+                                DLDesign="false" DLCodeTaxe1="false" DLTaxe1="false" MontantTVA="false" DLMontantTTC="false" TypeIntitule="true"
+                                QteMvt="true" DLDateBL="false" DLQte="false"
+                                />
+                            </GridCol>
+                        </GridRow>
                     </TabPane>
                     <TabPane Key="4" Tab="Achats">
                         <GridRow>
@@ -77,29 +92,54 @@
                              <GridCol Xs="24" Md="8">
                                 <Statistic Title="CA Achats TTC" Value="@((row.DL_MontantTTC_Achat ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="DH" />
                             </GridCol>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="Dernier prix d'achat" Value="@((row.DL_PU_Achat ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" />
+                            </GridCol>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="Dernier quantitee achetee" Value="@((row.DL_Dernier_Qte_Achat ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" />
+                            </GridCol>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="Fourisseur" Value="@(row.FR_Intitule??"")" ValueStyle="color: #3f8600;" />
+                            </GridCol>
+
+
                             <GridCol Xs="24" Md="24">
-                                <Statistic Title="Fourisseur" Value="@row.FR_Intitule" Precision="2" ValueStyle="color: #3f8600;"/>
-                            </GridCol>
-                            <GridCol Xs="24" Md="12">
-                                <FormItem Label="Prix d'achat'">
-                                    <AntDesign.InputNumber @bind-Value="@row.AR_PrixAch" />
-                                </FormItem>
-                                <FormItem Label="Prix de vente'">
-                                    <AntDesign.InputNumber @bind-Value="@row.AR_PrixVen" />
-                                </FormItem>
-                            </GridCol>
-                            <GridCol Xs="24" Md="12">
-                                <FormItem Label="Prix d'achat'">
-                                    <AntDesign.InputNumber @bind-Value="@row.AR_PrixAch" />
-                                </FormItem>
-                                <FormItem Label="Prix de vente'">
-                                    <AntDesign.InputNumber @bind-Value="@row.AR_PrixVen" />
-                                </FormItem>
+                                <DocligneDataGrid AR_Ref="@row.AR_Ref" DO_Domaine=1 Page="14"
+                                                  DEIntitule="false" ARRef="false"
+                                                  DLDesign="false" DLTaxe1="false" TypeIntitule="true"
+                                                  DLDateBL="false" />
                             </GridCol>
                         </GridRow>
                     </TabPane>
                     <TabPane Key="5" Tab="Ventes">
-                        Tab 3
+                        <GridRow>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="Total quantitée vendue" Value="@((row.DL_Qte_Vente ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="@row.U_Intitule"/>
+                            </GridCol>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="CA Ventes HT" Value="@((row.DL_MontantHT_Vente ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="DH" />
+                            </GridCol>
+                             <GridCol Xs="24" Md="8">
+                                <Statistic Title="CA Ventes TTC" Value="@((row.DL_MontantTTC_Vente ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" Suffix="DH" />
+                            </GridCol>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="Dernier prix de vente" Value="@((row.DL_PU_Vente ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" />
+                            </GridCol>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="Dernier quantitee vendue" Value="@((row.DL_Dernier_Qte_Vente ?? 0).ToString("### ### ### ##0.00"))" Precision="2" ValueStyle="color: #3f8600;" />
+                            </GridCol>
+                            <GridCol Xs="24" Md="8">
+                                <Statistic Title="Client" Value="@(row.CL_Intitule??"")" ValueStyle="color: #3f8600;" />
+                            </GridCol>
+
+
+                            <GridCol Xs="24" Md="24">
+                                <DocligneDataGrid AR_Ref="@row.AR_Ref" DO_Domaine=0 Page="14"
+                                                  DEIntitule="false" ARRef="false"
+                                                  DLDesign="false" DLTaxe1="false" TypeIntitule="true"
+                                                  DLDateBL="false" />
+                            </GridCol>
+                        </GridRow>
                     </TabPane>
                 </Tabs>
             </Form>
@@ -129,7 +169,7 @@
 
     private void LoadData()
     {
-        unites = db.P_UNITE.ToList();
+        unites = db.P_UNITE.Where(a => (a.U_Intitule??"") != "").ToList();
         familles = db.F_FAMILLE.ToList();
     }
     private void LoadAchats()

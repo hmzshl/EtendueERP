@@ -2,6 +2,8 @@
 @using Microsoft.EntityFrameworkCore
 @using Data
 @inject Radzen.DialogService DialogService
+@using AntDesign
+@using Newtonsoft.Json
 
 
 <RadzenAccordion>
@@ -12,36 +14,52 @@
 </RadzenAccordion>
 @if (@items == null)
 {
-
+<div class="spin-center">
+    <Spin size="large" />
+</div>
 }
 else
 {
-      <RadzenDataGrid RowSelect="@DataGridRowSelect" AllowFiltering="false" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowPaging="true" PageSize="15" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-                Data="@items" TItem="V_DOCLIGNE" LogicalFilterOperator="LogicalFilterOperator.Or" Style="font-size: 9px; font-weight: normal; font-family: Arial; min-height: 150px;" PagerAlwaysVisible="true" AllowColumnPicking="false" AllowColumnReorder="false" Responsive="true">
+      <RadzenDataGrid RowSelect="@DataGridRowSelect" AllowFiltering="false" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" AllowPaging="true" PageSize="@Page" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                Data="@items" TItem="V_DOCLIGNE" LogicalFilterOperator="LogicalFilterOperator.Or" Style="font-size: 9px; font-weight: normal; font-family: Arial; min-height: 350px;" PagerAlwaysVisible="true" AllowColumnReorder="false" Responsive="true"
+                AllowColumnPicking="true" Text>
                     <Columns>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DO_Date" Title="Date" Width="100px" Visible="@DODate"></RadzenDataGridColumn>
+
+            <RadzenDataGridColumn FormatString="{0:d}" TItem="V_DOCLIGNE" Property="DO_Date" Title="Date" Width="80px" Visible="@DODate"></RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DO_Piece" Title="Pièce" Width="100px" Visible="@DOPiece"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="AR_Ref" Title="Référence" Width="100px" Visible="@ARRef"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DL_Design" Title="Designation" Width="100px" Visible="@DLDesign"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DomaineIntitule" Title="Domaine" Width="90px" Visible="@DomaineIntitule"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="TypeIntitule" Title="Type" Width="90px" Visible="@TypeIntitule"></RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DL_PieceBL" Title="Numéro BL" Width="100px" Visible="@DLPieceBL"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DL_DateBL" Title="Date BL" Width="100px" Visible="@DLDateBL"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DL_Qte" Title="Qté" Width="100px" Visible="@DLQte"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DL_PrixUnitaire" Title="P.U" Width="100px" Visible="@DLPrixUnitaire"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DL_MontantHT" Title="Montant HT" Width="100px" Visible="@DLMontantHT"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CT_Intitule" Title="Montant TTC" Width="100px" Visible="@CTIntitule"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CT_Num" Title="N° Tiers" Width="100px" Visible="@CTNum"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CA_Num" Title="N° Affaire" Width="100px" Visible="@CANum"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:d}" TItem="V_DOCLIGNE" Property="DL_DateBL" Title="Date BL" Width="80px" Visible="@DLDateBL"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CT_Num" Title="N° Tiers" Width="90px" Visible="@CTNum"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CT_Intitule" Title="Intitule" Width="100px" Visible="@CTIntitule"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DE_Intitule" Title="Dépot" Width="100px" Visible="@DEIntitule"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="AR_Ref" Title="Référence" Width="90px" Visible="@ARRef"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DL_Design" Title="Designation" Width="100px" Visible="@DLDesign"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="EU_Enumere" Title="Unité" Width="60px" Visible="@EUEnumere"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DL_CodeTaxe1" Title="Code Taxe" Width="70px" Visible="@DLCodeTaxe1"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="DL_Taxe1" Title="Taux Taxe" Width="80px" Visible="@DLTaxe1"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="DL_Qte" Title="Qté" Width="80px" Visible="@DLQte"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="QteMvt" Title="Qté" Width="80px" Visible="@QteMvt"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="DL_PrixUnitaire" Title="P.U" Width="80px" Visible="@DLPrixUnitaire"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="Remise" Title="Remise" Width="80px" Visible="@Remise"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="PUNet" Title="PU Net" Width="80px" Visible="@PUNet"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="PUTTC" Title="PU TTC" Width="80px" Visible="@PUTTC"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="DL_MontantHT" Title="Montant HT" Width="80px" Visible="@DLMontantHT"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="MontantTVA" Title="Montant TVA" Width="80px" Visible="@MontantTVA"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="DL_MontantTTC" Title="Montant TTC" Width="80px" Visible="@DLMontantTTC"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CA_Num" Title="N° Affaire" Width="90px" Visible="@CANum"></RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CA_Intitule" Title="Intitulé Affaire" Width="100px" Visible="@CAIntitule"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DE_Intitule" Title="Dépot" Width="100px" Visible="@DE_Intitule"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DomaineIntitule" Title="Donamine" Width="100px" Visible="@DomaineIntitule"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DL_Taxe1" Title="Taux Taxe" Width="100px" Visible="@DLTaxe1"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="DL_CodeTaxe1" Title="Code Taxe" Width="100px" Visible="@DLCodeTaxe1"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="PUTTC" Title="P.U TTC" Width="100px" Visible="@PUTTC"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="MontantTVA" Title="Montant TVA" Width="100px" Visible="@MontantTVA"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="EU_Enemure" Title="Unité" Width="100px" Visible="@EUEnemure"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="PUNet" Title="PU Net" Width="100px" Visible="@PUNet"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="Remise" Title="Remise" Width="100px" Visible="@Remise"></RadzenDataGridColumn>
+            
+            
             <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CO_Nom" Title="Collaborateur" Width="100px" Visible="@CONom"></RadzenDataGridColumn>
+            
+            
+            
+            
+            
+            
+            
         </Columns>
     </RadzenDataGrid>
 
@@ -61,22 +79,25 @@ else
     [Parameter] public bool DLPieceBL { get; set; } = true;
     [Parameter] public bool DLDateBL { get; set; } = true;
     [Parameter] public bool DLQte { get; set; } = true;
+    [Parameter] public bool QteMvt { get; set; } = false;
     [Parameter] public bool DLPrixUnitaire { get; set; } = true;
     [Parameter] public bool DLMontantHT { get; set; } = true;
+    [Parameter] public bool DLMontantTTC { get; set; } = true;
     [Parameter] public bool CTIntitule { get; set; } = true;
     [Parameter] public bool CTNum { get; set; } = true;
-    [Parameter] public bool CANum { get; set; } = true;
-    [Parameter] public bool CAIntitule { get; set; } = true;
-    [Parameter] public bool DE_Intitule { get; set; } = true;
-    [Parameter] public bool DomaineIntitule { get; set; } = true;
-    [Parameter] public bool DLTaxe1 { get; set; } = true;
+    [Parameter] public bool CANum { get; set; } = false;
+    [Parameter] public bool CAIntitule { get; set; } = false;
+    [Parameter] public bool DEIntitule { get; set; } = true;
+    [Parameter] public bool DomaineIntitule { get; set; } = false;
+    [Parameter] public bool TypeIntitule { get; set; } = false;
+    [Parameter] public bool DLTaxe1 { get; set; } = false;
     [Parameter] public bool DLCodeTaxe1 { get; set; } = true;
     [Parameter] public bool PUTTC { get; set; } = true;
     [Parameter] public bool MontantTVA { get; set; } = true;
-    [Parameter] public bool EUEnemure { get; set; } = true;
+    [Parameter] public bool EUEnumere { get; set; } = true;
     [Parameter] public bool PUNet { get; set; } = true;
     [Parameter] public bool Remise { get; set; } = true;
-    [Parameter] public bool CONom { get; set; } = true;
+    [Parameter] public bool CONom { get; set; } = false;
     [Parameter] public int DO_Type { get; set; } = -1;
     [Parameter] public int DO_Domaine { get; set; } = -1;
     [Parameter] public int DE_No { get; set; } = -1;
@@ -84,6 +105,10 @@ else
     [Parameter] public string CT_Num { get; set; } = "";
     [Parameter] public string AR_Ref { get; set; } = "";
     [Parameter] public string DO_Piece { get; set; } = "";
+    [Parameter] public int Page { get; set; } = 20;
+    [Parameter] public int Height { get; set; } = 350;
+    [Parameter] public int Width { get; set; } = 1000;
+    [Parameter] public bool? IsStock { get; set; }
 
     //End Parameters
 
@@ -157,7 +182,6 @@ else
     {
 
     }
-
     private void DataFilter()
     {
         if (CT_Num != "")
@@ -184,8 +208,11 @@ else
         {
             data = data.Where(a => a.CO_No == CO_No).ToList();
         }
+        if(IsStock != null) 
+        {
+            data = data.Where(a => a.IsStock == (IsStock??true)).ToList();
+        }
     }
-
 
 
 
