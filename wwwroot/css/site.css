@@ -206,5 +206,5 @@ input, .rz-dropdown {
     font-size: 80% !important;
 }
 .ant-collapse-header {
-    padding: 5px;
+    padding: 5px !important;
 }

@@ -10,6 +10,14 @@
     <Panel Header="Filtrer" Key="1">
             <GridRow>
                 <GridCol Xs="24" Md="24">
+                    <FormItem Label="Recherche">
+                        <Input @bind-Value="@text" />
+                    </FormItem>
+                </GridCol>
+                <GridCol Xs="20" Md="20">
+                    
+                </GridCol>
+                <GridCol Xs="24" Md="24">
                     
                 </GridCol>
             </GridRow>
@@ -113,6 +121,7 @@ else
 
     //End Parameters
 
+    string text;
 
 
     SageAPIContext db = new SageAPIContext();

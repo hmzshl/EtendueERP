@@ -3,21 +3,32 @@
 @using Data
 @inject DialogService DialogService
 @using AntDesign
-
-<RadzenAccordion>
-    <Items>
-        <RadzenAccordionItem Expanded="True" Text="Filtrer">
-            <div class="row">
-                <div class="col-md-2">Recherche</div>
-                <div class="col-md-10">
-                    <RadzenTextBox Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))">
-
-                    </RadzenTextBox>
-                </div>
-            </div>
-        </RadzenAccordionItem>
-    </Items>
-</RadzenAccordion>
+<Collapse>
+    <Panel Header="Filtrer" Key="1">
+         <GridRow>
+             <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Recherche</label></GridCol>
+            <GridCol Xs="24" Md="7" Sm="14"><Input Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
+            <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Famille</label></GridCol>
+            <GridCol Xs="24" Md="3" Sm="6">
+                <Select OnSelectedItemChanged="UpdateGrid" @bind-Value="@vl_famille" DataSource="@familles" TItem="F_FAMILLE" TItemValue="string" ValueName="@nameof(F_FAMILLE.FA_CodeFamille)" LabelName="@nameof(F_FAMILLE.FA_Intitule)" />
+             </GridCol>
+             <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Unité</label></GridCol>
+             <GridCol Xs="24" Md="3" Sm="6">
+                <Select OnSelectedItemChanged="UpdateGrid" @bind-Value="@vl_unite" DataSource="@unites" TItem="P_UNITE" TItemValue="short?" ValueName="@nameof(P_UNITE.cbMarq)" LabelName="@nameof(P_UNITE.U_Intitule)" />
+             </GridCol>
+            <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Etat de stock</label></GridCol>
+             <GridCol Xs="24" Md="3" Sm="6">
+                <Select OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_stock">
+                    <SelectOptions>
+                        <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout"/>
+                        <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="En stock"/>
+                        <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="Epuisé" />
+                    </SelectOptions>
+                </Select>
+             </GridCol>
+          </GridRow>
+    </Panel>
+</Collapse>
 @if (@items == null)
 {
  <div class="spin-center">
@@ -27,7 +38,8 @@
 else
 {
     <RadzenDataGrid RowSelect="@DataGridRowSelect" AllowFiltering="false" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="40" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-                Data="@items" TItem="V_ARTICLE" LogicalFilterOperator="LogicalFilterOperator.Or" Style="font-size: 9px; font-weight: normal; font-family: Arial; min-height: 300px;" PagerAlwaysVisible="true" AllowColumnPicking="false" AllowColumnReorder="false" Responsive="true">
+                Data="@items" TItem="V_ARTICLE" LogicalFilterOperator="LogicalFilterOperator.Or" Style="font-size: 9px; font-weight: normal; font-family: Arial; min-height: 300px;" PagerAlwaysVisible="true" AllowColumnReorder="false" Responsive="true"
+                AllowColumnPicking="true" PageSizeText="élément par page" PagingSummaryFormat="Page {0}/{1} ({2} élément)" ColumnsShowingText="colonnes">
         <Columns>
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="AR_Ref" Title="Reference" Width="100px" Visible="@ARRef"></RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="AR_Design" Title="Designation" Width="250px" Visible="@ARDesign"></RadzenDataGridColumn>
@@ -120,6 +132,14 @@ else
 
 
     SageAPIContext db = new SageAPIContext();
+    string vl_text;
+    short? vl_unite = 0;
+    short? vl_stock = 0;
+    private ICollection<V_ARTICLE> items;
+    string vl_famille = "";
+    ICollection<P_UNITE> unites;
+    ICollection<F_FAMILLE> familles;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -133,21 +153,50 @@ else
             data = db.V_ARTICLE.ToList();
         }
         items = data;
+
+        var un = new P_UNITE();
+        un.cbIndice = 0;
+        un.U_Intitule = "   Tout";
+        unites = db.P_UNITE.Where(a => (a.U_Intitule ?? "") != "").ToList();
+        unites.Add(un);
+        unites = unites.OrderBy(a => a.U_Intitule).ToList();
+
+        var fa = new F_FAMILLE();
+        fa.FA_CodeFamille = "";
+        fa.FA_Intitule = "   Tout";
+        familles = db.F_FAMILLE.ToList();
+        familles.Add(fa);
+        familles = familles.OrderBy(a => a.FA_Intitule).ToList();
     }
 
-    private ICollection<V_ARTICLE> items;
-
-    void OnInput(string value)
-    {
-        items = data.Where(a => a.AR_Design.ToUpper().Contains(value.ToUpper())).ToList();
-    }
     protected async Task DataGridRowSelect(V_ARTICLE args)
     {
-       await DialogService.OpenAsync<ArticleFiche>($"{args.AR_Design}",
-     new Dictionary<string, object>() { { "row", args } },
-     new Radzen.DialogOptions() { Width = "1024px", Height = "600px", Resizable = true });
+        await DialogService.OpenAsync<ArticleFiche>($"{args.AR_Design}",
+      new Dictionary<string, object>() { { "row", args } },
+      new Radzen.DialogOptions() { Width = "1024px", Height = "600px", Resizable = true });
     }
-
+    void OnInput(string value)
+    {
+        items = items.Where(a => a.AR_Design.ToUpper().Contains(value.ToUpper()) || a.AR_Ref.ToUpper().Contains(value.ToUpper())).ToList();
+    }
+    void UpdateGrid() {
+        items = data;
+        if((vl_text??"") != "") {
+            items = items.Where(a => a.AR_Design.ToUpper().Contains(((vl_text ?? "")).ToUpper()) || a.AR_Ref.ToUpper().Contains(((vl_text ?? "")).ToUpper())).ToList();
+        }
+        if(vl_unite != 0) {
+            items = items.Where(a => a.AR_UniteVen == vl_unite).ToList();
+        }
+        if(vl_famille != "") {
+            items = items.Where(a => a.FA_CodeFamille == vl_famille).ToList();
+        }
+        if(vl_stock == 1) {
+            items = items.Where(a => a.EtatStock == "En stock").ToList();
+        }
+        else if(vl_stock == 2) {
+            items = items.Where(a => a.EtatStock == "Stock épuisé").ToList();
+        }
+    }
 
 
 
