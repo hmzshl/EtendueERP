@@ -114,5 +114,8 @@ namespace EtendueERP.Models.SageAPI
         public decimal? RG_Montant { get; set; }
         public decimal? SoldeCommercial { get; set; }
         public decimal? SoldeComptable { get; set; }
+        public string Controle { get; set; }
+        public string SommeilIntitule { get; set; }
+        public string EtatSolde { get; set; }
     }
 }

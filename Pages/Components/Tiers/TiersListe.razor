@@ -5,28 +5,30 @@
 @using AntDesign
 <Collapse>
     <Panel Header="Filtrer" Key="1">
-         <GridRow>
-             <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Recherche</label></GridCol>
-            <GridCol Xs="24" Md="7" Sm="14"><Input Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
-            <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Famille</label></GridCol>
-            <GridCol Xs="24" Md="3" Sm="6">
-                <Select OnSelectedItemChanged="UpdateGrid" @bind-Value="@vl_famille" DataSource="@familles" TItem="F_FAMILLE" TItemValue="string" ValueName="@nameof(F_FAMILLE.FA_CodeFamille)" LabelName="@nameof(F_FAMILLE.FA_Intitule)" />
-             </GridCol>
-             <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Unité</label></GridCol>
-             <GridCol Xs="24" Md="3" Sm="6">
-                <Select OnSelectedItemChanged="UpdateGrid" @bind-Value="@vl_unite" DataSource="@unites" TItem="P_UNITE" TItemValue="short?" ValueName="@nameof(P_UNITE.cbMarq)" LabelName="@nameof(P_UNITE.U_Intitule)" />
-             </GridCol>
-            <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Etat de stock</label></GridCol>
-             <GridCol Xs="24" Md="3" Sm="6">
-                <Select OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_stock">
+        <GridRow>
+            <GridCol Xs="24" Md="3" class="ant-form-item-label">Recherche</GridCol>
+            <GridCol Xs="24" Md="7"><Input Size="@AntSizeLDSType.Small" Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
+            <GridCol Xs="24" Md="3" class="ant-form-item-label">Etat Solde</GridCol>
+            <GridCol Xs="24" Md="4">
+                                <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_solde">
                     <SelectOptions>
-                        <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout"/>
-                        <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="En stock"/>
-                        <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="Epuisé" />
+                        <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
+                        <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Soldé" />
+                        <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="Non soldé" />
                     </SelectOptions>
                 </Select>
-             </GridCol>
-          </GridRow>
+            </GridCol>
+            <GridCol Xs="24" Md="3" class="ant-form-item-label">Sommeil</GridCol>
+            <GridCol Xs="24" Md="4">
+                                <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_sommeil">
+                    <SelectOptions>
+                        <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
+                        <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Actif" />
+                        <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="En sommeil" />
+                    </SelectOptions>
+                </Select>
+            </GridCol>
+        </GridRow>
     </Panel>
 </Collapse>
 @if (@items == null)
@@ -50,12 +52,12 @@ else
                 
                 <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_MontantHT" Title="CA HT" Width="100px" Visible="@DLMontantHT" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                     <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantHT))</b>
+                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.DL_MontantHT))</b>
                     </FooterTemplate>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_MontantTTC" Title="CA TTC" Width="100px" Visible="@DLMontantTTC" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                     <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantTTC))</b>
+                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.DL_MontantTTC))</b>
                     </FooterTemplate>
                 </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_DateBL" Title="Der. Activité" Width="100px" Visible="@DLDateBL" FormatString="{0:d}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
@@ -65,17 +67,17 @@ else
                 <RadzenDataGridColumn TItem="V_COMPTET" Property="NbrDocuments" Title="Nbr Documents" Width="100px" Visible="@NbrDocuments" FormatString="{0:N0}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="V_COMPTET" Property="RG_Montant" Title="Total Réglements" Width="100px" Visible="@RGMontant" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                     <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.RG_Montant))</b>
+                        <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.RG_Montant))</b>
                     </FooterTemplate>
                 </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_COMPTET" Property="SoldeCommercial" Title="Solde Commercial" Width="100px" Visible="@SoldeCommercial" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                     <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.SoldeCommercial))</b>
+                        <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.SoldeCommercial))</b>
                     </FooterTemplate>
                 </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_COMPTET" Property="SoldeComptable" Title="Solde Comptable" Width="100px" Visible="@SoldeComptable" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                     <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.SoldeComptable))</b>
+                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.SoldeComptable))</b>
                     </FooterTemplate>
                 </RadzenDataGridColumn>
             </Columns>
@@ -104,17 +106,16 @@ else
     [Parameter] public bool SoldeComptable { get; set; } = true;
     [Parameter] public bool DLDateBL { get; set; } = true;
     [Parameter] public bool DelaiSommeil { get; set; } = true;
-
+    [Parameter] public int CT_Type { get; set; } = 0;
     //End Parameters
 
 
 
     SageAPIContext db = new SageAPIContext();
     string vl_text;
-    short? vl_unite = 0;
-    short? vl_stock = 0;
+    short? vl_solde = 0;
+    short? vl_sommeil = 0;
     private ICollection<V_COMPTET> items;
-    string vl_famille = "";
     ICollection<P_UNITE> unites;
     ICollection<F_FAMILLE> familles;
 
@@ -128,23 +129,9 @@ else
         System.Threading.Thread.Sleep(3000);
         if (data == null)
         {
-            data = db.V_COMPTET.ToList();
+            data = db.V_COMPTET.Where(a => a.CT_Type == CT_Type).OrderBy(a => a.CT_Intitule).ToList();
         }
         items = data;
-
-        var un = new P_UNITE();
-        un.cbIndice = 0;
-        un.U_Intitule = "   Tout";
-        unites = db.P_UNITE.Where(a => (a.U_Intitule ?? "") != "").ToList();
-        unites.Add(un);
-        unites = unites.OrderBy(a => a.U_Intitule).ToList();
-
-        var fa = new F_FAMILLE();
-        fa.FA_CodeFamille = "";
-        fa.FA_Intitule = "   Tout";
-        familles = db.F_FAMILLE.ToList();
-        familles.Add(fa);
-        familles = familles.OrderBy(a => a.FA_Intitule).ToList();
     }
 
     protected async Task DataGridRowSelect(V_COMPTET args)
@@ -155,31 +142,29 @@ else
     }
     void OnInput(string value)
     {
-        //items = items.Where(a => a.AR_Design.ToUpper().Contains(value.ToUpper()) || a.AR_Ref.ToUpper().Contains(value.ToUpper())).ToList();
+        UpdateGrid();
+        items = items.Where(a => a.CT_Num.ToUpper().Contains(value.ToUpper()) || a.CT_Intitule.ToUpper().Contains(value.ToUpper())).ToList();
     }
     void UpdateGrid()
     {
         items = data;
-        /*if ((vl_text ?? "") != "")
+
+        if (vl_solde == 1)
         {
-            items = items.Where(a => a.AR_Design.ToUpper().Contains(((vl_text ?? "")).ToUpper()) || a.AR_Ref.ToUpper().Contains(((vl_text ?? "")).ToUpper())).ToList();
+            items = items.Where(a => a.SoldeCommercial == 0).ToList();
         }
-        if (vl_unite != 0)
-        {
-            items = items.Where(a => a.AR_UniteVen == vl_unite).ToList();
+        else if(vl_solde == 2) {
+            items = items.Where(a => a.SoldeCommercial != 0).ToList();
         }
-        if (vl_famille != "")
+
+        if (vl_sommeil == 1)
         {
-            items = items.Where(a => a.FA_CodeFamille == vl_famille).ToList();
+            items = items.Where(a => a.CT_Sommeil == 0).ToList();
         }
-        if (vl_stock == 1)
+        else if (vl_sommeil == 2)
         {
-            items = items.Where(a => a.EtatStock == "En stock").ToList();
+            items = items.Where(a => a.CT_Sommeil == 1).ToList();
         }
-        else if (vl_stock == 2)
-        {
-            items = items.Where(a => a.EtatStock == "Stock épuisé").ToList();
-        }*/
     }
 
 

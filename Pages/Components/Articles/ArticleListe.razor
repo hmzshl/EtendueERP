@@ -6,19 +6,19 @@
 <Collapse>
     <Panel Header="Filtrer" Key="1">
          <GridRow>
-             <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Recherche</label></GridCol>
-            <GridCol Xs="24" Md="7" Sm="14"><Input Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
-            <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Famille</label></GridCol>
+            <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label">Recherche</GridCol>
+            <GridCol Xs="24" Md="7" Sm="14"><Input Size="@AntSizeLDSType.Small" Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
+            <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label">Famille</GridCol>
             <GridCol Xs="24" Md="3" Sm="6">
-                <Select OnSelectedItemChanged="UpdateGrid" @bind-Value="@vl_famille" DataSource="@familles" TItem="F_FAMILLE" TItemValue="string" ValueName="@nameof(F_FAMILLE.FA_CodeFamille)" LabelName="@nameof(F_FAMILLE.FA_Intitule)" />
+                <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" @bind-Value="@vl_famille" DataSource="@familles" TItem="F_FAMILLE" TItemValue="string" ValueName="@nameof(F_FAMILLE.FA_CodeFamille)" LabelName="@nameof(F_FAMILLE.FA_Intitule)" />
              </GridCol>
-             <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Unité</label></GridCol>
+            <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label">Unité</GridCol>
              <GridCol Xs="24" Md="3" Sm="6">
-                <Select OnSelectedItemChanged="UpdateGrid" @bind-Value="@vl_unite" DataSource="@unites" TItem="P_UNITE" TItemValue="short?" ValueName="@nameof(P_UNITE.cbMarq)" LabelName="@nameof(P_UNITE.U_Intitule)" />
+                <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" @bind-Value="@vl_unite" DataSource="@unites" TItem="P_UNITE" TItemValue="short?" ValueName="@nameof(P_UNITE.cbMarq)" LabelName="@nameof(P_UNITE.U_Intitule)" />
              </GridCol>
-            <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label"><label>Etat de stock</label></GridCol>
+            <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label">Etat de stock</GridCol>
              <GridCol Xs="24" Md="3" Sm="6">
-                <Select OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_stock">
+                <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_stock">
                     <SelectOptions>
                         <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout"/>
                         <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="En stock"/>
@@ -66,19 +66,19 @@ else
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="AS_QteSto" Title="Qte Stock" Width="100px" Visible="@ASQteSto" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="AS_MontSto" Title="Montant Stock" Width="100px" Visible="@ASMontSto" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                 <FooterTemplate>
-                    <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.AS_MontSto))</b>
+                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.AS_MontSto))</b>
                 </FooterTemplate>
             </RadzenDataGridColumn>
             <!--Achats-->
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_Qte_Achat" Title="Qte Achetee Totale" Width="100px" Visible="@DLQteAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_MontantHT_Achat" Title="Achats HT" Width="100px" Visible="@DLMontantHTAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                 <FooterTemplate>
-                    <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantHT_Achat))</b>
+                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.DL_MontantHT_Achat))</b>
                 </FooterTemplate>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_MontantTTC_Achat" Title="Achats TTC" Width="100px" Visible="@DLMontantTTCAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                                 <FooterTemplate>
-                    <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantTTC_Achat))</b>
+                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.DL_MontantTTC_Achat))</b>
                 </FooterTemplate>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_DateBL_Achat" Title="Der. Date Achat" Width="100px" Visible="@DLDateBLAchat" FormatString="{0:d}"></RadzenDataGridColumn>
@@ -91,12 +91,12 @@ else
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_Qte_Vente" Title="Qte Vendues Totale" Width="100px" Visible="@DLQteVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_MontantHT_Vente" Title="CA HT" Width="100px" Visible="@DLMontantHTVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                 <FooterTemplate>
-                    <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantHT_Vente))</b>
+                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.DL_MontantHT_Vente))</b>
                 </FooterTemplate>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_MontantTTC_Vente" Title="CA TTC" Width="100px" Visible="@DLMontantTTCVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                 <FooterTemplate>
-                    <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantTTC_Vente))</b>
+                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.DL_MontantTTC_Vente))</b>
                 </FooterTemplate>
             </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_ARTICLE" Property="DL_DateBL_Vente" Title="Der. Date Vente" Width="100px" Visible="@DLDateBLVente" FormatString="{0:d}"></RadzenDataGridColumn>
@@ -170,7 +170,7 @@ else
         System.Threading.Thread.Sleep(3000);
         if (data == null)
         {
-            data = db.V_ARTICLE.ToList();
+            data = db.V_ARTICLE.OrderBy(a => a.AR_Design).ToList();
         }
         items = data;
 
@@ -197,6 +197,7 @@ else
     }
     void OnInput(string value)
     {
+        UpdateGrid();
         items = items.Where(a => a.AR_Design.ToUpper().Contains(value.ToUpper()) || a.AR_Ref.ToUpper().Contains(value.ToUpper())).ToList();
     }
     void UpdateGrid() {

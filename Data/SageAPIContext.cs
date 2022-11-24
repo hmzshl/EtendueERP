@@ -4542,17 +4542,31 @@ namespace EtendueERP.Data
                     .HasMaxLength(35)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Controle)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
 
                 entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");
 
                 entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
 
+                entity.Property(e => e.EtatSolde)
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.RG_Montant).HasColumnType("numeric(38, 6)");
 
                 entity.Property(e => e.SoldeCommercial).HasColumnType("numeric(38, 6)");
 
                 entity.Property(e => e.SoldeComptable).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.SommeilIntitule)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Taux).HasColumnType("numeric(38, 6)");
             });
