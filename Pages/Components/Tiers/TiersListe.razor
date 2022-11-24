@@ -41,58 +41,43 @@ else
                 Data="@items" TItem="V_COMPTET" LogicalFilterOperator="LogicalFilterOperator.Or" Style="font-size: 9px; font-weight: normal; font-family: Arial; min-height: 300px;" PagerAlwaysVisible="true" AllowColumnReorder="false" Responsive="true"
                 AllowColumnPicking="true" PageSizeText="élément par page" PagingSummaryFormat="Page {0}/{1} ({2} élément)" ColumnsShowingText="colonnes">
             <Columns>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Num" Title="Numero" Width="100px" Visible="@ARRef"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Intitule" Title="Intitule" Width="250px" Visible="@ARDesign"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Adresse" Title="Unite" Width="100px" Visible="@UIntitule"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Telephone" Title="Code Famille" Width="100px" Visible="@FACodeFamille"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Email" Title="Famille" Width="150px" Visible="@FAIntitule"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Ville" Title="Suivi Stock" Width="100px" Visible="@SuiviStockIntitule"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="AR_PrixAch" Title="Prix Achat" Width="100px" Visible="@ARPrixAch" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="AR_PrixVen" Title="Prix Vente" Width="100px" Visible="@ARPrixVen" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="SommeilIntitule" Title="Sommeil" Width="100px" Visible="@SommeilIntitule"></RadzenDataGridColumn>
-                <!--Stock-->
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="AS_QteSto" Title="Qte Stock" Width="100px" Visible="@ASQteSto" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="AS_MontSto" Title="Montant Stock" Width="100px" Visible="@ASMontSto" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
+                <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Num" Title="Numéro" Width="100px" Visible="@CTNum"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Ville" Title="Ville" Width="100px" Visible="@CTVille"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Intitule" Title="Intitule" Width="250px" Visible="@CTIntitule"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Adresse" Title="Adresse" Width="100px" Visible="@CTAdresse"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Telephone" Title="Téléphone" Width="100px" Visible="@CTTelephone"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_EMail" Title="Email" Width="150px" Visible="@CTEMail"></RadzenDataGridColumn>
+                
+                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_MontantHT" Title="CA HT" Width="100px" Visible="@DLMontantHT" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                     <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.AS_MontSto))</b>
+                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantHT))</b>
                     </FooterTemplate>
                 </RadzenDataGridColumn>
-                <!--Achats-->
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_Qte_Achat" Title="Qte Achetee Totale" Width="100px" Visible="@DLQteAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_MontantHT_Achat" Title="Achats HT" Width="100px" Visible="@DLMontantHTAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
+                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_MontantTTC" Title="CA TTC" Width="100px" Visible="@DLMontantTTC" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                     <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantHT_Achat))</b>
+                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantTTC))</b>
                     </FooterTemplate>
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_MontantTTC_Achat" Title="Achats TTC" Width="100px" Visible="@DLMontantTTCAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
-                                    <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantTTC_Achat))</b>
-                    </FooterTemplate>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_DateBL_Achat" Title="Der. Date Achat" Width="100px" Visible="@DLDateBLAchat" FormatString="{0:d}"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_Dernier_Qte_Achat" Title="Der. Qte Achetee" Width="100px" Visible="@DLDernierQteAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_PU_Achat" Title="Der. PU Achat" Width="100px" Visible="@DLPUAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_Dernier_MontantHT_Achat" Title="Der. Achat HT" Width="100px" Visible="@DLDernierMontantHTAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_Dernier_MontantTTC_Achat" Width="100px" Title="Der. Achat TTC" Visible="@DLDernierMontantTTCAchat" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="FR_Intitule" Title="Der. Fournisseur" Width="200px" Visible="@FRIntitule"></RadzenDataGridColumn>
-                <!--Ventes-->
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_Qte_Vente" Title="Qte Vendues Totale" Width="100px" Visible="@DLQteVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_MontantHT_Vente" Title="CA HT" Width="100px" Visible="@DLMontantHTVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
+            <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_DateBL" Title="Der. Activité" Width="100px" Visible="@DLDateBL" FormatString="{0:d}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_COMPTET" Property="DelaiSommeil" Title="Durée Inactivité" Width="100px" Visible="@DelaiSommeil" FormatString="{0:N0}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_COMPTET" Property="Taux" Title="%" Width="100px" Visible="@Taux" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_COMPTET" Property="NbrArticles" Title="Nbr Articles" Width="100px" Visible="@NbrArticles" FormatString="{0:N0}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="V_COMPTET" Property="NbrDocuments" Title="Nbr Documents" Width="100px" Visible="@NbrDocuments" FormatString="{0:N0}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="V_COMPTET" Property="RG_Montant" Title="Total Réglements" Width="100px" Visible="@RGMontant" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                     <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantHT_Vente))</b>
+                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.RG_Montant))</b>
                     </FooterTemplate>
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_MontantTTC_Vente" Title="CA TTC" Width="100px" Visible="@DLMontantTTCVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
+            <RadzenDataGridColumn TItem="V_COMPTET" Property="SoldeCommercial" Title="Solde Commercial" Width="100px" Visible="@SoldeCommercial" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
                     <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantTTC_Vente))</b>
+                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.SoldeCommercial))</b>
                     </FooterTemplate>
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_DateBL_Vente" Title="Der. Date Vente" Width="100px" Visible="@DLDateBLVente" FormatString="{0:d}"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_Dernier_Qte_Vente" Title="Der. Qte Venduee" Width="100px" Visible="@DLDernierQteVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_PU_Vente" Title="Der. PU Vente" Width="100px" Visible="@DLPUVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_Dernier_MontantHT_Vente" Title="Der. Vente HT" Width="100px" Visible="@DLDernierMontantHTVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_Dernier_MontantTTC_Vente" Width="100px" Title="Der. Vente TTC" Visible="@DLDernierMontantTTCVente" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="CL_Intitule" Title="Der. Client" Width="200px" Visible="@CLIntitule"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="V_COMPTET" Property="SoldeComptable" Title="Solde Comptable" Width="100px" Visible="@SoldeComptable" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
+                    <FooterTemplate>
+                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.SoldeComptable))</b>
+                    </FooterTemplate>
+                </RadzenDataGridColumn>
             </Columns>
         </RadzenDataGrid>
 
@@ -105,36 +90,21 @@ else
     [Parameter] public ICollection<V_COMPTET> data { get; set; }
     [Parameter] public bool CTNum { get; set; } = true;
     [Parameter] public bool CTIntitule { get; set; } = true;
-    [Parameter] public bool FAIntitule { get; set; } = true;
-    [Parameter] public bool FACodeFamille { get; set; } = true;
-    [Parameter] public bool ARPrixAch { get; set; } = true;
-    [Parameter] public bool ARPrixVen { get; set; } = true;
-    [Parameter] public bool UIntitule { get; set; } = true;
-    [Parameter] public bool DLQteVente { get; set; } = false;
-    [Parameter] public bool DLMontantHTVente { get; set; } = false;
-    [Parameter] public bool DLMontantTTCVente { get; set; } = false;
-    [Parameter] public bool DLQteAchat { get; set; } = false;
-    [Parameter] public bool DLMontantHTAchat { get; set; } = false;
-    [Parameter] public bool DLMontantTTCAchat { get; set; } = false;
-    [Parameter] public bool CLIntitule { get; set; } = false;
-    [Parameter] public bool CLNum { get; set; } = false;
-    [Parameter] public bool DLDateBLVente { get; set; } = false;
-    [Parameter] public bool DLDernierMontantHTVente { get; set; } = false;
-    [Parameter] public bool DLDernierMontantTTCVente { get; set; } = false;
-    [Parameter] public bool DLPUVente { get; set; } = false;
-    [Parameter] public bool DLDernierQteVente { get; set; } = false;
-    [Parameter] public bool FRIntitule { get; set; } = false;
-    [Parameter] public bool FRNum { get; set; } = false;
-    [Parameter] public bool DLDateBLAchat { get; set; } = false;
-    [Parameter] public bool DLDernierMontantHTAchat { get; set; } = false;
-    [Parameter] public bool DLDernierMontantTTCAchat { get; set; } = false;
-    [Parameter] public bool DLPUAchat { get; set; } = false;
-    [Parameter] public bool DLDernierQteAchat { get; set; } = false;
-    [Parameter] public bool SuiviStockIntitule { get; set; } = true;
-    [Parameter] public bool SommeilIntitule { get; set; } = true;
-    [Parameter] public bool ASQteSto { get; set; } = true;
-    [Parameter] public bool ASMontSto { get; set; } = true;
-    [Parameter] public bool EtatStock { get; set; } = true;
+    [Parameter] public bool CTAdresse { get; set; } = true;
+    [Parameter] public bool CTVille { get; set; } = true;
+    [Parameter] public bool CTEMail { get; set; } = true;
+    [Parameter] public bool CTTelephone { get; set; } = true;
+    [Parameter] public bool DLMontantHT { get; set; } = true;
+    [Parameter] public bool DLMontantTTC { get; set; } = true;
+    [Parameter] public bool Taux { get; set; } = true;
+    [Parameter] public bool NbrDocuments { get; set; } = true;
+    [Parameter] public bool NbrArticles { get; set; } = true;
+    [Parameter] public bool RGMontant { get; set; } = true;
+    [Parameter] public bool SoldeCommercial { get; set; } = true;
+    [Parameter] public bool SoldeComptable { get; set; } = true;
+    [Parameter] public bool DLDateBL { get; set; } = true;
+    [Parameter] public bool DelaiSommeil { get; set; } = true;
+
     //End Parameters
 
 
@@ -179,18 +149,18 @@ else
 
     protected async Task DataGridRowSelect(V_COMPTET args)
     {
-        await DialogService.OpenAsync<TiersFiche>($"{args.AR_Design}",
+        await DialogService.OpenAsync<TiersFiche>($"{args.CT_Intitule}",
       new Dictionary<string, object>() { { "row", args } },
       new Radzen.DialogOptions() { Width = "1024px", Height = "600px", Resizable = true });
     }
     void OnInput(string value)
     {
-        items = items.Where(a => a.AR_Design.ToUpper().Contains(value.ToUpper()) || a.AR_Ref.ToUpper().Contains(value.ToUpper())).ToList();
+        //items = items.Where(a => a.AR_Design.ToUpper().Contains(value.ToUpper()) || a.AR_Ref.ToUpper().Contains(value.ToUpper())).ToList();
     }
     void UpdateGrid()
     {
         items = data;
-        if ((vl_text ?? "") != "")
+        /*if ((vl_text ?? "") != "")
         {
             items = items.Where(a => a.AR_Design.ToUpper().Contains(((vl_text ?? "")).ToUpper()) || a.AR_Ref.ToUpper().Contains(((vl_text ?? "")).ToUpper())).ToList();
         }
@@ -209,7 +179,7 @@ else
         else if (vl_stock == 2)
         {
             items = items.Where(a => a.EtatStock == "Stock épuisé").ToList();
-        }
+        }*/
     }
 
 
