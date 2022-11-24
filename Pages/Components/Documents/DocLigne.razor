@@ -56,9 +56,21 @@ else
             <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="Remise" Title="Remise" Width="80px" Visible="@Remise"></RadzenDataGridColumn>
             <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="PUNet" Title="PU Net" Width="80px" Visible="@PUNet"></RadzenDataGridColumn>
             <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="PUTTC" Title="PU TTC" Width="80px" Visible="@PUTTC"></RadzenDataGridColumn>
-            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="DL_MontantHT" Title="Montant HT" Width="80px" Visible="@DLMontantHT"></RadzenDataGridColumn>
-            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="MontantTVA" Title="Montant TVA" Width="80px" Visible="@MontantTVA"></RadzenDataGridColumn>
-            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="DL_MontantTTC" Title="Montant TTC" Width="80px" Visible="@DLMontantTTC"></RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="DL_MontantHT" Title="Montant HT" Width="80px" Visible="@DLMontantHT">
+                <FooterTemplate>
+                    <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantHT))</b>
+                </FooterTemplate>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="MontantTVA" Title="Montant TVA" Width="80px" Visible="@MontantTVA">
+                <FooterTemplate>
+                    <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.MontantTVA))</b>
+                </FooterTemplate>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" TItem="V_DOCLIGNE" Property="DL_MontantTTC" Title="Montant TTC" Width="80px" Visible="@DLMontantTTC">
+                <FooterTemplate>
+                    <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N2}", items.Sum(a => a.DL_MontantTTC))</b>
+                </FooterTemplate>
+            </RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CA_Num" Title="N° Affaire" Width="90px" Visible="@CANum"></RadzenDataGridColumn>
             <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CA_Intitule" Title="Intitulé Affaire" Width="100px" Visible="@CAIntitule"></RadzenDataGridColumn>            
             <RadzenDataGridColumn TItem="V_DOCLIGNE" Property="CO_Nom" Title="Collaborateur" Width="100px" Visible="@CONom"></RadzenDataGridColumn>

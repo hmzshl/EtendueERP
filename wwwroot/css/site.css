@@ -208,3 +208,14 @@ input, .rz-dropdown {
 .ant-collapse-header {
     padding: 5px !important;
 }
+.rz-paginator {
+    padding: 2px !important;
+}
+.rz-paginator-element {
+    padding: 0px !important;
+    font-size: 11px !important;
+    min-height: 10px !important;
+}
+.invisible {
+    visibility: collapse;
+}

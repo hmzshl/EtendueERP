@@ -307,6 +307,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[dbo].[V_COMPTET]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[V_DOCLIGNE]",
          "ObjectType": 3
       }

@@ -92,6 +92,7 @@ namespace EtendueERP.Data
         public virtual DbSet<P_TIERS> P_TIERS { get; set; }
         public virtual DbSet<P_UNITE> P_UNITE { get; set; }
         public virtual DbSet<V_ARTICLE> V_ARTICLE { get; set; }
+        public virtual DbSet<V_COMPTET> V_COMPTET { get; set; }
         public virtual DbSet<V_DOCLIGNE> V_DOCLIGNE { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -4334,6 +4335,228 @@ namespace EtendueERP.Data
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<V_COMPTET>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_COMPTET");
+
+                entity.Property(e => e.CA_Num)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CA_NumIFRS)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CG_NumPrinc)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Adresse)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Ape)
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Assurance).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Classement)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_CodePostal)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_CodeRegion)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Coface)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Commentaire)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Complement)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Contact)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_EMail)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_EdiCode)
+                    .HasMaxLength(23)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_EdiCodeSage)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Encours).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Identifiant)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_LangueISO2)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Num)
+                    .IsRequired()
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_NumCentrale)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_NumPayeur)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Pays)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Qualite)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Raccourci)
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_RepresentInt)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_RepresentNIF)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Siret)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Site)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique01)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique02)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique03)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique04)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique05)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique06)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique07)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique08)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique09)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique10)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvCA).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_SvCotation)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvEffectif)
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvFormeJuri)
+                    .HasMaxLength(33)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvObjetMaj)
+                    .HasMaxLength(61)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvRegul)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvResultat).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Taux01).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Taux02).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Taux03).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Taux04).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Telecopie)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Telephone)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Ville)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
+
+                entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.RG_Montant).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.SoldeCommercial).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.SoldeComptable).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.Taux).HasColumnType("numeric(38, 6)");
+            });
+
             modelBuilder.Entity<V_DOCLIGNE>(entity =>
             {
                 entity.HasNoKey();
@@ -4489,7 +4712,7 @@ namespace EtendueERP.Data
 
                 entity.Property(e => e.DomaineIntitule)
                     .IsRequired()
-                    .HasMaxLength(18)
+                    .HasMaxLength(8)
                     .IsUnicode(false);
 
                 entity.Property(e => e.EU_Enumere)
@@ -4519,7 +4742,7 @@ namespace EtendueERP.Data
 
                 entity.Property(e => e.TypeIntitule)
                     .IsRequired()
-                    .HasMaxLength(24)
+                    .HasMaxLength(16)
                     .IsUnicode(false);
             });
 
