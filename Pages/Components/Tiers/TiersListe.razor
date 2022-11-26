@@ -7,8 +7,8 @@
 @inject NavigationManager UriHelper
 
 <RadzenContent Container="main">
-    <Tabs DefaultActiveKey="1">
-        <TabPane Key="0" Tab="Liste des clients" Closable="false">
+    <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
+        <TabPane Key="0"  Tab="LISTE DES CLIENTS" Closable="false">
             <Collapse>
     <Panel Header="Filtrer" Key="1">
         <GridRow>
@@ -94,7 +94,7 @@ else
         @if(rows != null) 
         {
             foreach (V_COMPTET row in rows) {
-                <TabPane Key="@key.ToString()" Tab="@row.CT_Intitule" Closable="true">
+                <TabPane Key="@row.cbMarq.ToString()" Tab="@row.CT_Intitule" Closable="true">
                     <TiersFiche row="@row" />
                 </TabPane>
             }
@@ -138,7 +138,8 @@ else
     ICollection<P_UNITE> unites;
     ICollection<F_FAMILLE> familles;
     List<V_COMPTET> rows = new List<V_COMPTET>();
-    int key = 2;
+    string activekey = "0";
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -161,7 +162,7 @@ else
       new Radzen.DialogOptions() { Width = "1024px", Height = "600px", Resizable = true });*/
         //UriHelper.NavigateTo($"clients/{args.CT_Num}");
         rows.Add(args);
-        key = key + 1;
+        activekey = args.cbMarq.ToString();
 
     }
 
