@@ -94,6 +94,7 @@ namespace EtendueERP.Data
         public virtual DbSet<V_ARTICLE> V_ARTICLE { get; set; }
         public virtual DbSet<V_COMPTET> V_COMPTET { get; set; }
         public virtual DbSet<V_DOCLIGNE> V_DOCLIGNE { get; set; }
+        public virtual DbSet<V_TOPMVT> V_TOPMVT { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -4758,6 +4759,35 @@ namespace EtendueERP.Data
                     .IsRequired()
                     .HasMaxLength(16)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<V_TOPMVT>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_TOPMVT");
+
+                entity.Property(e => e.AR_Design)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Ref)
+                    .HasMaxLength(19)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Num)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_Qte).HasColumnType("numeric(38, 6)");
             });
 
             OnModelCreatingPartial(modelBuilder);

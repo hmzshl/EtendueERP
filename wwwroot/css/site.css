@@ -234,3 +234,18 @@ input, .rz-dropdown {
     border-radius: 0px !important;
     padding: 5px !important;
 }
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td {
+    padding: 0px 5px !important;
+}
+.ant-table {
+    font-size: 11px !important;
+}
+.ant-divider-horizontal {
+    margin: 5px 0 !important;
+}
+.ant-statistic-content, .ant-statistic-title {
+    text-align: center !important;
+}
+h4 {
+    color: #0078d4 !important;
+}

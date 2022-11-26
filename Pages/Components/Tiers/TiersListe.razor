@@ -3,7 +3,13 @@
 @using Data
 @inject DialogService DialogService
 @using AntDesign
-<Collapse>
+@using Microsoft.AspNetCore.WebUtilities
+@inject NavigationManager UriHelper
+
+<RadzenContent Container="main">
+    <Tabs DefaultActiveKey="1">
+        <TabPane Key="0" Tab="Liste des clients" Closable="false">
+            <Collapse>
     <Panel Header="Filtrer" Key="1">
         <GridRow>
             <GridCol Xs="24" Md="3" class="ant-form-item-label">Recherche</GridCol>
@@ -84,6 +90,19 @@ else
         </RadzenDataGrid>
 
 }
+        </TabPane>
+        @if(rows != null) 
+        {
+            foreach (V_COMPTET row in rows) {
+                <TabPane Key="@key.ToString()" Tab="@row.CT_Intitule" Closable="true">
+                    <TiersFiche row="@row" />
+                </TabPane>
+            }
+        }
+    </Tabs>
+</RadzenContent>
+
+
 
 @code
 {
@@ -118,7 +137,8 @@ else
     private ICollection<V_COMPTET> items;
     ICollection<P_UNITE> unites;
     ICollection<F_FAMILLE> familles;
-
+    List<V_COMPTET> rows = new List<V_COMPTET>();
+    int key = 2;
 
     protected override async Task OnInitializedAsync()
     {
@@ -136,10 +156,15 @@ else
 
     protected async Task DataGridRowSelect(V_COMPTET args)
     {
-        await DialogService.OpenAsync<TiersFiche>($"{args.CT_Intitule}",
+        /*await DialogService.OpenAsync<TiersFiche>($"{args.CT_Intitule}",
       new Dictionary<string, object>() { { "row", args } },
-      new Radzen.DialogOptions() { Width = "1024px", Height = "600px", Resizable = true });
+      new Radzen.DialogOptions() { Width = "1024px", Height = "600px", Resizable = true });*/
+        //UriHelper.NavigateTo($"clients/{args.CT_Num}");
+        rows.Add(args);
+        key = key + 1;
+
     }
+
     void OnInput(string value)
     {
         UpdateGrid();

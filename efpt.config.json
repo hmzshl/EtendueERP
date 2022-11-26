@@ -313,6 +313,10 @@
       {
          "Name": "[dbo].[V_DOCLIGNE]",
          "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[V_TOPMVT]",
+         "ObjectType": 3
       }
    ],
    "UiHint": "sql1.SageAPI",
