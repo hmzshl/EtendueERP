@@ -6,7 +6,6 @@
 @using Microsoft.AspNetCore.WebUtilities
 @inject NavigationManager UriHelper
 
-<Button Type="@AntDesign.ButtonType.Primary" OnClick="args=>Add()">Add</Button>
 <RadzenContent Container="main">
     <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
         <TabPane Key="0"  Tab="LISTE DES CLIENTS" Closable="false">
@@ -48,7 +47,7 @@
                     }
                     else
                     {
-                        <Table TItem="V_COMPTET" Context="tiers" DataSource="@items" PageSize="50" Responsive OnRowClick="args=>RowClicked(args.Data)">
+                        <Table TItem="V_COMPTET" Context="context" DataSource="@items" PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)">
                             <PropertyColumn Property="a=>a.CT_Num" Title="Numéro"  Hidden="@(!CTNum)" ></PropertyColumn>
                             <PropertyColumn Property="a=>a.CT_Ville" Title="Ville"  Hidden="@(!CTVille)"></PropertyColumn>
                             <PropertyColumn Property="a=>a.CT_Intitule" Title="Intitule" Width="250px" Hidden="@(!CTIntitule)"></PropertyColumn>
@@ -140,10 +139,6 @@
     {
         rows.Add(args);
         activekey = args.cbMarq.ToString();
-    }
-    protected async Task Add()
-    {
-        await DialogService.OpenAsync<TiersFiche>($"Nouveau client", new Dictionary<string, object>() { { "type", "add" } }, new Radzen.DialogOptions() { Width = "1024px", Height = "600px", Resizable = true });
     }
     void OnInput(string value)
     {

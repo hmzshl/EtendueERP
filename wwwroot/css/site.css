@@ -260,8 +260,11 @@ h4 {
 }
 .ant-card {
     margin: 0px;
-    padding: 5px;
+    padding: 10px;
 }
 .ant-tabs-top > .ant-tabs-nav, .ant-tabs-bottom > .ant-tabs-nav, .ant-tabs-top > div > .ant-tabs-nav, .ant-tabs-bottom > div > .ant-tabs-nav {
     margin: 5px;
+}
+.ant-col {
+    padding: 2px;
 }

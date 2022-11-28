@@ -24,27 +24,31 @@ else
                         <Tabs>
                             <RadzenTabsItem Text="Accueil">
                             <GridRow>
-                                    <GridCol Xs="24" Md="12" Class="ant-card">
-                                       <FormItem Label="Intitulé" LabelColSpan="4">
+                                    <GridCol Xs="24" Md="12">
+                                        <Card>
+                                         <FormItem Label="Intitulé" LabelColSpan="4">
                                             <Input @bind-Value="@row.CT_Intitule"/>
                                             </FormItem>
-                                        <FormItem Label="Numéro" LabelColSpan="4">
-                                                <Input @bind-Value="@row.CT_Num" />
-                                        </FormItem>
-                                        <FormItem Label="Ville" LabelColSpan="4">
-                                            <Input @bind-Value="@row.CT_Ville" />
-                                        </FormItem>
+                                            <FormItem Label="Numéro" LabelColSpan="4">
+                                                    <Input @bind-Value="@row.CT_Num" />
+                                            </FormItem>
+                                            <FormItem Label="Ville" LabelColSpan="4">
+                                                <Input @bind-Value="@row.CT_Ville" />
+                                            </FormItem>
+                                        </Card>
                                     </GridCol>
-                                    <GridCol Xs="24" Md="12" Class="ant-card">
-                                        <FormItem Label="Adresse" LabelColSpan="4">
-                                            <Input @bind-Value="@row.CT_Adresse" />
-                                        </FormItem>
-                                        <FormItem Label="Téléphone" LabelColSpan="4">
-                                            <Input @bind-Value="@row.CT_Telephone" />
-                                        </FormItem>
-                                        <FormItem Label="Email" LabelColSpan="4">
-                                            <Input @bind-Value="@row.CT_EMail" />
-                                        </FormItem>
+                                    <GridCol Xs="24" Md="12">
+                                        <Card>
+                                             <FormItem Label="Adresse" LabelColSpan="4">
+                                                <Input @bind-Value="@row.CT_Adresse" />
+                                            </FormItem>
+                                            <FormItem Label="Téléphone" LabelColSpan="4">
+                                                <Input @bind-Value="@row.CT_Telephone" />
+                                            </FormItem>
+                                            <FormItem Label="Email" LabelColSpan="4">
+                                                <Input @bind-Value="@row.CT_EMail" />
+                                            </FormItem>
+                                        </Card>
                                     </GridCol>
                                     <Divider />
                                     <GridCol Xs="24" Md="3">
