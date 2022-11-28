@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.WebUtilities
 @inject NavigationManager UriHelper
 
+<Button Type="@AntDesign.ButtonType.Primary" OnClick="args=>Add()">Add</Button>
 <RadzenContent Container="main">
     <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
         <TabPane Key="0"  Tab="LISTE DES CLIENTS" Closable="false">
@@ -37,59 +38,39 @@
         </GridRow>
     </Panel>
 </Collapse>
-@if (@items == null)
-{
-     <div class="spin-center">
-        <Spin size="large" />
-    </div>
-}
-else
-{
-        <RadzenDataGrid RowSelect="@DataGridRowSelect" AllowFiltering="false" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="40" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-                Data="@items" TItem="V_COMPTET" LogicalFilterOperator="LogicalFilterOperator.Or" Style="font-size: 9px; font-weight: normal; font-family: Arial; min-height: 300px;" PagerAlwaysVisible="true" AllowColumnReorder="false" Responsive="true"
-                AllowColumnPicking="true" PageSizeText="élément par page" PagingSummaryFormat="Page {0}/{1} ({2} élément)" ColumnsShowingText="colonnes">
-            <Columns>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Num" Title="Numéro" Width="100px" Visible="@CTNum"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Ville" Title="Ville" Width="100px" Visible="@CTVille"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Intitule" Title="Intitule" Width="250px" Visible="@CTIntitule"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Adresse" Title="Adresse" Width="100px" Visible="@CTAdresse"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_Telephone" Title="Téléphone" Width="100px" Visible="@CTTelephone"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_COMPTET" Property="CT_EMail" Title="Email" Width="150px" Visible="@CTEMail"></RadzenDataGridColumn>
-                
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_MontantHT" Title="CA HT" Width="100px" Visible="@DLMontantHT" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
-                    <FooterTemplate>
-                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.DL_MontantHT))</b>
-                    </FooterTemplate>
-                </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_MontantTTC" Title="CA TTC" Width="100px" Visible="@DLMontantTTC" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
-                    <FooterTemplate>
-                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.DL_MontantTTC))</b>
-                    </FooterTemplate>
-                </RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_COMPTET" Property="DL_DateBL" Title="Der. Activité" Width="100px" Visible="@DLDateBL" FormatString="{0:d}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_COMPTET" Property="DelaiSommeil" Title="Durée Inactivité" Width="100px" Visible="@DelaiSommeil" FormatString="{0:N0}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_COMPTET" Property="Taux" Title="%" Width="100px" Visible="@Taux" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_COMPTET" Property="NbrArticles" Title="Nbr Articles" Width="100px" Visible="@NbrArticles" FormatString="{0:N0}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="NbrDocuments" Title="Nbr Documents" Width="100px" Visible="@NbrDocuments" FormatString="{0:N0}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="V_COMPTET" Property="RG_Montant" Title="Total Réglements" Width="100px" Visible="@RGMontant" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
-                    <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.RG_Montant))</b>
-                    </FooterTemplate>
-                </RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_COMPTET" Property="SoldeCommercial" Title="Solde Commercial" Width="100px" Visible="@SoldeCommercial" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
-                    <FooterTemplate>
-                        <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.SoldeCommercial))</b>
-                    </FooterTemplate>
-                </RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="V_COMPTET" Property="SoldeComptable" Title="Solde Comptable" Width="100px" Visible="@SoldeComptable" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right">
-                    <FooterTemplate>
-                    <b>@String.Format(new System.Globalization.CultureInfo("fr-FR"), "{0:N2}", items.Sum(a => a.SoldeComptable))</b>
-                    </FooterTemplate>
-                </RadzenDataGridColumn>
-            </Columns>
-        </RadzenDataGrid>
+<GridRow>
+    <GridCol Xs="24" Md="24">
+                    @if (@items == null)
+                    {
+                        <div class="spin-center">
+                            <Spin size="large" />
+                        </div>
+                    }
+                    else
+                    {
+                        <Table TItem="V_COMPTET" Context="tiers" DataSource="@items" PageSize="50" Responsive OnRowClick="args=>RowClicked(args.Data)">
+                            <PropertyColumn Property="a=>a.CT_Num" Title="Numéro"  Hidden="@(!CTNum)" ></PropertyColumn>
+                            <PropertyColumn Property="a=>a.CT_Ville" Title="Ville"  Hidden="@(!CTVille)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.CT_Intitule" Title="Intitule" Width="250px" Hidden="@(!CTIntitule)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.CT_Adresse" Title="Adresse" Hidden="@(!CTAdresse)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.CT_Telephone" Title="Téléphone"  Hidden="@(!CTTelephone)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.CT_EMail" Title="Email" Hidden="@(!CTEMail)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.DL_MontantHT" Title="CA HT"  Hidden="@(!DLMontantHT)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.DL_MontantTTC" Title="CA TTC"  Hidden="@(!DLMontantTTC)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.DL_DateBL" Title="Der. Activité"  Hidden="@(!DLDateBL)" Format="dd/MM/yyyy" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.DelaiSommeil" Title="Durée Inactivité"  Hidden="@(!DelaiSommeil)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.Taux" Title="%"  Hidden="@(!Taux)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.NbrArticles" Title="Nbr Articles"  Hidden="@(!NbrArticles)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.NbrDocuments" Title="Nbr Documents"  Hidden="@(!NbrDocuments)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.RG_Montant" Title="Total Réglements"  Hidden="@(!RGMontant)" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                            <PropertyColumn Property="a=>a.SoldeCommercial" Title="Solde Commercial"  Hidden="@(!SoldeCommercial)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.SoldeComptable" Title="Solde Comptable"  Hidden="@(!SoldeComptable)" Format="### ### ##0.00" Align="ColumnAlign.Right">
+                            </PropertyColumn>
+                        </Table>
 
-}
+                    }
+    </GridCol>
+</GridRow>
         </TabPane>
         @if(rows != null) 
         {
@@ -155,17 +136,15 @@ else
         items = data;
     }
 
-    protected async Task DataGridRowSelect(V_COMPTET args)
+    protected async Task RowClicked(V_COMPTET args)
     {
-        /*await DialogService.OpenAsync<TiersFiche>($"{args.CT_Intitule}",
-      new Dictionary<string, object>() { { "row", args } },
-      new Radzen.DialogOptions() { Width = "1024px", Height = "600px", Resizable = true });*/
-        //UriHelper.NavigateTo($"clients/{args.CT_Num}");
         rows.Add(args);
         activekey = args.cbMarq.ToString();
-
     }
-
+    protected async Task Add()
+    {
+        await DialogService.OpenAsync<TiersFiche>($"Nouveau client", new Dictionary<string, object>() { { "type", "add" } }, new Radzen.DialogOptions() { Width = "1024px", Height = "600px", Resizable = true });
+    }
     void OnInput(string value)
     {
         UpdateGrid();

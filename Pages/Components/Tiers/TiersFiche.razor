@@ -8,7 +8,6 @@
 @using EtendueERP.Pages.Components.Documents
 @using EtendueERP.Pages.Components.Tiers
 @using AntDesign
-<PageHeader Class="site-page-header" Title="@row.CT_Intitule" Subtitle="Custom Icon" BackIcon="@("backward")" />
 @if (@row == null)
 {
      <div class="spin-center">
@@ -20,93 +19,102 @@ else
     <div>
         <GridRow>
             <GridCol Xs="24" Md="24">
-                <RadzenButton>Enregistrer</RadzenButton>
-                <RadzenButton>Annuler</RadzenButton>
-            </GridCol>
-        </GridRow>
-        <GridRow>
-            <GridCol Xs="24" Md="24">
                 <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6">
-                    <Tabs DefaultActiveKey="0">
-                        <TabPane Key="0" Tab="Accueil">
+                    <RadzenTabs>
+                        <Tabs>
+                            <RadzenTabsItem Text="Accueil">
                             <GridRow>
-                                <GridCol Xs="24" Md="10">
-                                    <FormItem Label="Numéro">
-                                        <Input @bind-Value="@row.CT_Num" />
-                                    </FormItem>
-                                </GridCol>
-                                <GridCol Xs="24" Md="14">
-                                    <FormItem Label="Intitulé" LabelColSpan="3">
-                                        <Input @bind-Value="@row.CT_Intitule" />
-                                    </FormItem>
-                                </GridCol>
-                                <Divider />
-                                <GridCol Xs="24" Md="6">
-                                    <Statistic Title="CA HT" Value="@((row.DL_MontantHT ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600 ;" Precision="2" Suffix="DH" />
-                                </GridCol>
-                                <GridCol Xs="24" Md="6">
-                                    <Statistic Title="CA TTC" Value="@((row.DL_MontantTTC ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="2" Suffix="DH" />
-                                </GridCol>
-                                <GridCol Xs="24" Md="6">
-                                    <Statistic Title="Nombre Documents" Value="@((row.NbrArticles ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />
-                                </GridCol>
-                                <GridCol Xs="24" Md="6">
-                                    <Statistic Title="Nombre Articles" Value="@((row.NbrArticles ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />
-                                </GridCol>
-                                <Divider />
-                                <GridCol Xs="24" Md="24">
-                                    <h4>
-                                        <RadzenIcon Icon="star" Class="me-1" /><b>Top 10 articles</b>
-                                    </h4>
-                                    <Table Context="best" HidePagination
+                                    <GridCol Xs="24" Md="12" Class="ant-card">
+                                       <FormItem Label="Intitulé" LabelColSpan="4">
+                                            <Input @bind-Value="@row.CT_Intitule"/>
+                                            </FormItem>
+                                        <FormItem Label="Numéro" LabelColSpan="4">
+                                                <Input @bind-Value="@row.CT_Num" />
+                                        </FormItem>
+                                        <FormItem Label="Ville" LabelColSpan="4">
+                                            <Input @bind-Value="@row.CT_Ville" />
+                                        </FormItem>
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="12" Class="ant-card">
+                                        <FormItem Label="Adresse" LabelColSpan="4">
+                                            <Input @bind-Value="@row.CT_Adresse" />
+                                        </FormItem>
+                                        <FormItem Label="Téléphone" LabelColSpan="4">
+                                            <Input @bind-Value="@row.CT_Telephone" />
+                                        </FormItem>
+                                        <FormItem Label="Email" LabelColSpan="4">
+                                            <Input @bind-Value="@row.CT_EMail" />
+                                        </FormItem>
+                                    </GridCol>
+                                    <Divider />
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="CA HT" Value="@((row.DL_MontantHT ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600 ;" Precision="2" Suffix="DH" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="CA TTC" Value="@((row.DL_MontantTTC ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="2" Suffix="DH" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Nombre Documents" Value="@((row.NbrArticles ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Nombre Articles" Value="@((row.NbrArticles ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />
+                                    </GridCol>
+                                    <Divider />
+                                    <GridCol Xs="24" Md="12">
+                                        <Card title="Top 10 articles">
+                                          <Table Context="best" HidePagination
                                        TItem="V_TOPMVT"
                                        DataSource="@bestof">
-                                        <PropertyColumn Property="a=>a.AR_Ref" Sortable="false" Title="Référence" />
-                                        <PropertyColumn Property="a=>a.AR_Design" Sortable="false" Title="Désignation" />
-                                        <PropertyColumn Property="a=>a.DL_Qte" Sortable="false" Title="Qté" Format="### ### ##0.00" Align="ColumnAlign.Right" />
-                                        <PropertyColumn Property="a=>a.DL_MontantHT" Sortable="false" Title="CA HT" Format="### ### ##0.00" Align="ColumnAlign.Right" />
-                                        <PropertyColumn Property="a=>a.DL_MontantTTC" Sortable="false" Title="CA TTC" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                            <PropertyColumn Property="a=>a.AR_Ref" Sortable="false" Title="Référence" />
+                                            <PropertyColumn Property="a=>a.AR_Design" Sortable="false" Title="Désignation" />
+                                            <PropertyColumn Property="a=>a.DL_Qte" Sortable="false" Title="Qté" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                            <PropertyColumn Property="a=>a.DL_MontantHT" Sortable="false" Title="CA HT" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                            <PropertyColumn Property="a=>a.DL_MontantTTC" Sortable="false" Title="CA TTC" Format="### ### ##0.00" Align="ColumnAlign.Right" />
 
-                                    </Table>
-                                </GridCol>
+                                        </Table>
+                                       </Card>
 
-                            </GridRow>
-                        </TabPane>
-                        <TabPane Key="1" Tab="Coordonnées">
-                            <GridCol Xs="24" Md="24">
-                                <FormItem Label="Adresse">
-                                    <Input @bind-Value="@row.CT_Adresse" />
-                                </FormItem>
-                            </GridCol>
-                            <GridCol Xs="24" Md="12">
-                                <FormItem Label="Ville">
-                                    <Input @bind-Value="@row.CT_Ville" />
-                                </FormItem>
-                                <FormItem Label="Téléphone">
-                                    <Input @bind-Value="@row.CT_Telephone" />
-                                </FormItem>
-                                <FormItem Label="Email">
-                                    <Input @bind-Value="@row.CT_EMail" />
-                                </FormItem>
-                            </GridCol>
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="12">
+                                        <Card title="Top 10 articles">
+                                            <Table Context="best" HidePagination
+                                       TItem="V_TOPMVT"
+                                       DataSource="@bestof">
+                                            <PropertyColumn Property="a=>a.AR_Ref" Sortable="false" Title="Référence" />
+                                            <PropertyColumn Property="a=>a.AR_Design" Sortable="false" Title="Désignation" />
+                                            <PropertyColumn Property="a=>a.DL_Qte" Sortable="false" Title="Qté" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                            <PropertyColumn Property="a=>a.DL_MontantHT" Sortable="false" Title="CA HT" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                            <PropertyColumn Property="a=>a.DL_MontantTTC" Sortable="false" Title="CA TTC" Format="### ### ##0.00" Align="ColumnAlign.Right" />
 
-                        </TabPane>
-                        <TabPane Key="2" Tab="Tarifs">
+                                        </Table>
+                                        </Card>
 
-                        </TabPane>
-                        <TabPane Key="3" Tab="Solvabilité">
-                        </TabPane>
-                        <TabPane Key="4" Tab="Documents">
-                            <GridRow>
-                                <GridCol Xs="24" Md="24">
-                                    <DocLigne CT_Num="@row.CT_Num" Page="14"
+                                    </GridCol>
+
+                                </GridRow>
+                            </RadzenTabsItem>
+                            <RadzenTabsItem Text="Coordonnées">
+
+
+                            </RadzenTabsItem>
+                            <RadzenTabsItem Text="Tarifs">
+
+                            </RadzenTabsItem>
+                            <RadzenTabsItem Text="Solvabilité">
+                            </RadzenTabsItem>
+                            <RadzenTabsItem Text="Documents">
+                                <GridRow>
+                                    <GridCol Xs="24" Md="24">
+                                        <DocLigne CT_Num="@row.CT_Num" Page="14"
                                           DEIntitule="false" ARRef="false"
                                           DLDesign="false" DLTaxe1="false" TypeIntitule="true"
                                           DLDateBL="false" />
-                                </GridCol>
-                            </GridRow>
-                        </TabPane>
-                    </Tabs>
+                                    </GridCol>
+                                </GridRow>
+                            </RadzenTabsItem>
+                        </Tabs>
+
+                    </RadzenTabs>
                 </Form>
 
             </GridCol>
@@ -120,6 +128,7 @@ else
 
 @code {
     [Parameter] public V_COMPTET row { get; set; }
+    [Parameter] public string type { get; set; }
     //[Parameter] public string CT_Num { get; set; }
     SageAPIContext db = new SageAPIContext();
     //V_COMPTET row;
