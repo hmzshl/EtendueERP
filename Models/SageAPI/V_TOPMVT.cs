@@ -11,6 +11,7 @@ namespace EtendueERP.Models.SageAPI
         public string AR_Design { get; set; }
         public string CT_Num { get; set; }
         public string CT_Intitule { get; set; }
+        public short? CT_Type { get; set; }
         public decimal? DL_Qte { get; set; }
         public decimal? DL_MontantHT { get; set; }
         public decimal? DL_MontantTTC { get; set; }

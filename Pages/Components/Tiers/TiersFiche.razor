@@ -26,8 +26,8 @@ else
                             <GridRow>
                                     <GridCol Xs="24" Md="12">
                                         <Card>
-                                         <FormItem Label="Intitulé" LabelColSpan="4">
-                                            <Input @bind-Value="@row.CT_Intitule"/>
+                                            <FormItem Label="Intitulé" LabelColSpan="4">
+                                                <Input @bind-Value="@row.CT_Intitule"/>
                                             </FormItem>
                                             <FormItem Label="Numéro" LabelColSpan="4">
                                                     <Input @bind-Value="@row.CT_Num" />
@@ -52,10 +52,10 @@ else
                                     </GridCol>
                                     <Divider />
                                     <GridCol Xs="24" Md="3">
-                                        <Statistic Class="ant-card" Title="CA HT" Value="@((row.DL_MontantHT ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600 ;" Precision="2" Suffix="DH" />
+                                        <Statistic Class="ant-card" Title="CA HT" Value="@((row.DL_MontantHT ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600 ;"  Suffix="DH" />
                                     </GridCol>
                                     <GridCol Xs="24" Md="3">
-                                        <Statistic Class="ant-card" Title="CA TTC" Value="@((row.DL_MontantTTC ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="2" Suffix="DH" />
+                                        <Statistic Class="ant-card" Title="CA TTC" Value="@((row.DL_MontantTTC ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;"  Suffix="DH" />
                                     </GridCol>
                                     <GridCol Xs="24" Md="3">
                                         <Statistic Class="ant-card" Title="Nombre Documents" Value="@((row.NbrArticles ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />

@@ -10,35 +10,33 @@
     <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
         <TabPane Key="0"  Tab="LISTE DES CLIENTS" Closable="false">
             <Collapse>
-    <Panel Header="Filtrer" Key="1">
-        <GridRow>
-            <GridCol Xs="24" Md="3" class="ant-form-item-label">Recherche</GridCol>
-            <GridCol Xs="24" Md="7"><Input Size="@AntSizeLDSType.Small" Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
-            <GridCol Xs="24" Md="3" class="ant-form-item-label">Etat Solde</GridCol>
-            <GridCol Xs="24" Md="4">
-                                <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_solde">
-                    <SelectOptions>
-                        <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
-                        <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Soldé" />
-                        <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="Non soldé" />
-                    </SelectOptions>
-                </Select>
-            </GridCol>
-            <GridCol Xs="24" Md="3" class="ant-form-item-label">Sommeil</GridCol>
-            <GridCol Xs="24" Md="4">
-                                <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_sommeil">
-                    <SelectOptions>
-                        <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
-                        <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Actif" />
-                        <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="En sommeil" />
-                    </SelectOptions>
-                </Select>
-            </GridCol>
-        </GridRow>
-    </Panel>
-</Collapse>
-<GridRow>
-    <GridCol Xs="24" Md="24">
+                <Panel Header="Filtrer" Key="1">
+                    <GridRow>
+                        <GridCol Xs="24" Md="3" class="ant-form-item-label">Recherche</GridCol>
+                        <GridCol Xs="24" Md="7"><Input Size="@AntSizeLDSType.Small" Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
+                        <GridCol Xs="24" Md="3" class="ant-form-item-label">Etat Solde</GridCol>
+                        <GridCol Xs="24" Md="4">
+                                            <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_solde">
+                                <SelectOptions>
+                                    <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
+                                    <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Soldé" />
+                                    <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="Non soldé" />
+                                </SelectOptions>
+                            </Select>
+                        </GridCol>
+                        <GridCol Xs="24" Md="3" class="ant-form-item-label">Sommeil</GridCol>
+                        <GridCol Xs="24" Md="4">
+                                            <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_sommeil">
+                                <SelectOptions>
+                                    <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
+                                    <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Actif" />
+                                    <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="En sommeil" />
+                                </SelectOptions>
+                            </Select>
+                        </GridCol>
+                    </GridRow>
+                </Panel>
+            </Collapse>
                     @if (@items == null)
                     {
                         <div class="spin-center">
@@ -68,8 +66,6 @@
                         </Table>
 
                     }
-    </GridCol>
-</GridRow>
         </TabPane>
         @if(rows != null) 
         {
@@ -115,8 +111,6 @@
     short? vl_solde = 0;
     short? vl_sommeil = 0;
     private ICollection<V_COMPTET> items;
-    ICollection<P_UNITE> unites;
-    ICollection<F_FAMILLE> familles;
     List<V_COMPTET> rows = new List<V_COMPTET>();
     string activekey = "0";
 

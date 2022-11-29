@@ -1,0 +1,297 @@
+﻿@page "/documents"
+@using EtendueERP.Models.SageAPI
+@using Microsoft.EntityFrameworkCore
+@using Data
+@inject DialogService DialogService
+@using AntDesign
+
+<Layout>
+    <Sider Breakpoint="@BreakpointType.Lg"
+           CollapsedWidth="64"
+           @bind-Collapsed=@collapsed>
+        <div class="logo" />
+        <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Inline" DefaultSelectedKeys=@(new[]{"4"}) >
+            @if(DO_Domaine == 0) {
+                <MenuItem Key="0">
+                    <Icon Type="bar-chart" Theme="outline" />
+                    <span class="nav-text">Devis</span>
+                </MenuItem>
+                <MenuItem Key="1">
+                    <Icon Type="rise" Theme="outline" />
+                    <span class="nav-text">Bon de commande</span>
+                </MenuItem>
+                <MenuItem Key="2">
+                    <Icon Type="fund" Theme="outline" />
+                    <span class="nav-text">Préparation de livraison</span>
+                </MenuItem>
+                <MenuItem Key="3">
+                    <Icon Type="branches" Theme="outline" />
+                    <span class="nav-text">Bon de livraiosn</span>
+                </MenuItem>
+                <MenuItem Key="4">
+                    <Icon Type="cloud-download" Theme="outline" />
+                    <span class="nav-text">Bon de retour</span>
+                </MenuItem>
+                <MenuItem Key="6">
+                    <Icon Type="crown" Theme="outline" />
+                    <span class="nav-text">Facture</span>
+                </MenuItem>
+                <MenuItem Key="7">
+                    <Icon Type="control" Theme="outline"/>
+                    <span class="nav-text">Facture comptabilisée</span>
+                </MenuItem>
+            }
+            else if(DO_Domaine == 1) {
+                <MenuItem Key="10">
+                    <Icon Type="disconnect" Theme="outline" />
+                    <span class="nav-text">Demande d'achats</span>
+                </MenuItem>
+                <MenuItem Key="11">
+                    <Icon Type="export" Theme="outline" />
+                    <span class="nav-text">Préparation d'achat</span>
+                </MenuItem>
+                <MenuItem Key="12">
+                    <Icon Type="file-protect" Theme="outline" />
+                    <span class="nav-text">Bon de commande</span>
+                </MenuItem>
+                <MenuItem Key="13">
+                    <Icon Type="fork" Theme="outline" />
+                    <span class="nav-text">Bon de livraiosn</span>
+                </MenuItem>
+                <MenuItem Key="14">
+                    <Icon Type="gold" Theme="outline" />
+                    <span class="nav-text">Bon de retour</span>
+                </MenuItem>
+                <MenuItem Key="16">
+                    <Icon Type="insert-row-left" Theme="outline" />
+                    <span class="nav-text">Facture</span>
+                </MenuItem>
+                <MenuItem Key="17">
+                    <Icon Type="mac-command" Theme="outline" />
+                    <span class="nav-text">Facture comptabilisée</span>
+                </MenuItem>
+
+
+            }
+            else if(DO_Domaine == 2) {
+                <MenuItem Key="20">
+                    <Icon Type="number" Theme="outline" />
+                    <span class="nav-text">Mouvements d'entrées</span>
+                </MenuItem>
+                <MenuItem Key="21">
+                    <Icon Type="one-to-one" Theme="outline" />
+                    <span class="nav-text">Mouvements de sorties</span>
+                </MenuItem>
+                <MenuItem Key="23">
+                    <Icon Type="pull-request" Theme="outline" />
+                    <span class="nav-text">Mouvements de transferts</span>
+                </MenuItem>
+            }
+
+        </Menu>
+    </Sider>
+    <Layout>
+        <Content Style=" margin: 10px 10px 0;">
+            <div class="site-layout-background" style="padding: 24px; min-height: 360px">
+                <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
+                    <TabPane Key="0"  Tab="LISTE DES DOCUMENTS" Closable="false">
+                        <Collapse>
+                            <Panel Header="Filtrer" Key="1">
+                                <GridRow>
+                                    <GridCol Xs="24" Md="3" class="ant-form-item-label">Recherche</GridCol>
+                                    <GridCol Xs="24" Md="7"><Input Size="@AntSizeLDSType.Small" Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
+                                    <GridCol Xs="24" Md="3" class="ant-form-item-label">Etat Solde</GridCol>
+                                    <GridCol Xs="24" Md="4">
+                                                        <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_solde">
+                                            <SelectOptions>
+                                                <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
+                                                <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Soldé" />
+                                                <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="Non soldé" />
+                                            </SelectOptions>
+                                        </Select>
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3" class="ant-form-item-label">Sommeil</GridCol>
+                                    <GridCol Xs="24" Md="4">
+                                                        <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_sommeil">
+                                            <SelectOptions>
+                                                <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
+                                                <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Actif" />
+                                                <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="En sommeil" />
+                                            </SelectOptions>
+                                        </Select>
+                                    </GridCol>
+                                </GridRow>
+                            </Panel>
+                        </Collapse>
+                                @if (@items == null)
+                                {
+                                    <div class="spin-center">
+                                        <Spin size="large" />
+                                    </div>
+                                }
+                                else
+                                {
+                            <Table TItem="V_DOCENTETE" Context="context" DataSource="@items" PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)">
+                                        <PropertyColumn Property="a=>a.DO_Date" Title="Numéro"  Hidden="@(!DODate)" ></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DO_Piece" Title="Ville"  Hidden="@(!DOPiece)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DO_Tiers" Title="Intitule" Width="250px" Hidden="@(!DOTiers)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.CT_Intitule" Title="Adresse" Hidden="@(!CTIntitule)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.CA_Num" Title="Téléphone" Hidden="@(!CANum)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.CA_Intitule" Title="Email" Hidden="@(!CAIntitule)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DL_MontantHT" Title="CA HT" Hidden="@(!DLMontantHT)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DL_MontantTTC" Title="CA TTC"  Hidden="@(!DLMontantTTC)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DL_MontantTVA" Title="Der. Activité"  Hidden="@(!DLMontantTVA)" Format="dd/MM/yyyy" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DE_Intitule" Title="Durée Inactivité" Hidden="@(!DEIntitule)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.CO_Nom" Title="%"  Hidden="@(!CONom)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.RC_Montant" Title="Nbr Articles"  Hidden="@(!RCMontant)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.Reste" Title="Nbr Documents"  Hidden="@(!Reste)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.EtatReglement" Title="Total Réglements" Hidden="@(!EtatReglement)" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                    </Table>
+
+                                }
+                    </TabPane>
+                    @if(rows != null) 
+                    {
+                        foreach (V_DOCENTETE row in rows)
+                        {
+                            <TabPane Key="@row.cbMarq.ToString()" Tab="@row.CT_Intitule" Closable="true">
+                                <DocumentsFiche row="@row" />
+                            </TabPane>
+                        }
+                    }
+                </Tabs>
+            </div>
+        </Content>
+    </Layout>
+</Layout>
+<style>
+    #components-layout-demo-responsive .logo {
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 16px;
+    }
+
+    .site-layout-sub-header-background {
+        background: #fff;
+    }
+
+    .site-layout-background {
+        background: #fff;
+    }
+</style>
+
+
+@code {
+    //Parameters
+    
+    [Parameter] public ICollection<V_DOCENTETE> data { get; set; }
+    [Parameter] public bool CTNum { get; set; } = true;
+    [Parameter] public bool CTIntitule { get; set; } = true;
+    [Parameter] public bool DODate { get; set; } = true;
+    [Parameter] public bool DOPiece { get; set; } = true;
+    [Parameter] public bool DEIntitule { get; set; } = true;
+    [Parameter] public bool DLMontantTVA { get; set; } = true;
+    [Parameter] public bool DLMontantHT { get; set; } = true;
+    [Parameter] public bool DLMontantTTC { get; set; } = true;
+    [Parameter] public bool EtatReglement { get; set; } = true;
+    [Parameter] public bool Reste { get; set; } = true;
+    [Parameter] public bool RCMontant { get; set; } = true;
+    [Parameter] public bool CAIntitule { get; set; } = true;
+    [Parameter] public bool CONom { get; set; } = true;
+    [Parameter] public bool DOTiers { get; set; } = true;
+    [Parameter] public bool CANum { get; set; } = true;
+    [Parameter] public int CT_Type { get; set; } = 0;
+    [Parameter] public int DO_Domaine { get; set; } = 0;
+    //End Parameters
+
+
+    bool collapsed;
+    SageAPIContext db = new SageAPIContext();
+    string vl_text;
+    short? vl_solde = 0;
+    short? vl_sommeil = 0;
+    private ICollection<V_DOCENTETE> items;
+    List<V_DOCENTETE> rows = new List<V_DOCENTETE>();
+    string activekey = "0";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(LoadData);
+    }
+    private void LoadData()
+    {
+        System.Threading.Thread.Sleep(3000);
+        if (data == null)
+        {
+            //data = db.V_DOCENTETE.Where(a => a.CT_Type == CT_Type).OrderBy(a => a.CT_Intitule).ToList();
+        }
+        items = data;
+    }
+
+    protected async Task RowClicked(V_DOCENTETE args)
+    {
+        rows.Add(args);
+        activekey = args.cbMarq.ToString();
+    }
+    void OnInput(string value)
+    {
+        UpdateGrid();
+        //items = items.Where(a => a.CT_Num.ToUpper().Contains(value.ToUpper()) || a.CT_Intitule.ToUpper().Contains(value.ToUpper())).ToList();
+    }
+    void UpdateGrid()
+    {
+        /*items = data;
+
+        if (vl_solde == 1)
+        {
+            items = items.Where(a => a.SoldeCommercial == 0).ToList();
+        }
+        else if (vl_solde == 2)
+        {
+            items = items.Where(a => a.SoldeCommercial != 0).ToList();
+        }
+
+        if (vl_sommeil == 1)
+        {
+            items = items.Where(a => a.CT_Sommeil == 0).ToList();
+        }
+        else if (vl_sommeil == 2)
+        {
+            items = items.Where(a => a.CT_Sommeil == 1).ToList();
+        }*/
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

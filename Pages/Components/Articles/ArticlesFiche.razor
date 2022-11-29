@@ -1,0 +1,230 @@
+﻿@using EtendueERP.Models.SageAPI
+@using Microsoft.EntityFrameworkCore
+@using Data
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@using EtendueERP.Pages.Components.Documents
+@using EtendueERP.Pages.Components.Articles
+@using AntDesign
+
+@if (@row == null)
+{
+     <div class="spin-center">
+        <Spin size="large" />
+    </div>
+}
+else {
+        <div>
+        <GridRow>
+            <GridCol Xs="24" Md="24">
+                <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6">
+                    <RadzenTabs>
+                        <Tabs>
+                            <RadzenTabsItem Text="Indentification">
+                            <GridRow>
+                                    <GridCol Xs="24" Md="24">
+                                        <Card>
+                                                <FormItem Label="Designation" LabelColSpan="3">
+                                                <Input @bind-Value="@row.AR_Design" />
+                                                </FormItem>
+                                        </Card>
+                                        </GridCol>
+                                            <GridCol Xs="24" Md="12">
+                                                <Card>
+                                                    <FormItem Label="Reference">
+                                                        <Input @bind-Value="@row.AR_Ref" />
+                                                    </FormItem>
+                                                    <FormItem Label="Famille">
+                                                        <Select DataSource="@familles" TItem="F_FAMILLE" TItemValue="string" ValueName="@nameof(F_FAMILLE.FA_CodeFamille)" LabelName="@nameof(F_FAMILLE.FA_Intitule)" @bind-Value="@row.FA_CodeFamille" />
+                                                    </FormItem>
+                                                    <FormItem Label="Unite">
+                                                        <Select DataSource="@unites" TItem="P_UNITE" TItemValue="short?" ValueName="@nameof(P_UNITE.cbMarq)" LabelName="@nameof(P_UNITE.U_Intitule)" @bind-Value="@row.AR_UniteVen" />
+                                                    </FormItem>
+                                                </Card>
+                                            </GridCol>
+                                            <GridCol Xs="24" Md="12">
+                                                <Card>
+                                                      <FormItem Label="Suivi de stock">
+                                                        <Select TItem="short?" TItemValue="short?" @bind-Value="@row.AR_SuiviStock">
+                                                            <SelectOptions>
+                                                                <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="Aucun" />
+                                                                        <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Serie" />
+                                                                        <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="CMUP" />
+                                                                        <SelectOption TItem="short?" TItemValue="short?" Value="3" Label="FIFO" />
+                                                                        <SelectOption TItem="short?" TItemValue="short?" Value="4" Label="LIFO" />
+                                                                <SelectOption TItem="short?" TItemValue="short?" Value="5" Label="Lot" />
+                                                            </SelectOptions>
+                                                        </Select>
+                                                    </FormItem>
+                                                    <FormItem Label="Prix d'achat'">
+                                                        <AntDesign.InputNumber @bind-Value="@row.AR_PrixAch" />
+                                                    </FormItem>
+                                                    <FormItem Label="Prix de vente'">
+                                                        <AntDesign.InputNumber @bind-Value="@row.AR_PrixVen" />
+                                                    </FormItem>
+                                                </Card>
+
+                                            </GridCol>
+                                    <Divider />
+                                        <GridCol Xs="24" Md="3">
+                                            <Statistic Class="ant-card" Title="Total quantitée achetée" Value="@((row.DL_Qte_Achat ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Suffix="@row.U_Intitule"/>
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="3">
+                                            <Statistic Class="ant-card" Title="CA Achats HT" Value="@((row.DL_MontantHT_Achat ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Suffix="DH" />
+                                        </GridCol>
+                                         <GridCol Xs="24" Md="3">
+                                            <Statistic Class="ant-card" Title="CA Achats TTC" Value="@((row.DL_MontantTTC_Achat ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Suffix="DH" />
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="3">
+                                            <Statistic Class="ant-card" Title="Dernier prix d'achat" Value="@((row.DL_PU_Achat ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" />
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="3">
+                                            <Statistic Class="ant-card" Title="Dernier quantitee achetee" Value="@((row.DL_Dernier_Qte_Achat ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" />
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="9">
+                                            <Statistic Class="ant-card" Title="Fourisseur" Value="@(row.FR_Intitule??"")" ValueStyle="color: #3f8600;" />
+                                        </GridCol>
+                                    <Divider />
+                                        <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Total quantitée vendue" Value="@((row.DL_Qte_Vente ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Suffix="@row.U_Intitule" />
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="3">
+                                            <Statistic Class="ant-card" Title="CA Ventes HT" Value="@((row.DL_MontantHT_Vente ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Suffix="DH" />
+                                        </GridCol>
+                                         <GridCol Xs="24" Md="3">
+                                            <Statistic Class="ant-card" Title="CA Ventes TTC" Value="@((row.DL_MontantTTC_Vente ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Suffix="DH" />
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Dernier prix de vente" Value="@((row.DL_PU_Vente ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" />
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="3">
+                                            <Statistic Class="ant-card" Title="Dernier quantitee vendue" Value="@((row.DL_Dernier_Qte_Vente ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" />
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="9">
+                                        <Statistic Class="ant-card" Title="Client" Value="@(row.CL_Intitule??"")" ValueStyle="color: #3f8600;" />
+                                        </GridCol>
+                                    <Divider />
+                                    <GridCol Xs="24" Md="8">
+                                        <Statistic Class="ant-card" Title="Etat de stock" Value="@((row.EtatStock ?? ""))" ValueStyle="color: #3f8600;"/>
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="8">
+                                        <Statistic Class="ant-card" Title="Quantitee de stock" Value="@((row.AS_QteSto ?? 0).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Suffix="@row.U_Intitule" />
+                                    </GridCol>
+                                     <GridCol Xs="24" Md="8">
+                                        <Statistic Class="ant-card" Title="Montant du stock" Value="@((row.AS_MontSto ?? 0).ToString ("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Suffix="DH" />
+                                    </GridCol>
+                                         <Divider />
+                                            <GridCol Xs="24" Md="12">
+                                                <Card title="Top 10 fournisseurs">
+                                                  <Table Context="best" HidePagination
+                                       TItem="V_TOPMVT"
+                                       DataSource="@bestoffr">
+                                                <PropertyColumn Property="a=>a.CT_Num" Sortable="false" Title="Numéro" />
+                                                <PropertyColumn Property="a=>a.CT_Intitule" Sortable="false" Title="Intitulé" />
+                                                    <PropertyColumn Property="a=>a.DL_Qte" Sortable="false" Title="Qté" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                                    <PropertyColumn Property="a=>a.DL_MontantHT" Sortable="false" Title="CA HT" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                                    <PropertyColumn Property="a=>a.DL_MontantTTC" Sortable="false" Title="CA TTC" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+
+                                                </Table>
+                                               </Card>
+
+                                            </GridCol>
+                                            <GridCol Xs="24" Md="12">
+                                                <Card title="Top 10 clients">
+                                                    <Table Context="best" HidePagination
+                                                   TItem="V_TOPMVT"
+                                                   DataSource="@bestofcl">
+                                                        <PropertyColumn Property="a=>a.CT_Num" Sortable="false" Title="Numéro" />
+                                                        <PropertyColumn Property="a=>a.CT_Intitule" Sortable="false" Title="Intitulé" />
+                                                        <PropertyColumn Property="a=>a.DL_Qte" Sortable="false" Title="Qté" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                                        <PropertyColumn Property="a=>a.DL_MontantHT" Sortable="false" Title="CA HT" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                                        <PropertyColumn Property="a=>a.DL_MontantTTC" Sortable="false" Title="CA TTC" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+
+                                                    </Table>
+                                                </Card>
+
+                                            </GridCol>
+                                    </GridRow>
+                            </RadzenTabsItem>
+                            <RadzenTabsItem Text="Stock">
+                                <GridRow>
+
+
+                                    <GridCol Xs="24" Md="24">
+                                        <DocLigne AR_Ref="@row.AR_Ref" Page="14" IsStock="true" Remise="false" DLPrixUnitaire="false" DEIntitule="false" ARRef="false"
+                                DLDesign="false" DLCodeTaxe1="false" DLTaxe1="false" MontantTVA="false" DLMontantTTC="false" TypeIntitule="true"
+                                QteMvt="true" DLDateBL="false" DLQte="false"
+                                />
+                                    </GridCol>
+                                </GridRow>
+                            </RadzenTabsItem>
+                            <RadzenTabsItem Text="Achats">
+                                <GridRow>
+
+
+
+                                    <GridCol Xs="24" Md="24">
+                                        <DocLigne AR_Ref="@row.AR_Ref" DO_Domaine=1 Page="14"
+                                                  DEIntitule="false" ARRef="false"
+                                                  DLDesign="false" DLTaxe1="false" TypeIntitule="true"
+                                                  DLDateBL="false" />
+                                    </GridCol>
+                                </GridRow>
+                            </RadzenTabsItem>
+                            <RadzenTabsItem Text="Ventes">
+                                <GridRow>
+
+
+
+                                    <GridCol Xs="24" Md="24">
+                                        <DocLigne AR_Ref="@row.AR_Ref" DO_Domaine=0 Page="14"
+                                                  DEIntitule="false" ARRef="false"
+                                                  DLDesign="false" DLTaxe1="false" TypeIntitule="true"
+                                                  DLDateBL="false" />
+                                    </GridCol>
+                                </GridRow>
+                            </RadzenTabsItem>
+                        </Tabs>
+                    </RadzenTabs>
+                </Form>
+
+            </GridCol>
+
+        </GridRow>
+    </div>
+}
+
+
+
+
+@code {
+	    [Parameter] public V_ARTICLE row { get; set; }
+
+    SageAPIContext db = new SageAPIContext();
+    ICollection<P_UNITE> unites;
+    ICollection<SuiviStock> suivistock;
+    ICollection<F_FAMILLE> familles;
+    ICollection<F_DOCLIGNE> achats;
+    ICollection<F_DOCLIGNE> ventes;
+    ICollection<V_TOPMVT> bestofcl;
+    ICollection<V_TOPMVT> bestoffr;
+
+    private class SuiviStock
+    {
+        public int suivi { get; set; }
+        public string intitule { get; set; }
+    }
+
+    private void LoadData()
+    {
+        unites = db.P_UNITE.Where(a => (a.U_Intitule??"") != "").ToList();
+        familles = db.F_FAMILLE.ToList();
+        bestofcl = db.V_TOPMVT.Where(a => a.AR_Ref == row.AR_Ref && a.CT_Type == 0).OrderByDescending(a => a.DL_MontantTTC).Take(10).ToList();
+        bestoffr = db.V_TOPMVT.Where(a => a.AR_Ref == row.AR_Ref && a.CT_Type == 1).OrderByDescending(a => a.DL_MontantTTC).Take(10).ToList();
+    }
+
+    protected override void OnInitialized()
+    {
+        LoadData();
+    }
+}
