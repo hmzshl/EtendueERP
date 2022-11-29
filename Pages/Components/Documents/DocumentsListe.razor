@@ -10,7 +10,7 @@
            CollapsedWidth="64"
            @bind-Collapsed=@collapsed>
         <div class="logo" />
-        <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Inline" DefaultSelectedKeys=@(new[]{"4"}) >
+        <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Inline" DefaultSelectedKeys=@activekey>
             @if(DO_Domaine == 0) {
                 <MenuItem Key="0">
                     <Icon Type="bar-chart" Theme="outline" />
@@ -93,7 +93,7 @@
     <Layout>
         <Content Style=" margin: 10px 10px 0;">
             <div class="site-layout-background" style="padding: 24px; min-height: 360px">
-                <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
+                <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd>
                     <TabPane Key="0"  Tab="LISTE DES DOCUMENTS" Closable="false">
                         <Collapse>
                             <Panel Header="Filtrer" Key="1">
@@ -183,7 +183,7 @@
 
 @code {
     //Parameters
-    
+
     [Parameter] public ICollection<V_DOCENTETE> data { get; set; }
     [Parameter] public bool CTNum { get; set; } = true;
     [Parameter] public bool CTIntitule { get; set; } = true;
@@ -212,7 +212,7 @@
     short? vl_sommeil = 0;
     private ICollection<V_DOCENTETE> items;
     List<V_DOCENTETE> rows = new List<V_DOCENTETE>();
-    string activekey = "0";
+    IEnumerable<string> activekey = new[]{"0"};
 
     protected override async Task OnInitializedAsync()
     {
@@ -223,15 +223,21 @@
         System.Threading.Thread.Sleep(3000);
         if (data == null)
         {
-            //data = db.V_DOCENTETE.Where(a => a.CT_Type == CT_Type).OrderBy(a => a.CT_Intitule).ToList();
+            data = db.V_DOCENTETE.Take(1000).ToList();
         }
         items = data;
+        if(DO_Domaine == 1) {
+            activekey = new[]{"10"};
+        }
+        else if(DO_Domaine == 2) {
+            activekey = new[]{"20"};
+        }
     }
 
     protected async Task RowClicked(V_DOCENTETE args)
     {
         rows.Add(args);
-        activekey = args.cbMarq.ToString();
+        //activekey = args.cbMarq.ToString();
     }
     void OnInput(string value)
     {
