@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EtendueERP.Models.SageAPI
 {
-    public partial class V_ARTICLE
+    public partial class API_V_ARTICLE
     {
         public string AR_Ref { get; set; }
         public string AR_Design { get; set; }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EtendueERP.Models.SageAPI
 {
-    public partial class V_DOCENTETE
+    public partial class API_V_DOCENTETE
     {
         public int cbMarq { get; set; }
         public short? DO_Domaine { get; set; }

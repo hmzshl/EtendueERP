@@ -283,7 +283,7 @@ h4 {
 }
 
 .ant-tabs-top > .ant-tabs-nav, .ant-tabs-bottom > .ant-tabs-nav, .ant-tabs-top > div > .ant-tabs-nav, .ant-tabs-bottom > div > .ant-tabs-nav {
-    margin: 5px;
+    margin: 0px;
 }
 
 .ant-col {
@@ -306,4 +306,10 @@ h4 {
 .site-layout-background {
     height: 100% !important;
     padding: 5px !important;
+}
+body {
+    font-family: sans-serif;
+}
+.header {
+    min-height: 0px !important;
 }

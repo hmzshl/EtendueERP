@@ -303,23 +303,23 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[V_ARTICLE]",
+         "Name": "[dbo].[API_V_ARTICLE]",
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[V_COMPTET]",
+         "Name": "[dbo].[API_V_COMPTET]",
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[V_DOCENTETE]",
+         "Name": "[dbo].[API_V_DOCENTETE]",
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[V_DOCLIGNE]",
+         "Name": "[dbo].[API_V_DOCLIGNE]",
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[V_TOPMVT]",
+         "Name": "[dbo].[API_V_TOPMVT]",
          "ObjectType": 3
       }
    ],

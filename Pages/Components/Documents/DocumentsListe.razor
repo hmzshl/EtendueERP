@@ -4,14 +4,14 @@
 @using Data
 @inject DialogService DialogService
 @using AntDesign
-
 <Layout>
     <Sider Breakpoint="@BreakpointType.Lg"
            CollapsedWidth="64"
            @bind-Collapsed=@collapsed>
         <div class="logo" />
-        <Menu Theme="MenuTheme.Dark" Mode="MenuMode.Inline" DefaultSelectedKeys=@activekey>
-            @if(DO_Domaine == 0) {
+        <Menu Theme="MenuTheme.Light" Mode="MenuMode.Inline" DefaultSelectedKeys=@activekey SelectedKeysChanged="@(args => MenuClicked(args.First<string>()))" Style="height: 100%;">
+            @if (DO_Domaine == 0)
+            {
                 <MenuItem Key="0">
                     <Icon Type="bar-chart" Theme="outline" />
                     <span class="nav-text">Devis</span>
@@ -37,11 +37,12 @@
                     <span class="nav-text">Facture</span>
                 </MenuItem>
                 <MenuItem Key="7">
-                    <Icon Type="control" Theme="outline"/>
+                    <Icon Type="control" Theme="outline" />
                     <span class="nav-text">Facture comptabilisée</span>
                 </MenuItem>
             }
-            else if(DO_Domaine == 1) {
+            else if (DO_Domaine == 1)
+            {
                 <MenuItem Key="10">
                     <Icon Type="disconnect" Theme="outline" />
                     <span class="nav-text">Demande d'achats</span>
@@ -73,7 +74,8 @@
 
 
             }
-            else if(DO_Domaine == 2) {
+            else if (DO_Domaine == 2)
+            {
                 <MenuItem Key="20">
                     <Icon Type="number" Theme="outline" />
                     <span class="nav-text">Mouvements d'entrées</span>
@@ -95,34 +97,37 @@
             <div class="site-layout-background" style="padding: 24px; min-height: 360px">
                 <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd>
                     <TabPane Key="0"  Tab="LISTE DES DOCUMENTS" Closable="false">
-                        <Collapse>
-                            <Panel Header="Filtrer" Key="1">
-                                <GridRow>
-                                    <GridCol Xs="24" Md="3" class="ant-form-item-label">Recherche</GridCol>
-                                    <GridCol Xs="24" Md="7"><Input Size="@AntSizeLDSType.Small" Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
-                                    <GridCol Xs="24" Md="3" class="ant-form-item-label">Etat Solde</GridCol>
-                                    <GridCol Xs="24" Md="4">
-                                                        <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_solde">
-                                            <SelectOptions>
-                                                <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
-                                                <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Soldé" />
-                                                <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="Non soldé" />
-                                            </SelectOptions>
-                                        </Select>
-                                    </GridCol>
-                                    <GridCol Xs="24" Md="3" class="ant-form-item-label">Sommeil</GridCol>
-                                    <GridCol Xs="24" Md="4">
-                                                        <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_sommeil">
-                                            <SelectOptions>
-                                                <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
-                                                <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Actif" />
-                                                <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="En sommeil" />
-                                            </SelectOptions>
-                                        </Select>
-                                    </GridCol>
-                                </GridRow>
-                            </Panel>
-                        </Collapse>
+                        <RadzenAccordion>
+                            <Items>
+                                <RadzenAccordionItem Text="Filtrer" Icon="filter_list_alt">
+                                    <GridRow>
+                                        <GridCol Xs="24" Md="3" class="ant-form-item-label">Recherche</GridCol>
+                                        <GridCol Xs="24" Md="7"><Input Size="@AntSizeLDSType.Small" Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
+                                        <GridCol Xs="24" Md="3" class="ant-form-item-label">Etat Solde</GridCol>
+                                        <GridCol Xs="24" Md="4">
+                                                            <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_solde">
+                                                <SelectOptions>
+                                                    <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
+                                                    <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Soldé" />
+                                                    <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="Non soldé" />
+                                                </SelectOptions>
+                                            </Select>
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="3" class="ant-form-item-label">Sommeil</GridCol>
+                                        <GridCol Xs="24" Md="4">
+                                                            <Select Size="@AntSizeLDSType.Small" OnSelectedItemChanged="UpdateGrid" TItem="short?" TItemValue="short?" @bind-Value="@vl_sommeil">
+                                                <SelectOptions>
+                                                    <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="   Tout" />
+                                                    <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Actif" />
+                                                    <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="En sommeil" />
+                                                </SelectOptions>
+                                            </Select>
+                                        </GridCol>
+                                    </GridRow>
+                                </RadzenAccordionItem>
+                            </Items>
+                            
+                        </RadzenAccordion>
                                 @if (@items == null)
                                 {
                                     <div class="spin-center">
@@ -131,28 +136,28 @@
                                 }
                                 else
                                 {
-                            <Table TItem="V_DOCENTETE" Context="context" DataSource="@items" PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)">
-                                        <PropertyColumn Property="a=>a.DO_Date" Title="Numéro"  Hidden="@(!DODate)" ></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DO_Piece" Title="Ville"  Hidden="@(!DOPiece)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DO_Tiers" Title="Intitule" Width="250px" Hidden="@(!DOTiers)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.CT_Intitule" Title="Adresse" Hidden="@(!CTIntitule)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.CA_Num" Title="Téléphone" Hidden="@(!CANum)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.CA_Intitule" Title="Email" Hidden="@(!CAIntitule)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DL_MontantHT" Title="CA HT" Hidden="@(!DLMontantHT)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DL_MontantTTC" Title="CA TTC"  Hidden="@(!DLMontantTTC)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DL_MontantTVA" Title="Der. Activité"  Hidden="@(!DLMontantTVA)" Format="dd/MM/yyyy" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DE_Intitule" Title="Durée Inactivité" Hidden="@(!DEIntitule)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.CO_Nom" Title="%"  Hidden="@(!CONom)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.RC_Montant" Title="Nbr Articles"  Hidden="@(!RCMontant)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.Reste" Title="Nbr Documents"  Hidden="@(!Reste)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.EtatReglement" Title="Total Réglements" Hidden="@(!EtatReglement)" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                            <Table Loading="_loading" TItem="API_V_DOCENTETE" Context="context" DataSource="@items" PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)">
+                                        <PropertyColumn Property="a=>a.DO_Date" Title="Date" Hidden="@(!DODate)" Format="dd/MM/yyyy" ></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DO_Piece" Title="Pièce" Hidden="@(!DOPiece)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DO_Tiers" Title="Numéro" Hidden="@(!DOTiers)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.CT_Intitule" Title="Intitulé" Hidden="@(!CTIntitule)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.CA_Num" Title="Affaire" Hidden="@(!CANum)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.CA_Intitule" Title="Affaire Intitulé" Hidden="@(!CAIntitule)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DL_MontantHT" Title="Montant HT" Hidden="@(!DLMontantHT)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DL_MontantTTC" Title="Montant TTC"  Hidden="@(!DLMontantTTC)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DL_MontantTVA" Title="Montant TVA" Hidden="@(!DLMontantTVA)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.DE_Intitule" Title="Dépot" Hidden="@(!DEIntitule)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.CO_Nom" Title="Collaborateur"  Hidden="@(!CONom)"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.RC_Montant" Title="Montant Réglé"  Hidden="@(!RCMontant)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.Reste" Title="Montant Du"  Hidden="@(!Reste)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                                        <PropertyColumn Property="a=>a.EtatReglement" Title="Etat" Hidden="@(!EtatReglement)" />
                                     </Table>
 
                                 }
                     </TabPane>
                     @if(rows != null) 
                     {
-                        foreach (V_DOCENTETE row in rows)
+                        foreach (API_V_DOCENTETE row in rows)
                         {
                             <TabPane Key="@row.cbMarq.ToString()" Tab="@row.CT_Intitule" Closable="true">
                                 <DocumentsFiche row="@row" />
@@ -163,7 +168,7 @@
             </div>
         </Content>
     </Layout>
-</Layout>
+</Layout>-->
 <style>
     #components-layout-demo-responsive .logo {
         height: 32px;
@@ -184,7 +189,6 @@
 @code {
     //Parameters
 
-    [Parameter] public ICollection<V_DOCENTETE> data { get; set; }
     [Parameter] public bool CTNum { get; set; } = true;
     [Parameter] public bool CTIntitule { get; set; } = true;
     [Parameter] public bool DODate { get; set; } = true;
@@ -210,34 +214,43 @@
     string vl_text;
     short? vl_solde = 0;
     short? vl_sommeil = 0;
-    private ICollection<V_DOCENTETE> items;
-    List<V_DOCENTETE> rows = new List<V_DOCENTETE>();
-    IEnumerable<string> activekey = new[]{"0"};
+    private ICollection<API_V_DOCENTETE> items;
+    List<API_V_DOCENTETE> rows = new List<API_V_DOCENTETE>();
+    IEnumerable<string> activekey = new[] { "0" };
+    bool _loading;
+
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(LoadData);
+        await Task.Run(() => getData(-1));
     }
-    private void LoadData()
+    public async Task<List<API_V_DOCENTETE>>  getData(int index)
     {
-        System.Threading.Thread.Sleep(3000);
-        if (data == null)
-        {
-            data = db.V_DOCENTETE.Take(1000).ToList();
-        }
-        items = data;
-        if(DO_Domaine == 1) {
-            activekey = new[]{"10"};
-        }
-        else if(DO_Domaine == 2) {
-            activekey = new[]{"20"};
-        }
+        return await Task.FromResult(db.API_V_DOCENTETE.Where(a => a.DO_Type == index).ToList());
     }
 
-    protected async Task RowClicked(V_DOCENTETE args)
+
+    private async Task LoadDataAsync(int index)
+    {
+        _loading = true;
+        StateHasChanged();
+        items = await getData(index);
+        _loading = false;
+        StateHasChanged();
+    }
+
+
+    protected async Task RowClicked(API_V_DOCENTETE args)
     {
         rows.Add(args);
-        //activekey = args.cbMarq.ToString();
+    }
+
+
+
+    protected async Task MenuClicked(string value)
+    {
+        await LoadDataAsync(Int16.Parse(value));
+
     }
     void OnInput(string value)
     {

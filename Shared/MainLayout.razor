@@ -6,81 +6,63 @@
 
 <RadzenLayout style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body';">
     <RadzenHeader>
-        <div class="container-fluid">
-            <div class="row justify-content-start align-items-center">
-                <div class="col-6 d-flex align-items-center ps-0 pl-0">
-                    <RadzenSidebarToggle Click="@SidebarToggleClick"></RadzenSidebarToggle>
-                </div>
-                <div class="col-6 d-flex align-items-center justify-content-end pr-0 pe-0">
-                    <RadzenProfileMenu Visible="@Security.IsAuthenticated()" Click="@ProfileMenuClick">
-                        <ChildContent>
-                            <RadzenProfileMenuItem Path="profile" Icon="settings" Text="Profile" />
-                            <RadzenProfileMenuItem Path="application-users" Icon="person" Text="Users" />
-                            <RadzenProfileMenuItem Path="application-roles" Icon="security" Text="Roles" />
-                            <RadzenProfileMenuItem Text="Logout" Value="Logout" Icon="power_settings_new" />
-                        </ChildContent>
-                        <Template>
-                            @Security.User?.Name
-                        </Template>
-                    </RadzenProfileMenu>
-                </div>
-            </div>
-        </div>
+        <RadzenMenu Click="OnParentClicked">
+            <RadzenMenuItem Text="Gestion commercial" Icon="article">
+                <RadzenMenuItem Text="Tableau de bord" Icon="space_dashboard" />
+                <RadzenMenuItem Text="Structure" Icon="work">
+                    <RadzenMenuItem Text="Fournisseurs" Path="/fournisseurs"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Clients" Path="/clients"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Collaborateurs" Path="/collaborateurs"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Familles" Path="/familles"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Articles" Path="/articles"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Dépots" Path="/depots"></RadzenMenuItem>
+                </RadzenMenuItem>
+                <RadzenMenuItem Text="Achats" Icon="description">
+                    <RadzenMenuItem Text="Documents" Path="/achats"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Réglements"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Etats"></RadzenMenuItem>
+                </RadzenMenuItem>
+                <RadzenMenuItem Text="Ventes" Icon="shopping_bag">
+                    <RadzenMenuItem Text="Documents" Path="/ventes"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Réglements"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Etats"></RadzenMenuItem>
+                </RadzenMenuItem>
+                <RadzenMenuItem Text="Stock" Icon="gavel">
+                    <RadzenMenuItem Text="Entrées"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Sorties"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Stock"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Etats"></RadzenMenuItem>
+                </RadzenMenuItem>
+                <RadzenMenuItem Text="Etats" Icon="pie_chart">
+                    <RadzenMenuItem Text="Articles"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Entrées"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Sorties"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Stock"></RadzenMenuItem>
+                </RadzenMenuItem>
+            </RadzenMenuItem>
+            <RadzenMenuItem Visible="@Security.IsAuthenticated()" Text="@Security.User?.Name" Icon="account_circle">
+                <RadzenMenuItem Path="profile" Icon="settings" Text="Profile" />
+                <RadzenMenuItem Path="application-users" Icon="person" Text="Users" />
+                <RadzenMenuItem Path="application-roles" Icon="security" Text="Roles" />
+                <RadzenMenuItem Text="Logout" Icon="power_settings_new" />
+            </RadzenMenuItem>
+
+
+    </RadzenMenu>
     </RadzenHeader>
-    <RadzenBody Expanded="@sidebarExpanded">
-        <div class="container-fluid pt-2 pt-md-3 pt-lg-4 pt-xl-5 pb-2 pb-lg-5" style="max-width: 1920px !important; padding: 5px !important; height: 100%;">
-            <div class="row">
-                <div class="col">
-                    @Body
-                </div>
-            </div>
-        </div>
+    <RadzenBody Expanded="@sidebarExpanded" Style="padding: 10px;">
+        @Body
     </RadzenBody>
-    <RadzenSidebar Expanded="@sidebarExpanded" style="z-index: 2">
-        <div class="py-3 py-lg-4" style="color: var(--rz-primary-light); padding: var(--rz-panel-menu-item-padding); border-bottom: var(--rz-panel-menu-item-border); display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-            <svg width="48" height="48" viewBox="0 0 64 64">
-                <use href="/images/logo.svg#logo"></use>
-            </svg>
-            <RadzenText Text="Etendue ERP" TextStyle="Radzen.Blazor.TextStyle.Subtitle1" class="mb-0" style="color: var(--rz-primary-light);" />
-        </div>
-        <RadzenPanelMenu>
-            <RadzenPanelMenuItem Text="Gestion commercial" Expanded="true" Icon="" Style="font-size: 120%; font-weight: bold">
-                <RadzenPanelMenuItem Text="Tableau de bord" Icon="space_dashboard" />
-                <RadzenPanelMenuItem Text="Structure" Icon="work">
-                    <RadzenPanelMenuItem Text="Fournisseurs" Path="/fournisseurs"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Clients" Path="/clients"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Collaborateurs" Path="/collaborateurs"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Familles" Path="/familles"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Articles" Path="/articles"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Dépots" Path="/depots"></RadzenPanelMenuItem>
-                </RadzenPanelMenuItem>
-                <RadzenPanelMenuItem Text="Achats" Icon="description">
-                    <RadzenPanelMenuItem Text="Documents" Path="/achats"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Réglements"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Etats"></RadzenPanelMenuItem>
-                </RadzenPanelMenuItem>
-                <RadzenPanelMenuItem Text="Ventes" Icon="shopping_bag">
-                    <RadzenPanelMenuItem Text="Documents" Path="/ventes"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Réglements"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Etats"></RadzenPanelMenuItem>
-                </RadzenPanelMenuItem>
-                <RadzenPanelMenuItem Text="Stock" Icon="gavel">
-                    <RadzenPanelMenuItem Text="Entrées"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Sorties"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Stock"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Etats"></RadzenPanelMenuItem>
-                </RadzenPanelMenuItem>
-                <RadzenPanelMenuItem Text="Etats" Icon="pie_chart">
-                    <RadzenPanelMenuItem Text="Articles"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Entrées"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Sorties"></RadzenPanelMenuItem>
-                    <RadzenPanelMenuItem Text="Stock"></RadzenPanelMenuItem>
-                </RadzenPanelMenuItem>
-            </RadzenPanelMenuItem>
-        </RadzenPanelMenu>
-        <div class="py-3 py-md-4" style="padding: var(--rz-panel-menu-item-padding);">
-            <RadzenText Text="Etendue ERP v1.0.0" TextStyle="Radzen.Blazor.TextStyle.Caption" style="color: var(--rz-text-disabled-color);" TagName="Radzen.Blazor.TagName.P" TextAlign="Radzen.TextAlign.Center" />
-            <RadzenText Text="Copyright Ⓒ 2022" TextStyle="Radzen.Blazor.TextStyle.Caption" class="mb-0" style="color: var(--rz-text-disabled-color);" TagName="Radzen.Blazor.TagName.P" TextAlign="Radzen.TextAlign.Center" />
-        </div>
-    </RadzenSidebar>
 </RadzenLayout>
+
+    @code {
+    void OnParentClicked(MenuItemEventArgs args)
+    {
+        
+    }
+
+    void OnChildClicked(MenuItemEventArgs args)
+    {
+        
+    }
+        }

@@ -67,7 +67,7 @@ else
                                     <GridCol Xs="24" Md="12">
                                         <Card title="Top 10 articles">
                                           <Table Context="best" HidePagination
-                                       TItem="V_TOPMVT"
+                                       TItem="API_V_TOPMVT"
                                        DataSource="@bestof">
                                             <PropertyColumn Property="a=>a.AR_Ref" Sortable="false" Title="Référence" />
                                             <PropertyColumn Property="a=>a.AR_Design" Sortable="false" Title="Désignation" />
@@ -82,7 +82,7 @@ else
                                     <GridCol Xs="24" Md="12">
                                         <Card title="Top 10 articles">
                                             <Table Context="best" HidePagination
-                                       TItem="V_TOPMVT"
+                                       TItem="API_V_TOPMVT"
                                        DataSource="@bestof">
                                             <PropertyColumn Property="a=>a.AR_Ref" Sortable="false" Title="Référence" />
                                             <PropertyColumn Property="a=>a.AR_Design" Sortable="false" Title="Désignation" />
@@ -131,17 +131,17 @@ else
 
 
 @code {
-    [Parameter] public V_COMPTET row { get; set; }
+    [Parameter] public API_V_COMPTET row { get; set; }
     [Parameter] public string type { get; set; }
     //[Parameter] public string CT_Num { get; set; }
     SageAPIContext db = new SageAPIContext();
-    //V_COMPTET row;
-    ICollection<V_TOPMVT> bestof;
+    //API_V_COMPTET row;
+    ICollection<API_V_TOPMVT> bestof;
 
 
     private void LoadData()
     {
-        bestof = db.V_TOPMVT.Where(a => a.CT_Num == row.CT_Num).OrderByDescending(a => a.DL_MontantTTC).Take(10).ToList();
+        bestof = db.API_V_TOPMVT.Where(a => a.CT_Num == row.CT_Num).OrderByDescending(a => a.DL_MontantTTC).Take(10).ToList();
     }
 
     protected override void OnInitialized()

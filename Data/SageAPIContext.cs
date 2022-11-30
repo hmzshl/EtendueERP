@@ -19,6 +19,11 @@ namespace EtendueERP.Data
         {
         }
 
+        public virtual DbSet<API_V_ARTICLE> API_V_ARTICLE { get; set; }
+        public virtual DbSet<API_V_COMPTET> API_V_COMPTET { get; set; }
+        public virtual DbSet<API_V_DOCENTETE> API_V_DOCENTETE { get; set; }
+        public virtual DbSet<API_V_DOCLIGNE> API_V_DOCLIGNE { get; set; }
+        public virtual DbSet<API_V_TOPMVT> API_V_TOPMVT { get; set; }
         public virtual DbSet<F_ABOENTETE> F_ABOENTETE { get; set; }
         public virtual DbSet<F_ARTCLIENT> F_ARTCLIENT { get; set; }
         public virtual DbSet<F_ARTCOMPO> F_ARTCOMPO { get; set; }
@@ -91,17 +96,11 @@ namespace EtendueERP.Data
         public virtual DbSet<P_INTERNE> P_INTERNE { get; set; }
         public virtual DbSet<P_TIERS> P_TIERS { get; set; }
         public virtual DbSet<P_UNITE> P_UNITE { get; set; }
-        public virtual DbSet<V_ARTICLE> V_ARTICLE { get; set; }
-        public virtual DbSet<V_COMPTET> V_COMPTET { get; set; }
-        public virtual DbSet<V_DOCENTETE> V_DOCENTETE { get; set; }
-        public virtual DbSet<V_DOCLIGNE> V_DOCLIGNE { get; set; }
-        public virtual DbSet<V_TOPMVT> V_TOPMVT { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=feedipet.com;Initial Catalog=SageAPI;Persist Security Info=True;User ID=sa;Password=azer12TY");
             }
         }
@@ -109,6 +108,844 @@ namespace EtendueERP.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseCollation("French_CI_AS");
+
+            modelBuilder.Entity<API_V_ARTICLE>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("API_V_ARTICLE");
+
+                entity.Property(e => e.AR_CodeBarre)
+                    .HasMaxLength(19)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_CodeFiscal)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Coef).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_CoefNouv).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_CoutStd).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Design)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_EdiCode)
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Frais01FR_Denomination)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Frais01FR_Rem01REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Frais01FR_Rem02REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Frais01FR_Rem03REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Frais02FR_Denomination)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Frais02FR_Rem01REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Frais02FR_Rem02REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Frais02FR_Rem03REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Frais03FR_Denomination)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Frais03FR_Rem01REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Frais03FR_Rem02REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Frais03FR_Rem03REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Langue1)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Langue2)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_PUNet).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Pays)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Photo)
+                    .HasMaxLength(259)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_PoidsBrut).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_PoidsNet).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_PrixAch).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_PrixAchNouv).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_PrixVen).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_PrixVenNouv).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_QteComp).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_QteOperatoire).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.AR_Raccourci)
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Ref)
+                    .IsRequired()
+                    .HasMaxLength(19)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Stat01)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Stat02)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Stat03)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Stat04)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Stat05)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Substitut)
+                    .HasMaxLength(19)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AS_MontSto).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.AS_QteSto).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.CL_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CL_Num)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_DateBL_Achat).HasColumnType("datetime");
+
+                entity.Property(e => e.DL_DateBL_Vente).HasColumnType("datetime");
+
+                entity.Property(e => e.DL_Dernier_MontantHT_Achat).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_Dernier_MontantHT_Vente).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_Dernier_MontantTTC_Achat).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_Dernier_MontantTTC_Vente).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_Dernier_Qte_Achat).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_Dernier_Qte_Vente).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_MontantHT_Achat).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_MontantHT_Vente).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_MontantTTC_Achat).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_MontantTTC_Vente).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_PU_Achat).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_PU_Vente).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_Qte_Achat).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_Qte_Vente).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.EtatStock)
+                    .IsRequired()
+                    .HasMaxLength(12)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FA_CodeFamille)
+                    .IsRequired()
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FA_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FR_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FR_Num)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RP_CodeDefaut)
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SommeilIntitule)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SuiviStockIntitule)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.U_Intitule)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<API_V_COMPTET>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("API_V_COMPTET");
+
+                entity.Property(e => e.CA_Num)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CA_NumIFRS)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CG_NumPrinc)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Adresse)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Ape)
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Assurance).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Classement)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_CodePostal)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_CodeRegion)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Coface)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Commentaire)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Complement)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Contact)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_EMail)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_EdiCode)
+                    .HasMaxLength(23)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_EdiCodeSage)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Encours).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Identifiant)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_LangueISO2)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Num)
+                    .IsRequired()
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_NumCentrale)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_NumPayeur)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Pays)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Qualite)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Raccourci)
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_RepresentInt)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_RepresentNIF)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Siret)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Site)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique01)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique02)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique03)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique04)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique05)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique06)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique07)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique08)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique09)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Statistique10)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvCA).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_SvCotation)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvEffectif)
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvFormeJuri)
+                    .HasMaxLength(33)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvObjetMaj)
+                    .HasMaxLength(61)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvRegul)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_SvResultat).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Taux01).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Taux02).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Taux03).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Taux04).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.CT_Telecopie)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Telephone)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Ville)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Controle)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
+
+                entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.EtatSolde)
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RG_Montant).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.SoldeCommercial).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.SoldeComptable).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.SommeilIntitule)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Taux).HasColumnType("numeric(38, 6)");
+            });
+
+            modelBuilder.Entity<API_V_DOCENTETE>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("API_V_DOCENTETE");
+
+                entity.Property(e => e.CA_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CA_Num)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CA_NumIFRS)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CG_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CG_Num)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CO_Nom)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_NumCentrale)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_NumPayeur)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DE_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_MontantTVA).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DO_CodeTaxe1)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_CodeTaxe2)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_CodeTaxe3)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_Contact)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_Coord01)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_Coord02)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_Coord03)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_Coord04)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_Cours).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DO_Date).HasColumnType("datetime");
+
+                entity.Property(e => e.DO_DateExpedition).HasColumnType("datetime");
+
+                entity.Property(e => e.DO_DateLivr).HasColumnType("datetime");
+
+                entity.Property(e => e.DO_DateLivrRealisee).HasColumnType("datetime");
+
+                entity.Property(e => e.DO_DebutAbo).HasColumnType("datetime");
+
+                entity.Property(e => e.DO_DebutPeriod).HasColumnType("datetime");
+
+                entity.Property(e => e.DO_Ecart).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DO_FactureFrs)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_FinAbo).HasColumnType("datetime");
+
+                entity.Property(e => e.DO_FinPeriod).HasColumnType("datetime");
+
+                entity.Property(e => e.DO_Heure)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.DO_Motif)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_NoWeb)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_Piece)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_PieceOrig)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_Ref)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_Taxe1).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DO_Taxe2).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DO_Taxe3).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DO_Tiers)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_TotalHT).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DO_TxEscompte).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DO_ValFrais).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DO_ValFranco).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DomaineIntitule)
+                    .IsRequired()
+                    .HasMaxLength(8)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EtatReglement)
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RC_Montant).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.Reste).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.TF_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TypeIntitule)
+                    .IsRequired()
+                    .HasMaxLength(16)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<API_V_DOCLIGNE>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("API_V_DOCLIGNE");
+
+                entity.Property(e => e.AC_RefClient)
+                    .HasMaxLength(19)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AF_RefFourniss)
+                    .HasMaxLength(19)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Ref)
+                    .HasMaxLength(19)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_RefCompose)
+                    .HasMaxLength(19)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CA_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CA_Num)
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CO_Nom)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Num)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DE_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_CMUP).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_CodeTaxe1)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_CodeTaxe2)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_CodeTaxe3)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_DateAvancement).HasColumnType("datetime");
+
+                entity.Property(e => e.DL_DateBC).HasColumnType("datetime");
+
+                entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
+
+                entity.Property(e => e.DL_DateDE).HasColumnType("datetime");
+
+                entity.Property(e => e.DL_DatePL).HasColumnType("datetime");
+
+                entity.Property(e => e.DL_Design)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_Frais).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_NoColis)
+                    .HasMaxLength(19)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_Operation)
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_PUBC).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_PUDevise).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_PUTTC).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_PieceBC)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_PieceBL)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_PieceDE)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_PiecePL)
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_PoidsBrut).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_PoidsNet).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_PrixRU).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_PrixUnitaire).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_Qte).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_QteBC).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_QteBL).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_QteDE).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_QtePL).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_Remise01REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_Remise02REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_Remise03REM_Valeur).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_Taxe1).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_Taxe2).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DL_Taxe3).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.DO_Date).HasColumnType("datetime");
+
+                entity.Property(e => e.DO_DateLivr).HasColumnType("datetime");
+
+                entity.Property(e => e.DO_Piece)
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DO_Ref)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DomaineIntitule)
+                    .IsRequired()
+                    .HasMaxLength(8)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EU_Enumere)
+                    .HasMaxLength(21)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EU_Qte).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.MontantTVA).HasColumnType("numeric(25, 6)");
+
+                entity.Property(e => e.PF_Num)
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PUNet).HasColumnType("numeric(38, 14)");
+
+                entity.Property(e => e.PUTTC).HasColumnType("numeric(38, 14)");
+
+                entity.Property(e => e.QteMvt).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.RP_Code)
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Remise).HasColumnType("numeric(24, 6)");
+
+                entity.Property(e => e.TypeIntitule)
+                    .IsRequired()
+                    .HasMaxLength(16)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<API_V_TOPMVT>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("API_V_TOPMVT");
+
+                entity.Property(e => e.AR_Design)
+                    .HasMaxLength(69)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AR_Ref)
+                    .HasMaxLength(19)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CT_Num)
+                    .HasMaxLength(17)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.DL_Qte).HasColumnType("numeric(38, 6)");
+            });
 
             modelBuilder.Entity<F_ABOENTETE>(entity =>
             {
@@ -4126,844 +4963,6 @@ namespace EtendueERP.Data
                 entity.Property(e => e.U_Intitule)
                     .HasMaxLength(21)
                     .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<V_ARTICLE>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("V_ARTICLE");
-
-                entity.Property(e => e.AR_CodeBarre)
-                    .HasMaxLength(19)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_CodeFiscal)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Coef).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_CoefNouv).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_CoutStd).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Design)
-                    .HasMaxLength(69)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_EdiCode)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Frais01FR_Denomination)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Frais01FR_Rem01REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Frais01FR_Rem02REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Frais01FR_Rem03REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Frais02FR_Denomination)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Frais02FR_Rem01REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Frais02FR_Rem02REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Frais02FR_Rem03REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Frais03FR_Denomination)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Frais03FR_Rem01REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Frais03FR_Rem02REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Frais03FR_Rem03REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Langue1)
-                    .HasMaxLength(69)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Langue2)
-                    .HasMaxLength(69)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_PUNet).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Pays)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Photo)
-                    .HasMaxLength(259)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_PoidsBrut).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_PoidsNet).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_PrixAch).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_PrixAchNouv).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_PrixVen).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_PrixVenNouv).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_QteComp).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_QteOperatoire).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.AR_Raccourci)
-                    .HasMaxLength(7)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Ref)
-                    .IsRequired()
-                    .HasMaxLength(19)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Stat01)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Stat02)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Stat03)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Stat04)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Stat05)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Substitut)
-                    .HasMaxLength(19)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AS_MontSto).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.AS_QteSto).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.CL_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CL_Num)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_DateBL_Achat).HasColumnType("datetime");
-
-                entity.Property(e => e.DL_DateBL_Vente).HasColumnType("datetime");
-
-                entity.Property(e => e.DL_Dernier_MontantHT_Achat).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_Dernier_MontantHT_Vente).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_Dernier_MontantTTC_Achat).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_Dernier_MontantTTC_Vente).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_Dernier_Qte_Achat).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_Dernier_Qte_Vente).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_MontantHT_Achat).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_MontantHT_Vente).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_MontantTTC_Achat).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_MontantTTC_Vente).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_PU_Achat).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_PU_Vente).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_Qte_Achat).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_Qte_Vente).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.EtatStock)
-                    .IsRequired()
-                    .HasMaxLength(12)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FA_CodeFamille)
-                    .IsRequired()
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FA_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FR_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FR_Num)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RP_CodeDefaut)
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.SommeilIntitule)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.SuiviStockIntitule)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.U_Intitule)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<V_COMPTET>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("V_COMPTET");
-
-                entity.Property(e => e.CA_Num)
-                    .HasMaxLength(13)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CA_NumIFRS)
-                    .HasMaxLength(13)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CG_NumPrinc)
-                    .HasMaxLength(13)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Adresse)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Ape)
-                    .HasMaxLength(7)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Assurance).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.CT_Classement)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_CodePostal)
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_CodeRegion)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Coface)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Commentaire)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Complement)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Contact)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_EMail)
-                    .HasMaxLength(69)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_EdiCode)
-                    .HasMaxLength(23)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_EdiCodeSage)
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Encours).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.CT_Identifiant)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_LangueISO2)
-                    .HasMaxLength(3)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Num)
-                    .IsRequired()
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_NumCentrale)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_NumPayeur)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Pays)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Qualite)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Raccourci)
-                    .HasMaxLength(7)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_RepresentInt)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_RepresentNIF)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Siret)
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Site)
-                    .HasMaxLength(69)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Statistique01)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Statistique02)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Statistique03)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Statistique04)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Statistique05)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Statistique06)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Statistique07)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Statistique08)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Statistique09)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Statistique10)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_SvCA).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.CT_SvCotation)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_SvEffectif)
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_SvFormeJuri)
-                    .HasMaxLength(33)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_SvObjetMaj)
-                    .HasMaxLength(61)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_SvRegul)
-                    .HasMaxLength(3)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_SvResultat).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.CT_Taux01).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.CT_Taux02).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.CT_Taux03).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.CT_Taux04).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.CT_Telecopie)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Telephone)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Ville)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Controle)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
-
-                entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.EtatSolde)
-                    .IsRequired()
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RG_Montant).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.SoldeCommercial).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.SoldeComptable).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.SommeilIntitule)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Taux).HasColumnType("numeric(38, 6)");
-            });
-
-            modelBuilder.Entity<V_DOCENTETE>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("V_DOCENTETE");
-
-                entity.Property(e => e.CA_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CA_Num)
-                    .HasMaxLength(13)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CA_NumIFRS)
-                    .HasMaxLength(13)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CG_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CG_Num)
-                    .HasMaxLength(13)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CO_Nom)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_NumCentrale)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_NumPayeur)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DE_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_MontantTVA).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DO_CodeTaxe1)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_CodeTaxe2)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_CodeTaxe3)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_Contact)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_Coord01)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_Coord02)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_Coord03)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_Coord04)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_Cours).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DO_Date).HasColumnType("datetime");
-
-                entity.Property(e => e.DO_DateExpedition).HasColumnType("datetime");
-
-                entity.Property(e => e.DO_DateLivr).HasColumnType("datetime");
-
-                entity.Property(e => e.DO_DateLivrRealisee).HasColumnType("datetime");
-
-                entity.Property(e => e.DO_DebutAbo).HasColumnType("datetime");
-
-                entity.Property(e => e.DO_DebutPeriod).HasColumnType("datetime");
-
-                entity.Property(e => e.DO_Ecart).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DO_FactureFrs)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_FinAbo).HasColumnType("datetime");
-
-                entity.Property(e => e.DO_FinPeriod).HasColumnType("datetime");
-
-                entity.Property(e => e.DO_Heure)
-                    .HasMaxLength(9)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
-                entity.Property(e => e.DO_Motif)
-                    .HasMaxLength(69)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_NoWeb)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_Piece)
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_PieceOrig)
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_Ref)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_Taxe1).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DO_Taxe2).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DO_Taxe3).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DO_Tiers)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_TotalHT).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DO_TxEscompte).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DO_ValFrais).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DO_ValFranco).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DomaineIntitule)
-                    .IsRequired()
-                    .HasMaxLength(8)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EtatReglement)
-                    .IsRequired()
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RC_Montant).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.Reste).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.TF_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TypeIntitule)
-                    .IsRequired()
-                    .HasMaxLength(16)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<V_DOCLIGNE>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("V_DOCLIGNE");
-
-                entity.Property(e => e.AC_RefClient)
-                    .HasMaxLength(19)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AF_RefFourniss)
-                    .HasMaxLength(19)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Ref)
-                    .HasMaxLength(19)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_RefCompose)
-                    .HasMaxLength(19)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CA_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CA_Num)
-                    .HasMaxLength(13)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CO_Nom)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Num)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DE_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_CMUP).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_CodeTaxe1)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_CodeTaxe2)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_CodeTaxe3)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_DateAvancement).HasColumnType("datetime");
-
-                entity.Property(e => e.DL_DateBC).HasColumnType("datetime");
-
-                entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
-
-                entity.Property(e => e.DL_DateDE).HasColumnType("datetime");
-
-                entity.Property(e => e.DL_DatePL).HasColumnType("datetime");
-
-                entity.Property(e => e.DL_Design)
-                    .HasMaxLength(69)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_Frais).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_NoColis)
-                    .HasMaxLength(19)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_Operation)
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_PUBC).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_PUDevise).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_PUTTC).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_PieceBC)
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_PieceBL)
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_PieceDE)
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_PiecePL)
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_PoidsBrut).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_PoidsNet).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_PrixRU).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_PrixUnitaire).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_Qte).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_QteBC).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_QteBL).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_QteDE).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_QtePL).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_Remise01REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_Remise02REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_Remise03REM_Valeur).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_Taxe1).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_Taxe2).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DL_Taxe3).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.DO_Date).HasColumnType("datetime");
-
-                entity.Property(e => e.DO_DateLivr).HasColumnType("datetime");
-
-                entity.Property(e => e.DO_Piece)
-                    .IsRequired()
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DO_Ref)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DomaineIntitule)
-                    .IsRequired()
-                    .HasMaxLength(8)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EU_Enumere)
-                    .HasMaxLength(21)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EU_Qte).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.MontantTVA).HasColumnType("numeric(25, 6)");
-
-                entity.Property(e => e.PF_Num)
-                    .IsRequired()
-                    .HasMaxLength(9)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PUNet).HasColumnType("numeric(38, 14)");
-
-                entity.Property(e => e.PUTTC).HasColumnType("numeric(38, 14)");
-
-                entity.Property(e => e.QteMvt).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.RP_Code)
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Remise).HasColumnType("numeric(24, 6)");
-
-                entity.Property(e => e.TypeIntitule)
-                    .IsRequired()
-                    .HasMaxLength(16)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<V_TOPMVT>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("V_TOPMVT");
-
-                entity.Property(e => e.AR_Design)
-                    .HasMaxLength(69)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AR_Ref)
-                    .HasMaxLength(19)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Intitule)
-                    .HasMaxLength(35)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CT_Num)
-                    .HasMaxLength(17)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
-
-                entity.Property(e => e.DL_Qte).HasColumnType("numeric(38, 6)");
             });
 
             OnModelCreatingPartial(modelBuilder);

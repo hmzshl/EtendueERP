@@ -117,7 +117,7 @@ else {
                                             <GridCol Xs="24" Md="12">
                                                 <Card title="Top 10 fournisseurs">
                                                   <Table Context="best" HidePagination
-                                       TItem="V_TOPMVT"
+                                       TItem="API_V_TOPMVT"
                                        DataSource="@bestoffr">
                                                 <PropertyColumn Property="a=>a.CT_Num" Sortable="false" Title="Numéro" />
                                                 <PropertyColumn Property="a=>a.CT_Intitule" Sortable="false" Title="Intitulé" />
@@ -132,7 +132,7 @@ else {
                                             <GridCol Xs="24" Md="12">
                                                 <Card title="Top 10 clients">
                                                     <Table Context="best" HidePagination
-                                                   TItem="V_TOPMVT"
+                                                   TItem="API_V_TOPMVT"
                                                    DataSource="@bestofcl">
                                                         <PropertyColumn Property="a=>a.CT_Num" Sortable="false" Title="Numéro" />
                                                         <PropertyColumn Property="a=>a.CT_Intitule" Sortable="false" Title="Intitulé" />
@@ -198,7 +198,7 @@ else {
 
 
 @code {
-	    [Parameter] public V_ARTICLE row { get; set; }
+	    [Parameter] public API_V_ARTICLE row { get; set; }
 
     SageAPIContext db = new SageAPIContext();
     ICollection<P_UNITE> unites;
@@ -206,8 +206,8 @@ else {
     ICollection<F_FAMILLE> familles;
     ICollection<F_DOCLIGNE> achats;
     ICollection<F_DOCLIGNE> ventes;
-    ICollection<V_TOPMVT> bestofcl;
-    ICollection<V_TOPMVT> bestoffr;
+    ICollection<API_V_TOPMVT> bestofcl;
+    ICollection<API_V_TOPMVT> bestoffr;
 
     private class SuiviStock
     {
@@ -219,8 +219,8 @@ else {
     {
         unites = db.P_UNITE.Where(a => (a.U_Intitule??"") != "").ToList();
         familles = db.F_FAMILLE.ToList();
-        bestofcl = db.V_TOPMVT.Where(a => a.AR_Ref == row.AR_Ref && a.CT_Type == 0).OrderByDescending(a => a.DL_MontantTTC).Take(10).ToList();
-        bestoffr = db.V_TOPMVT.Where(a => a.AR_Ref == row.AR_Ref && a.CT_Type == 1).OrderByDescending(a => a.DL_MontantTTC).Take(10).ToList();
+        bestofcl = db.API_V_TOPMVT.Where(a => a.AR_Ref == row.AR_Ref && a.CT_Type == 0).OrderByDescending(a => a.DL_MontantTTC).Take(10).ToList();
+        bestoffr = db.API_V_TOPMVT.Where(a => a.AR_Ref == row.AR_Ref && a.CT_Type == 1).OrderByDescending(a => a.DL_MontantTTC).Take(10).ToList();
     }
 
     protected override void OnInitialized()

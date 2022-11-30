@@ -7,8 +7,9 @@
 <RadzenContent Container="main">
     <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
         <TabPane Key="0"  Tab="LISTE DES ARTICLES" Closable="false">
-            <Collapse>
-                <Panel Header="Filtrer" Key="1">
+            <RadzenAccordion>
+                <Items>
+                    <RadzenAccordionItem Text="Filtrer" Icon="filter_list_alt">
                      <GridRow>
                         <GridCol Xs="24" Md="2" Sm="4" class="ant-form-item-label">Recherche</GridCol>
                         <GridCol Xs="24" Md="7" Sm="14"><Input Size="@AntSizeLDSType.Small" Style="Width: 100%;" @oninput="@(args => OnInput(args.Value.ToString()))" @bind-Value="@vl_text" /></GridCol>
@@ -31,8 +32,10 @@
                             </Select>
                          </GridCol>
                       </GridRow>
-                </Panel>
-            </Collapse>
+                </RadzenAccordionItem>
+                </Items>
+                
+            </RadzenAccordion>
             @if (@items == null)
             {
              <div class="spin-center">
@@ -41,7 +44,7 @@
             }
             else
             {
-                <Table PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)" DataSource="@items" TItem="V_ARTICLE" Context="context">
+                <Table PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)" DataSource="@items" TItem="API_V_ARTICLE" Context="context">
                         <PropertyColumn Property="a=>a.AR_Ref" Title="Reference" Width="100px" Hidden="@(!ARRef)"></PropertyColumn>
                         <PropertyColumn Property="a=>a.AR_Design" Title="Designation" Width="250px" Hidden="@(!ARDesign)"></PropertyColumn>
                         <PropertyColumn Property="a=>a.U_Intitule" Title="Unite" Width="100px" Hidden="@(!UIntitule)"></PropertyColumn>
@@ -89,7 +92,7 @@
         </TabPane>
                 @if(rows != null) 
         {
-            foreach (V_ARTICLE row in rows) {
+            foreach (API_V_ARTICLE row in rows) {
                 <TabPane Key="@row.cbMarq.ToString()" Tab="@row.AR_Design" Closable="true">
                     <ArticlesFiche row="@row" />
                 </TabPane>
@@ -104,7 +107,7 @@
 {
 
     //Parameters
-    [Parameter] public ICollection<V_ARTICLE> data { get; set; }
+    [Parameter] public ICollection<API_V_ARTICLE> data { get; set; }
     [Parameter] public bool ARRef { get; set; } = true;
     [Parameter] public bool ARDesign { get; set; } = true;
     [Parameter] public bool FAIntitule { get; set; } = true;
@@ -145,11 +148,11 @@
     string vl_text;
     short? vl_unite = 0;
     short? vl_stock = 0;
-    private ICollection<V_ARTICLE> items;
+    private ICollection<API_V_ARTICLE> items;
     string vl_famille = "";
     ICollection<P_UNITE> unites;
     ICollection<F_FAMILLE> familles;
-    List<V_ARTICLE> rows = new List<V_ARTICLE>();
+    List<API_V_ARTICLE> rows = new List<API_V_ARTICLE>();
     string activekey = "0";
 
 
@@ -162,7 +165,7 @@
         System.Threading.Thread.Sleep(3000);
         if (data == null)
         {
-            data = db.V_ARTICLE.OrderBy(a => a.AR_Design).ToList();
+            data = db.API_V_ARTICLE.OrderBy(a => a.AR_Design).ToList();
         }
         items = data;
 
@@ -181,7 +184,7 @@
         familles = familles.OrderBy(a => a.FA_Intitule).ToList();
     }
 
-    protected async Task RowClicked(V_ARTICLE args)
+    protected async Task RowClicked(API_V_ARTICLE args)
     {
         rows.Add(args);
         activekey = args.cbMarq.ToString();

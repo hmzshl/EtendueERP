@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EtendueERP.Models.SageAPI
 {
-    public partial class V_COMPTET
+    public partial class API_V_COMPTET
     {
         public int cbMarq { get; set; }
         public string CT_Num { get; set; }
