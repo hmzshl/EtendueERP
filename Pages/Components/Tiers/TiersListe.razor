@@ -8,7 +8,7 @@
 
 <RadzenContent Container="main">
     <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
-        <TabPane Key="0"  Tab="LISTE DES CLIENTS" Closable="false">
+        <TabPane Key="0" Tab="@Title" Closable="false">
             <RadzenAccordion>
                 <Items>
                     <RadzenAccordionItem Text="Filtrer" Icon="filter_list_alt">
@@ -39,15 +39,7 @@
                     </RadzenAccordionItem>
                 </Items>
             </RadzenAccordion>
-                    @if (@items == null)
-                    {
-                        <div class="spin-center">
-                            <Spin size="large" />
-                        </div>
-                    }
-                    else
-                    {
-                <Table TItem="API_V_COMPTET" Context="context" DataSource="@items" PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)">
+            <Table Loading="_loading" TItem="API_V_COMPTET" Context="context" DataSource="@items" PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)">
                             <PropertyColumn Property="a=>a.CT_Num" Title="Numéro"  Hidden="@(!CTNum)" ></PropertyColumn>
                             <PropertyColumn Property="a=>a.CT_Ville" Title="Ville"  Hidden="@(!CTVille)"></PropertyColumn>
                             <PropertyColumn Property="a=>a.CT_Intitule" Title="Intitule" Width="250px" Hidden="@(!CTIntitule)"></PropertyColumn>
@@ -66,8 +58,6 @@
                             <PropertyColumn Property="a=>a.SoldeComptable" Title="Solde Comptable"  Hidden="@(!SoldeComptable)" Format="### ### ##0.00" Align="ColumnAlign.Right">
                             </PropertyColumn>
                         </Table>
-
-                    }
         </TabPane>
         @if(rows != null) 
         {
@@ -104,6 +94,7 @@
     [Parameter] public bool DLDateBL { get; set; } = true;
     [Parameter] public bool DelaiSommeil { get; set; } = true;
     [Parameter] public int CT_Type { get; set; } = 0;
+    [Parameter] public string Title { get; set; } = "";
     //End Parameters
 
 
@@ -115,22 +106,24 @@
     private ICollection<API_V_COMPTET> items;
     List<API_V_COMPTET> rows = new List<API_V_COMPTET>();
     string activekey = "0";
+    bool _loading = true;
 
 
     protected override async Task OnInitializedAsync()
     {
         await Task.Run(LoadData);
     }
-    private void LoadData()
+    private async Task LoadData()
     {
-        //System.Threading.Thread.Sleep(3000);
+        _loading = true;
+        await Task.Delay(1);
         if (data == null)
         {
-
-            data = db.API_V_COMPTET.Where(a => a.CT_Type == CT_Type).OrderBy(a => a.CT_Intitule).Take(40).ToList();
-            //data = db.API_V_COMPTET.Where(a => a.CT_Type == CT_Type).OrderBy(a => a.CT_Intitule).ToList();
+            data = db.API_V_COMPTET.Where(a => a.CT_Type == CT_Type).OrderBy(a => a.CT_Intitule).ToList();
         }
         items = data;
+        _loading = false;
+        await Task.Delay(1);
     }
 
     protected async Task RowClicked(API_V_COMPTET args)

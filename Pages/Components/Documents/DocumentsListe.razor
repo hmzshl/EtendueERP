@@ -96,7 +96,7 @@
         <Content Style=" margin: 10px 10px 0;">
             <div class="site-layout-background" style="padding: 24px; min-height: 360px">
                 <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd>
-                    <TabPane Key="0"  Tab="LISTE DES DOCUMENTS" Closable="false">
+                    <TabPane Key="0"  Tab="@Title" Closable="false">
                         <RadzenAccordion>
                             <Items>
                                 <RadzenAccordionItem Text="Filtrer" Icon="filter_list_alt">
@@ -128,32 +128,22 @@
                             </Items>
                             
                         </RadzenAccordion>
-                                @if (@items == null)
-                                {
-                                    <div class="spin-center">
-                                        <Spin size="large" />
-                                    </div>
-                                }
-                                else
-                                {
-                            <Table Loading="_loading" TItem="API_V_DOCENTETE" Context="context" DataSource="@items" PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)">
-                                        <PropertyColumn Property="a=>a.DO_Date" Title="Date" Hidden="@(!DODate)" Format="dd/MM/yyyy" ></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DO_Piece" Title="Pièce" Hidden="@(!DOPiece)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DO_Tiers" Title="Numéro" Hidden="@(!DOTiers)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.CT_Intitule" Title="Intitulé" Hidden="@(!CTIntitule)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.CA_Num" Title="Affaire" Hidden="@(!CANum)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.CA_Intitule" Title="Affaire Intitulé" Hidden="@(!CAIntitule)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DL_MontantHT" Title="Montant HT" Hidden="@(!DLMontantHT)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DL_MontantTTC" Title="Montant TTC"  Hidden="@(!DLMontantTTC)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DL_MontantTVA" Title="Montant TVA" Hidden="@(!DLMontantTVA)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.DE_Intitule" Title="Dépot" Hidden="@(!DEIntitule)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.CO_Nom" Title="Collaborateur"  Hidden="@(!CONom)"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.RC_Montant" Title="Montant Réglé"  Hidden="@(!RCMontant)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.Reste" Title="Montant Du"  Hidden="@(!Reste)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                                        <PropertyColumn Property="a=>a.EtatReglement" Title="Etat" Hidden="@(!EtatReglement)" />
-                                    </Table>
-
-                                }
+                        <Table Loading="_loading" TItem="API_V_DOCENTETE" Context="context" DataSource="@items" PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)">
+                            <PropertyColumn Property="a=>a.DO_Date" Title="Date" Hidden="@(!DODate)" Format="dd/MM/yyyy"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.DO_Piece" Title="Pièce" Hidden="@(!DOPiece)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.DO_Tiers" Title="Numéro" Hidden="@(!DOTiers)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.CT_Intitule" Title="Intitulé" Hidden="@(!CTIntitule)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.CA_Num" Title="Affaire" Hidden="@(!CANum)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.CA_Intitule" Title="Affaire Intitulé" Hidden="@(!CAIntitule)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.DL_MontantHT" Title="Montant HT" Hidden="@(!DLMontantHT)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.DL_MontantTTC" Title="Montant TTC" Hidden="@(!DLMontantTTC)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.DL_MontantTVA" Title="Montant TVA" Hidden="@(!DLMontantTVA)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.DE_Intitule" Title="Dépot" Hidden="@(!DEIntitule)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.CO_Nom" Title="Collaborateur" Hidden="@(!CONom)"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.RC_Montant" Title="Montant Réglé" Hidden="@(!RCMontant)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.Reste" Title="Montant Du" Hidden="@(!Reste)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
+                            <PropertyColumn Property="a=>a.EtatReglement" Title="Etat" Hidden="@(!EtatReglement)" />
+                        </Table>
                     </TabPane>
                     @if(rows != null) 
                     {
@@ -206,6 +196,8 @@
     [Parameter] public bool CANum { get; set; } = true;
     [Parameter] public int CT_Type { get; set; } = 0;
     [Parameter] public int DO_Domaine { get; set; } = 0;
+    [Parameter] public IEnumerable<string> activekey { get; set; } = new[] { "0" };
+    [Parameter] public string Title { get; set; } = "";
     //End Parameters
 
 
@@ -216,27 +208,32 @@
     short? vl_sommeil = 0;
     private ICollection<API_V_DOCENTETE> items;
     List<API_V_DOCENTETE> rows = new List<API_V_DOCENTETE>();
-    IEnumerable<string> activekey = new[] { "0" };
-    bool _loading;
+    
+    bool _loading = true;
 
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(() => getData(-1));
-    }
-    public async Task<List<API_V_DOCENTETE>>  getData(int index)
-    {
-        return await Task.FromResult(db.API_V_DOCENTETE.Where(a => a.DO_Type == index).ToList());
+        if(DO_Domaine == 0) {
+
+            await Task.Run(() => LoadDataAsync(0));
+        }
+        else if(DO_Domaine == 1) {
+            await Task.Run(() => LoadDataAsync(10));
+        }
+        else if(DO_Domaine == 2) {
+            await Task.Run(() => LoadDataAsync(20));
+        }
     }
 
 
     private async Task LoadDataAsync(int index)
     {
         _loading = true;
-        StateHasChanged();
-        items = await getData(index);
+        await Task.Delay(1);
+        items = await Task.FromResult(db.API_V_DOCENTETE.Where(a => a.DO_Type == index).ToList());
         _loading = false;
-        StateHasChanged();
+        await Task.Delay(1);
     }
 
 
@@ -244,8 +241,6 @@
     {
         rows.Add(args);
     }
-
-
 
     protected async Task MenuClicked(string value)
     {

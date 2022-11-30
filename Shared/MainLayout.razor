@@ -40,7 +40,7 @@
                     <RadzenMenuItem Text="Stock"></RadzenMenuItem>
                 </RadzenMenuItem>
             </RadzenMenuItem>
-            <RadzenMenuItem Visible="@Security.IsAuthenticated()" Text="@Security.User?.Name" Icon="account_circle">
+            <RadzenMenuItem Visible="@Security.IsAuthenticated()" Text="@Security.User?.Name" Icon="account_circle" class="profile-item">
                 <RadzenMenuItem Path="profile" Icon="settings" Text="Profile" />
                 <RadzenMenuItem Path="application-users" Icon="person" Text="Users" />
                 <RadzenMenuItem Path="application-roles" Icon="security" Text="Roles" />
