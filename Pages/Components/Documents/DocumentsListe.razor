@@ -3,94 +3,41 @@
 @using Microsoft.EntityFrameworkCore
 @using Data
 @inject DialogService DialogService
+@inject ContextMenuService ContextMenuService
 @using AntDesign
+
+                        
 <Layout>
     <Sider Breakpoint="@BreakpointType.Lg"
            CollapsedWidth="64"
            @bind-Collapsed=@collapsed>
         <div class="logo" />
-        <Menu Theme="MenuTheme.Light" Mode="MenuMode.Inline" DefaultSelectedKeys=@activekey SelectedKeysChanged="@(args => MenuClicked(args.First<string>()))" Style="height: 100%;">
-            @if (DO_Domaine == 0)
-            {
-                <MenuItem Key="0">
-                    <Icon Type="bar-chart" Theme="outline" />
-                    <span class="nav-text">Devis</span>
-                </MenuItem>
-                <MenuItem Key="1">
-                    <Icon Type="rise" Theme="outline" />
-                    <span class="nav-text">Bon de commande</span>
-                </MenuItem>
-                <MenuItem Key="2">
-                    <Icon Type="fund" Theme="outline" />
-                    <span class="nav-text">Préparation de livraison</span>
-                </MenuItem>
-                <MenuItem Key="3">
-                    <Icon Type="branches" Theme="outline" />
-                    <span class="nav-text">Bon de livraiosn</span>
-                </MenuItem>
-                <MenuItem Key="4">
-                    <Icon Type="cloud-download" Theme="outline" />
-                    <span class="nav-text">Bon de retour</span>
-                </MenuItem>
-                <MenuItem Key="6">
-                    <Icon Type="crown" Theme="outline" />
-                    <span class="nav-text">Facture</span>
-                </MenuItem>
-                <MenuItem Key="7">
-                    <Icon Type="control" Theme="outline" />
-                    <span class="nav-text">Facture comptabilisée</span>
-                </MenuItem>
+        <RadzenPanelMenu Style="width:100%; height: 100%;" Click="@(args => MenuClicked(args.Value.ToString()))">
+            @if (DO_Domaine == 0) {
+             <RadzenPanelMenuItem Text="Devis" Icon="account_circle" Value="0"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Bon de commande" Icon="line_weight" Value="1"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Préparation de livraison" Icon="attach_file" Value="2"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Bon de livraison" Icon="perm_media" Value="3"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Bon de retour" Icon="announcement" Value="4"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Facture" Icon="announcement" Value="6"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Facture comptabilisée" Icon="announcement" Value="7"></RadzenPanelMenuItem>
             }
-            else if (DO_Domaine == 1)
-            {
-                <MenuItem Key="10">
-                    <Icon Type="disconnect" Theme="outline" />
-                    <span class="nav-text">Demande d'achats</span>
-                </MenuItem>
-                <MenuItem Key="11">
-                    <Icon Type="export" Theme="outline" />
-                    <span class="nav-text">Préparation d'achat</span>
-                </MenuItem>
-                <MenuItem Key="12">
-                    <Icon Type="file-protect" Theme="outline" />
-                    <span class="nav-text">Bon de commande</span>
-                </MenuItem>
-                <MenuItem Key="13">
-                    <Icon Type="fork" Theme="outline" />
-                    <span class="nav-text">Bon de livraiosn</span>
-                </MenuItem>
-                <MenuItem Key="14">
-                    <Icon Type="gold" Theme="outline" />
-                    <span class="nav-text">Bon de retour</span>
-                </MenuItem>
-                <MenuItem Key="16">
-                    <Icon Type="insert-row-left" Theme="outline" />
-                    <span class="nav-text">Facture</span>
-                </MenuItem>
-                <MenuItem Key="17">
-                    <Icon Type="mac-command" Theme="outline" />
-                    <span class="nav-text">Facture comptabilisée</span>
-                </MenuItem>
-
-
+            else if(DO_Domaine == 1) {
+            <RadzenPanelMenuItem Text="Demande d'achat" Icon="account_circle" Value="10"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Préparation de commande" Icon="line_weight" Value="11"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Bon de commande" Icon="attach_file" Value="12"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Bon de livraison" Icon="perm_media" Value="13"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Bon de retour" Icon="announcement" Value="14"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Facture" Icon="announcement" Value="16"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Facture comptabilisée" Icon="announcement" Value="17"></RadzenPanelMenuItem>
             }
-            else if (DO_Domaine == 2)
-            {
-                <MenuItem Key="20">
-                    <Icon Type="number" Theme="outline" />
-                    <span class="nav-text">Mouvements d'entrées</span>
-                </MenuItem>
-                <MenuItem Key="21">
-                    <Icon Type="one-to-one" Theme="outline" />
-                    <span class="nav-text">Mouvements de sorties</span>
-                </MenuItem>
-                <MenuItem Key="23">
-                    <Icon Type="pull-request" Theme="outline" />
-                    <span class="nav-text">Mouvements de transferts</span>
-                </MenuItem>
+            else if(DO_Domaine == 2){
+            <RadzenPanelMenuItem Text="Mouvement d'entrée" Icon="account_circle" Value="20"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Mouvement de sortie" Icon="line_weight" Value="21"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Mouvement de transfert" Icon="attach_file" Value="23"></RadzenPanelMenuItem>
             }
 
-        </Menu>
+        </RadzenPanelMenu>     
     </Sider>
     <Layout>
         <Content Style=" margin: 10px 10px 0;">
@@ -128,28 +75,32 @@
                             </Items>
                             
                         </RadzenAccordion>
-                        <Table Loading="_loading" TItem="API_V_DOCENTETE" Context="context" DataSource="@items" PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)">
-                            <PropertyColumn Property="a=>a.DO_Date" Title="Date" Hidden="@(!DODate)" Format="dd/MM/yyyy"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.DO_Piece" Title="Pièce" Hidden="@(!DOPiece)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.DO_Tiers" Title="Numéro" Hidden="@(!DOTiers)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.CT_Intitule" Title="Intitulé" Hidden="@(!CTIntitule)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.CA_Num" Title="Affaire" Hidden="@(!CANum)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.CA_Intitule" Title="Affaire Intitulé" Hidden="@(!CAIntitule)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.DL_MontantHT" Title="Montant HT" Hidden="@(!DLMontantHT)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.DL_MontantTTC" Title="Montant TTC" Hidden="@(!DLMontantTTC)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.DL_MontantTVA" Title="Montant TVA" Hidden="@(!DLMontantTVA)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.DE_Intitule" Title="Dépot" Hidden="@(!DEIntitule)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.CO_Nom" Title="Collaborateur" Hidden="@(!CONom)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.RC_Montant" Title="Montant Réglé" Hidden="@(!RCMontant)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.Reste" Title="Montant Du" Hidden="@(!Reste)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.EtatReglement" Title="Etat" Hidden="@(!EtatReglement)" />
-                        </Table>
+                        <RadzenDataGrid CellContextMenu="@OnCellContextMenu" AllowRowSelectOnRowClick="true" RowDoubleClick="@(args => RowDoubleClicked(args.Data))" @bind-Value=@selecteditems Style="min-height: 200px;" AllowPaging="true" IsLoading="_loading" TItem="API_V_DOCENTETE" Data="@items" PageSize="40" Responsive>
+                                <Columns>
+                                <RadzenDataGridColumn TItem="API_V_DOCENTETE" Property="DO_Date" Title="Date" Visible="@(DODate)" FormatString="{0:d}"></RadzenDataGridColumn>
+                                    <RadzenDataGridColumn  TItem="API_V_DOCENTETE" Property="DO_Piece" Title="Pièce" Visible="@(DOPiece)"></RadzenDataGridColumn>
+                                    <RadzenDataGridColumn  TItem="API_V_DOCENTETE" Property="DO_Tiers" Title="Numéro" Visible="@(DOTiers)"></RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="API_V_DOCENTETE" Property="CT_Intitule" Title="Intitulé" Width="200px" Visible="@(CTIntitule)"></RadzenDataGridColumn>
+                                    <RadzenDataGridColumn  TItem="API_V_DOCENTETE" Property="CA_Num" Title="Affaire" Visible="@(CANum)"></RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="API_V_DOCENTETE" Property="CA_Intitule" Title="Affaire Intitulé" Width="190px" Visible="@(CAIntitule)"></RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="API_V_DOCENTETE" Property="DL_MontantHT" Title="Montant HT" Visible="@(DLMontantHT)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="API_V_DOCENTETE" Property="DL_MontantTTC" Title="Montant TTC" Visible="@(DLMontantTTC)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="API_V_DOCENTETE" Property="DL_MontantTVA" Title="Montant TVA" Visible="@(DLMontantTVA)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                                    <RadzenDataGridColumn  TItem="API_V_DOCENTETE" Property="DE_Intitule" Title="Dépot" Visible="@(DEIntitule)"></RadzenDataGridColumn>
+                                    <RadzenDataGridColumn  TItem="API_V_DOCENTETE" Property="CO_Nom" Title="Collaborateur" Visible="@(CONom)"></RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="API_V_DOCENTETE" Property="RC_Montant" Title="Montant Réglé" Visible="@(RCMontant)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                                <RadzenDataGridColumn TItem="API_V_DOCENTETE" Property="Reste" Title="Montant Du" Visible="@(Reste)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                                    <RadzenDataGridColumn  TItem="API_V_DOCENTETE" Property="EtatReglement" Title="Etat" Visible="@(EtatReglement)" />
+                                </Columns>
+
+                       </RadzenDataGrid>
+                        
                     </TabPane>
                     @if(rows != null) 
                     {
                         foreach (API_V_DOCENTETE row in rows)
                         {
-                            <TabPane Key="@row.cbMarq.ToString()" Tab="@row.CT_Intitule" Closable="true">
+                            <TabPane Key="@row.cbMarq.ToString()" Tab="@(row.DO_Piece + " - " + row.CT_Intitule)" Closable="true">
                                 <DocumentsFiche row="@row" />
                             </TabPane>
                         }
@@ -158,7 +109,7 @@
             </div>
         </Content>
     </Layout>
-</Layout>-->
+</Layout>
 <style>
     #components-layout-demo-responsive .logo {
         height: 32px;
@@ -190,7 +141,7 @@
     [Parameter] public bool EtatReglement { get; set; } = true;
     [Parameter] public bool Reste { get; set; } = true;
     [Parameter] public bool RCMontant { get; set; } = true;
-    [Parameter] public bool CAIntitule { get; set; } = true;
+    [Parameter] public bool CAIntitule { get; set; } = false;
     [Parameter] public bool CONom { get; set; } = true;
     [Parameter] public bool DOTiers { get; set; } = true;
     [Parameter] public bool CANum { get; set; } = true;
@@ -208,6 +159,7 @@
     short? vl_sommeil = 0;
     private ICollection<API_V_DOCENTETE> items;
     List<API_V_DOCENTETE> rows = new List<API_V_DOCENTETE>();
+    IList<API_V_DOCENTETE> selecteditems;
     
     bool _loading = true;
 
@@ -237,7 +189,11 @@
     }
 
 
-    protected async Task RowClicked(API_V_DOCENTETE args)
+    protected async Task RowSelected(API_V_DOCENTETE args)
+    {
+        rows.Add(args);
+    }
+    protected async Task RowDoubleClicked(API_V_DOCENTETE args)
     {
         rows.Add(args);
     }
@@ -274,6 +230,30 @@
             items = items.Where(a => a.CT_Sommeil == 1).ToList();
         }*/
     }
+    void OnMenuItemClick(MenuItemEventArgs args)
+    {
+        if (args.Value.Equals(3) && !args.Value.Equals(4))
+        {
+            
+        }
+    }
+
+    void OnCellContextMenu(DataGridCellMouseEventArgs<API_V_DOCENTETE> args) 
+    { 
+    selecteditems = new List<API_V_DOCENTETE>() { args.Data };
+    ContextMenuService.Open(args, ds =>
+    @<RadzenMenu Click="OnMenuItemClick">
+        <RadzenMenuItem Text="Ajouter" Value="1" Icon="note_add"></RadzenMenuItem>
+        <RadzenMenuItem Text="Modifier" Value="2" Icon="edit"></RadzenMenuItem>
+        <RadzenMenuItem Text="Dupliquer" Value="3" Icon="content_copy"></RadzenMenuItem>
+        <RadzenMenuItem Text="Supprimer" Value="4" Icon="delete"></RadzenMenuItem>
+        <RadzenMenuItem Text="Dé-comptabiser" Value="5" Icon="branding_watermark"></RadzenMenuItem>
+        <RadzenMenuItem Text="Dé-valider" Value="6" Icon="key"></RadzenMenuItem>
+        <RadzenMenuItem Text="Fusionner" Value="7" Icon="merge_type"></RadzenMenuItem>
+        <RadzenMenuItem Text="Transformer" Value="8" Icon="published_with_changes"></RadzenMenuItem>
+    </RadzenMenu>
+    );}
+
 }
 
 

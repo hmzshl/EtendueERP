@@ -39,25 +39,27 @@
                     </RadzenAccordionItem>
                 </Items>
             </RadzenAccordion>
-            <Table Loading="_loading" TItem="API_V_COMPTET" Context="context" DataSource="@items" PageSize="40" Responsive OnRowClick="args=>RowClicked(args.Data)">
-                            <PropertyColumn Property="a=>a.CT_Num" Title="Numéro"  Hidden="@(!CTNum)" ></PropertyColumn>
-                            <PropertyColumn Property="a=>a.CT_Ville" Title="Ville"  Hidden="@(!CTVille)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.CT_Intitule" Title="Intitule" Width="250px" Hidden="@(!CTIntitule)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.CT_Adresse" Title="Adresse" Hidden="@(!CTAdresse)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.CT_Telephone" Title="Téléphone"  Hidden="@(!CTTelephone)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.CT_EMail" Title="Email" Hidden="@(!CTEMail)"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.DL_MontantHT" Title="CA HT"  Hidden="@(!DLMontantHT)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.DL_MontantTTC" Title="CA TTC"  Hidden="@(!DLMontantTTC)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.DL_DateBL" Title="Der. Activité"  Hidden="@(!DLDateBL)" Format="dd/MM/yyyy" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.DelaiSommeil" Title="Durée Inactivité"  Hidden="@(!DelaiSommeil)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.Taux" Title="%"  Hidden="@(!Taux)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.NbrArticles" Title="Nbr Articles"  Hidden="@(!NbrArticles)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.NbrDocuments" Title="Nbr Documents"  Hidden="@(!NbrDocuments)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.RG_Montant" Title="Total Réglements"  Hidden="@(!RGMontant)" Format="### ### ##0.00" Align="ColumnAlign.Right" />
-                            <PropertyColumn Property="a=>a.SoldeCommercial" Title="Solde Commercial"  Hidden="@(!SoldeCommercial)" Format="### ### ##0.00" Align="ColumnAlign.Right"></PropertyColumn>
-                            <PropertyColumn Property="a=>a.SoldeComptable" Title="Solde Comptable"  Hidden="@(!SoldeComptable)" Format="### ### ##0.00" Align="ColumnAlign.Right">
-                            </PropertyColumn>
-                        </Table>
+            <RadzenDataGrid @bind-Value=@selecteditems RowDoubleClick="@(args => RowDoubleClicked(args.Data))" Style="min-height: 200px" IsLoading="_loading" AllowPaging="true" TItem="API_V_COMPTET" Context="context" Data="@items" PageSize="40" Responsive>
+                <Columns>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="CT_Num" Title="Numéro"  Visible="@(CTNum)" ></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="CT_Ville" Title="Ville"  Visible="@(CTVille)"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="CT_Intitule" Title="Intitule" Width="250px" Visible="@(CTIntitule)"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="API_V_COMPTET" Property="CT_Adresse" Title="Adresse" Width="250px" Visible="@(CTAdresse)"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="CT_Telephone" Title="Téléphone"  Visible="@(CTTelephone)"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="CT_EMail" Title="Email" Visible="@(CTEMail)"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="DL_MontantHT" Title="CA HT"  Visible="@(DLMontantHT)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="DL_MontantTTC" Title="CA TTC"  Visible="@(DLMontantTTC)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="DL_DateBL" Title="Der. Activité" Visible="@(DLDateBL)" FormatString="{0:d}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="DelaiSommeil" Title="Durée Inactivité"  Visible="@(DelaiSommeil)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="Taux" Title="%"  Visible="@(Taux)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="NbrArticles" Title="Nbr Articles"  Visible="@(NbrArticles)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="NbrDocuments" Title="Nbr Documents"  Visible="@(NbrDocuments)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="RG_Montant" Title="Total Réglements"  Visible="@(RGMontant)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right" />
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="SoldeCommercial" Title="Solde Commercial"  Visible="@(SoldeCommercial)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="API_V_COMPTET" Property="SoldeComptable" Title="Solde Comptable"  Visible="@(SoldeComptable)" FormatString="{0:N2}" TextAlign="Radzen.TextAlign.Right"></RadzenDataGridColumn>
+                </Columns>
+
+            </RadzenDataGrid>
         </TabPane>
         @if(rows != null) 
         {
@@ -107,6 +109,7 @@
     List<API_V_COMPTET> rows = new List<API_V_COMPTET>();
     string activekey = "0";
     bool _loading = true;
+    IList<API_V_COMPTET> selecteditems;
 
 
     protected override async Task OnInitializedAsync()
@@ -126,7 +129,7 @@
         await Task.Delay(1);
     }
 
-    protected async Task RowClicked(API_V_COMPTET args)
+    protected async Task RowDoubleClicked(API_V_COMPTET args)
     {
         rows.Add(args);
         activekey = args.cbMarq.ToString();

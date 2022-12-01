@@ -341,3 +341,11 @@ body {
         transform: rotate(360deg)
     }
 }
+
+.rz-menu:not(.rz-profile-menu) .rz-navigation-menu {
+    border-radius: 0px;
+}
+.rz-panel-menu .rz-navigation-item-link {
+    padding: 5px !important;
+    font-size: 95% !important;
+}

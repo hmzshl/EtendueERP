@@ -7,6 +7,9 @@
 <RadzenLayout style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body';">
     <RadzenHeader>
         <RadzenMenu Click="OnParentClicked">
+            <RadzenMenuItem Text="Paramétres" Icon="settings">
+
+            </RadzenMenuItem>
             <RadzenMenuItem Text="Gestion commercial" Icon="article">
                 <RadzenMenuItem Text="Tableau de bord" Icon="space_dashboard" />
                 <RadzenMenuItem Text="Structure" Icon="work">
@@ -39,6 +42,12 @@
                     <RadzenMenuItem Text="Sorties"></RadzenMenuItem>
                     <RadzenMenuItem Text="Stock"></RadzenMenuItem>
                 </RadzenMenuItem>
+            </RadzenMenuItem>
+            <RadzenMenuItem Text="Comptabilité" Icon="account_balance">
+
+            </RadzenMenuItem>
+            <RadzenMenuItem Text="Outils" Icon="handyman">
+
             </RadzenMenuItem>
             <RadzenMenuItem Visible="@Security.IsAuthenticated()" Text="@Security.User?.Name" Icon="account_circle" class="profile-item">
                 <RadzenMenuItem Path="profile" Icon="settings" Text="Profile" />
