@@ -8,7 +8,6 @@
     <RadzenHeader>
         <RadzenMenu Click="OnParentClicked">
             <RadzenMenuItem Text="Paramétres" Icon="settings">
-
             </RadzenMenuItem>
             <RadzenMenuItem Text="Gestion commercial" Icon="article">
                 <RadzenMenuItem Text="Tableau de bord" Icon="space_dashboard" />
@@ -23,18 +22,15 @@
                 <RadzenMenuItem Text="Achats" Icon="description">
                     <RadzenMenuItem Text="Documents" Path="/achats"></RadzenMenuItem>
                     <RadzenMenuItem Text="Réglements"></RadzenMenuItem>
-                    <RadzenMenuItem Text="Etats"></RadzenMenuItem>
                 </RadzenMenuItem>
                 <RadzenMenuItem Text="Ventes" Icon="shopping_bag">
                     <RadzenMenuItem Text="Documents" Path="/ventes"></RadzenMenuItem>
                     <RadzenMenuItem Text="Réglements"></RadzenMenuItem>
-                    <RadzenMenuItem Text="Etats"></RadzenMenuItem>
                 </RadzenMenuItem>
                 <RadzenMenuItem Text="Stock" Icon="gavel">
                     <RadzenMenuItem Text="Entrées"></RadzenMenuItem>
                     <RadzenMenuItem Text="Sorties"></RadzenMenuItem>
                     <RadzenMenuItem Text="Stock"></RadzenMenuItem>
-                    <RadzenMenuItem Text="Etats"></RadzenMenuItem>
                 </RadzenMenuItem>
                 <RadzenMenuItem Text="Etats" Icon="pie_chart">
                     <RadzenMenuItem Text="Articles"></RadzenMenuItem>
@@ -44,10 +40,23 @@
                 </RadzenMenuItem>
             </RadzenMenuItem>
             <RadzenMenuItem Text="Comptabilité" Icon="account_balance">
+                <RadzenMenuItem Text="Structure" Icon="work">
+                    <RadzenMenuItem Text="Plan comptable"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Journaux"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Codes taxes"></RadzenMenuItem>
+                    <RadzenMenuItem Text="Plan tiers"></RadzenMenuItem>
+                </RadzenMenuItem>
+
+            </RadzenMenuItem>
+            <RadzenMenuItem Text="Gestion de caisse" Icon="shopping_basket">
+
+            </RadzenMenuItem>
+            <RadzenMenuItem Text="Déclaration TVA" Icon="payments">
 
             </RadzenMenuItem>
             <RadzenMenuItem Text="Outils" Icon="handyman">
-
+                <RadzenMenuItem Text="Traçabilité" Icon="manage_search" />
+                <RadzenMenuItem Text="Utilisateurs connectés" Icon="people" />
             </RadzenMenuItem>
             <RadzenMenuItem Visible="@Security.IsAuthenticated()" Text="@Security.User?.Name" Icon="account_circle" class="profile-item">
                 <RadzenMenuItem Path="profile" Icon="settings" Text="Profile" />

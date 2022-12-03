@@ -5,6 +5,7 @@
 @using AntDesign
 @using Microsoft.AspNetCore.WebUtilities
 @inject NavigationManager UriHelper
+@inject SageAPIContext db
 
 <RadzenContent Container="main">
     <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
@@ -101,7 +102,6 @@
 
 
 
-    SageAPIContext db = new SageAPIContext();
     string vl_text;
     short? vl_solde = 0;
     short? vl_sommeil = 0;

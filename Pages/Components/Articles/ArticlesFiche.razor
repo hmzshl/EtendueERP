@@ -6,6 +6,7 @@
 @using EtendueERP.Pages.Components.Documents
 @using EtendueERP.Pages.Components.Articles
 @using AntDesign
+@inject SageAPIContext db
 
 @if (@row == null)
 {
@@ -200,7 +201,6 @@ else {
 @code {
 	    [Parameter] public API_V_ARTICLE row { get; set; }
 
-    SageAPIContext db = new SageAPIContext();
     ICollection<P_UNITE> unites;
     ICollection<SuiviStock> suivistock;
     ICollection<F_FAMILLE> familles;

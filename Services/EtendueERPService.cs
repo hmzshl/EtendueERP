@@ -32,7 +32,7 @@ namespace EtendueERP
             this.context = context;
             this.navigationManager = navigationManager;
         }
-
+        public SageAPIContext SageAPIContext { get; set; }
         public void Reset() => Context.ChangeTracker.Entries().Where(e => e.Entity != null).ToList().ForEach(e => e.State = EntityState.Detached);
 
 

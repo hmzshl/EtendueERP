@@ -1,13 +1,157 @@
-﻿@using EtendueERP.Models.SageAPI
+@using EtendueERP.Models.SageAPI
 @using Microsoft.EntityFrameworkCore
 @using Data
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @using EtendueERP.Pages.Components.Documents
-@using EtendueERP.Pages.Components.Articles
+@using EtendueERP.Pages.Components.Tiers
 @using AntDesign
+@inject SageAPIContext db
+
+@if (_loading == true)
+{
+    <div class="spin-center" style="height: 100%; width: 100%;">
+        <Spin size="large" />
+    </div>
+}
+else
+{
+    <div>
+        <GridRow>
+            <GridCol Xs="24" Md="24">
+                <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6">
+                    <RadzenTabs>
+                        <Tabs>
+                            <RadzenTabsItem Text="Informations">
+                                <GridRow>
+                                    <GridCol Xs="24" Md="6">
+                                        <Card>
+                                            <FormItem Label="Date" LabelColSpan="8">
+                                                <DatePicker TValue="DateTime?" @bind-Value="@row.DO_Date" />
+                                            </FormItem>
+                                            <FormItem Label="Numero" LabelColSpan="8">
+                                                <Input @bind-Value="@row.DO_Piece" />
+                                            </FormItem>
+                                            <FormItem Label="Date livraison" LabelColSpan="8">
+                                                <DatePicker TValue="DateTime?" @bind-Value="@row.DO_DateLivr" />
+                                            </FormItem>
+                                        </Card>
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="12">
+                                        <Card>
+                                            <FormItem Label="Tiers" LabelColSpan="4">
+                                                <Select DataSource="@tiers" TItem="F_COMPTET" TItemValue="string" ValueName="@nameof(F_COMPTET.CT_Num)" LabelName="@nameof(F_COMPTET.CT_Intitule)" @bind-Value="@row.DO_Tiers" />
+                                            </FormItem>
+                                            <FormItem Label="Entete 1" LabelColSpan="4">
+                                                <Input @bind-Value="@row.DO_Coord01" />
+                                            </FormItem>
+                                            <FormItem Label="Entete 2" LabelColSpan="4">
+                                                <Input @bind-Value="@row.DO_Coord02" />
+                                            </FormItem>
+                                        </Card>
+                                    </GridCol>
+
+                                    <GridCol Xs="24" Md="6">
+                                        <Card>
+                                            <FormItem Label="Reference" LabelColSpan="8">
+                                                <Input @bind-Value="@row.DO_Ref" />
+                                            </FormItem>
+                                            <FormItem Label="Statut" LabelColSpan="8">
+                                                        <Select TItem="short?" TItemValue="short?" @bind-Value="@row.DO_Statut">
+                                                            <SelectOptions>
+                                                                <SelectOption TItem="short?" TItemValue="short?" Value="0" Label="Saisi" />
+                                                                <SelectOption TItem="short?" TItemValue="short?" Value="1" Label="Confirme" />
+                                                                <SelectOption TItem="short?" TItemValue="short?" Value="2" Label="Envoye" />
+                                                            </SelectOptions>
+                                                        </Select>
+                                            </FormItem>
+                                            <FormItem Label="Affaire" LabelColSpan="8">
+                                                <Select DataSource="@affaires" TItem="F_COMPTEA" TItemValue="string" ValueName="@nameof(F_COMPTEA.CA_Num)" LabelName="@nameof(F_COMPTEA.CA_Intitule)" @bind-Value="@row.CA_Num" />
+                                            </FormItem>
+                                        </Card>
+                                    </GridCol>
+                                    <Divider />
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Montant HT" Value="@((row.DL_MontantHT).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600 ;" Suffix="DH" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Montant TVA" Value="@((row.DL_MontantHT).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Suffix="DH" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Montant TTC" Value="@((row.DL_MontantHT).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Cout" Value="@((row.DL_MontantHT).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Marge" Value="@((row.DL_MontantHT).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Reglements" Value="@((row.DL_MontantHT).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Reste" Value="@((row.DL_MontantHT).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic Class="ant-card" Title="Etat" Value="@((row.DL_MontantHT).ToString("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Precision="0" />
+                                    </GridCol>
+                                    <Divider />
+                                    <GridCol Xs="24" Md="24">
+                                        <Card title="Top 10 articles">
+                                            <Table Context="best" HidePagination TItem="API_V_DOCLIGNE" DataSource="@lignes">
+                                                <PropertyColumn Property="a=>a.AR_Ref" Sortable="false" Title="Référence" />
+                                                <PropertyColumn Property="a=>a.DL_Design" Sortable="false" Title="Désignation" />
+                                                <PropertyColumn Property="a=>a.EU_Enumere" Sortable="false" Title="Unité" />
+                                                <PropertyColumn Property="a=>a.DL_CodeTaxe1" Sortable="false" Title="Taxe" />
+                                                <PropertyColumn Property="a=>a.DL_Qte" Sortable="false" Title="Qté" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                                <PropertyColumn Property="a=>a.DL_PrixUnitaire" Sortable="false" Title="PU" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                                <PropertyColumn Property="a=>a.Remise" Sortable="false" Title="Remise" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                                <PropertyColumn Property="a=>a.PUNet" Sortable="false" Title="PU Net" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                                <PropertyColumn Property="a=>a.DL_MontantHT" Sortable="false" Title="Montant HT" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                                <PropertyColumn Property="a=>a.MontantTVA" Sortable="false" Title="Montant TVA" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                                <PropertyColumn Property="a=>a.DL_MontantTTC" Sortable="false" Title="Montant TTC" Format="### ### ##0.00" Align="ColumnAlign.Right" />
+                                            </Table>
+                                        </Card>
+
+                                    </GridCol>
+                                </GridRow>
+                            </RadzenTabsItem>
+                            <RadzenTabsItem Text="Pied">
+
+                            </RadzenTabsItem>
+                        </Tabs>
+
+                    </RadzenTabs>
+                </Form>
+
+            </GridCol>
+
+        </GridRow>
+    </div>
+}
+
 
 
 @code {
-	[Parameter] public API_V_DOCENTETE row { get; set; }
+    [Parameter] public API_V_DOCENTETE row { get; set; }
+    ICollection<F_COMPTET> tiers { get; set; }
+    ICollection<F_COMPTEA> affaires { get; set; }
+    ICollection<API_V_DOCLIGNE> lignes;
+    bool _loading = true;
+
+    private async Task LoadData()
+    {
+        tiers = db.F_COMPTET.Where(a=> a.CT_Num == row.DO_Tiers).ToList();
+        affaires = db.F_COMPTEA.Where(a => a.CA_Num == row.CA_Num).ToList();
+        lignes = db.API_V_DOCLIGNE.Where(a => a.DO_Type == row.DO_Type && a.DO_Piece == row.DO_Piece).OrderByDescending(a => a.DL_Ligne).ToList();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        await Task.Delay(1);
+        await LoadData();
+        _loading = false;
+        await Task.Delay(1);
+    }
 }

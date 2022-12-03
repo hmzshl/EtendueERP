@@ -280,6 +280,8 @@ h4 {
 .ant-card {
     margin: 0px;
     padding: 0px;
+    background: -webkit-linear-gradient(to left, #fcfcfc, #f2f3f5); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #fcfcfc, #f2f3f5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .ant-tabs-top > .ant-tabs-nav, .ant-tabs-bottom > .ant-tabs-nav, .ant-tabs-top > div > .ant-tabs-nav, .ant-tabs-bottom > div > .ant-tabs-nav {
@@ -349,3 +351,16 @@ body {
     padding: 5px !important;
     font-size: 95% !important;
 }
+.rz-tabview-panel {
+    padding: 5px;
+}
+.rz-tabview-top > .rz-tabview-nav li {
+    border-radius: 0px;
+}
+.ant-form-item-label > label, 
+.ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector, 
+.ant-form-item-control-input {
+    height: 24px !important;
+    min-height: 24px !important;
+}
+

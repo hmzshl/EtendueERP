@@ -4,6 +4,7 @@
 @using Data
 @inject DialogService DialogService
 @inject ContextMenuService ContextMenuService
+@inject SageAPIContext db
 @using AntDesign
 
                         
@@ -12,29 +13,29 @@
            CollapsedWidth="64"
            @bind-Collapsed=@collapsed>
         <div class="logo" />
-        <RadzenPanelMenu Style="width:100%; height: 100%;" Click="@(args => MenuClicked(args.Value.ToString()))">
+        <RadzenPanelMenu Style="height: 100%;" Click="@(args => MenuClicked(args.Value.ToString()))">
             @if (DO_Domaine == 0) {
-             <RadzenPanelMenuItem Text="Devis" Icon="account_circle" Value="0"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Bon de commande" Icon="line_weight" Value="1"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Préparation de livraison" Icon="attach_file" Value="2"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Bon de livraison" Icon="perm_media" Value="3"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Bon de retour" Icon="announcement" Value="4"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Facture" Icon="announcement" Value="6"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Facture comptabilisée" Icon="announcement" Value="7"></RadzenPanelMenuItem>
+             <RadzenPanelMenuItem Text="Devis" Icon="account_circle" Value="0" Selected="IsSelected(0)"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Bon de commande" Icon="line_weight" Value="1" Selected="IsSelected(1)"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Préparation de livraison" Icon="attach_file" Value="2" Selected="IsSelected(2)"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Bon de livraison" Icon="perm_media" Value="3" Selected="IsSelected(3)"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Bon de retour" Icon="announcement" Value="4" Selected="IsSelected(4)"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Facture" Icon="announcement" Value="6" Selected="IsSelected(6)"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Facture comptabilisée" Icon="announcement" Value="7" Selected="IsSelected(7)"></RadzenPanelMenuItem>
             }
             else if(DO_Domaine == 1) {
-            <RadzenPanelMenuItem Text="Demande d'achat" Icon="account_circle" Value="10"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Préparation de commande" Icon="line_weight" Value="11"></RadzenPanelMenuItem>
-                <RadzenPanelMenuItem Text="Bon de commande" Icon="attach_file" Value="12"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Bon de livraison" Icon="perm_media" Value="13"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Bon de retour" Icon="announcement" Value="14"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Facture" Icon="announcement" Value="16"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Facture comptabilisée" Icon="announcement" Value="17"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Demande d'achat" Icon="account_circle" Value="10" Selected="IsSelected(10)"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Préparation de commande" Icon="line_weight" Value="11" Selected="IsSelected(11)"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Bon de commande" Icon="attach_file" Value="12" Selected="IsSelected(12)"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Bon de livraison" Icon="perm_media" Value="13" Selected="IsSelected(13)"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Bon de retour" Icon="announcement" Value="14" Selected="IsSelected(14)"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Facture" Icon="announcement" Value="16" Selected="IsSelected(16)"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Facture comptabilisée" Icon="announcement" Value="17" Selected="IsSelected(17)"></RadzenPanelMenuItem>
             }
             else if(DO_Domaine == 2){
-            <RadzenPanelMenuItem Text="Mouvement d'entrée" Icon="account_circle" Value="20"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Mouvement de sortie" Icon="line_weight" Value="21"></RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Mouvement de transfert" Icon="attach_file" Value="23"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Mouvement d'entrée" Icon="account_circle" Value="20" Selected="IsSelected(20)"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Mouvement de sortie" Icon="line_weight" Value="21" Selected="IsSelected(21)"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Mouvement de transfert" Icon="attach_file" Value="23" Selected="IsSelected(23)"></RadzenPanelMenuItem>
             }
 
         </RadzenPanelMenu>     
@@ -42,7 +43,7 @@
     <Layout>
         <Content Style=" margin: 10px 10px 0;">
             <div class="site-layout-background" style="padding: 24px; min-height: 360px">
-                <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd>
+                <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
                     <TabPane Key="0"  Tab="@Title" Closable="false">
                         <RadzenAccordion>
                             <Items>
@@ -101,7 +102,7 @@
                         foreach (API_V_DOCENTETE row in rows)
                         {
                             <TabPane Key="@row.cbMarq.ToString()" Tab="@(row.DO_Piece + " - " + row.CT_Intitule)" Closable="true">
-                                <DocumentsFiche row="@row" />
+                                <DocumentsFiche row="@row"/>
                             </TabPane>
                         }
                     }
@@ -147,55 +148,61 @@
     [Parameter] public bool CANum { get; set; } = true;
     [Parameter] public int CT_Type { get; set; } = 0;
     [Parameter] public int DO_Domaine { get; set; } = 0;
-    [Parameter] public IEnumerable<string> activekey { get; set; } = new[] { "0" };
     [Parameter] public string Title { get; set; } = "";
     //End Parameters
 
 
     bool collapsed;
-    SageAPIContext db = new SageAPIContext();
     string vl_text;
     short? vl_solde = 0;
     short? vl_sommeil = 0;
     private ICollection<API_V_DOCENTETE> items;
     List<API_V_DOCENTETE> rows = new List<API_V_DOCENTETE>();
     IList<API_V_DOCENTETE> selecteditems;
-    
+    int selectedvalue = 0;
     bool _loading = true;
+    [Parameter] public ICollection<F_COMPTET> tiers { get; set; }
+    [Parameter] public ICollection<F_COMPTEA> affaires { get; set; }
+    string activekey = "0";
 
 
     protected override async Task OnInitializedAsync()
     {
         if(DO_Domaine == 0) {
-
-            await Task.Run(() => LoadDataAsync(0));
+            selectedvalue = 0;      
         }
         else if(DO_Domaine == 1) {
-            await Task.Run(() => LoadDataAsync(10));
+            selectedvalue = 10;
         }
-        else if(DO_Domaine == 2) {
-            await Task.Run(() => LoadDataAsync(20));
+        else if(DO_Domaine == 20) {
+            selectedvalue = 0; 
+        }
+        await Task.Run(() => LoadDataAsync(selectedvalue));
+    }
+    private bool IsSelected(int value) {
+        if(value == selectedvalue) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
-
 
     private async Task LoadDataAsync(int index)
     {
         _loading = true;
         await Task.Delay(1);
+        selectedvalue = index;
+        activekey = "0";
         items = await Task.FromResult(db.API_V_DOCENTETE.Where(a => a.DO_Type == index).ToList());
         _loading = false;
         await Task.Delay(1);
     }
 
-
-    protected async Task RowSelected(API_V_DOCENTETE args)
-    {
-        rows.Add(args);
-    }
     protected async Task RowDoubleClicked(API_V_DOCENTETE args)
     {
         rows.Add(args);
+        activekey = args.cbMarq.ToString();
     }
 
     protected async Task MenuClicked(string value)

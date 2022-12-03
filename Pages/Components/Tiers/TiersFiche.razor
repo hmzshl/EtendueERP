@@ -8,6 +8,7 @@
 @using EtendueERP.Pages.Components.Documents
 @using EtendueERP.Pages.Components.Tiers
 @using AntDesign
+@inject SageAPIContext db
 @if (@row == null)
 {
      <div class="spin-center">
@@ -134,7 +135,6 @@ else
     [Parameter] public API_V_COMPTET row { get; set; }
     [Parameter] public string type { get; set; }
     //[Parameter] public string CT_Num { get; set; }
-    SageAPIContext db = new SageAPIContext();
     //API_V_COMPTET row;
     ICollection<API_V_TOPMVT> bestof;
 

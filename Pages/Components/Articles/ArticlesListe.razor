@@ -3,6 +3,7 @@
 @using Data
 @inject DialogService DialogService
 @using AntDesign
+@inject SageAPIContext db
 
 <RadzenContent Container="main">
     <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
@@ -137,7 +138,6 @@
 
 
 
-    SageAPIContext db = new SageAPIContext();
     string vl_text;
     short? vl_unite = 0;
     short? vl_stock = 0;
