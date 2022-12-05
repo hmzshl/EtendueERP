@@ -1,4 +1,10 @@
 @inherits LayoutComponentBase
+@using Data.EtendueDB
+@using Models.EtendueDB
+@using AntDesign
+@inject EtendueDBContext db
+
+
 <RadzenDialog />
 <RadzenNotification />
 <RadzenTooltip />
@@ -58,7 +64,10 @@
                 <RadzenMenuItem Text="Traçabilité" Icon="manage_search" />
                 <RadzenMenuItem Text="Utilisateurs connectés" Icon="people" />
             </RadzenMenuItem>
-            <RadzenMenuItem Visible="@Security.IsAuthenticated()" Text="@Security.User?.Name" Icon="account_circle" class="profile-item">
+            <FormItem Label="Suivi de stock">
+                <Select DataSource="@societes" TItem="T_Societe" TItemValue="short?" ValueName="@nameof(T_Societe.id)" LabelName="@nameof(T_Societe.Intitule)" class="profile-item rz-navigation-item" />
+            </FormItem>
+            <RadzenMenuItem Visible="@Security.IsAuthenticated()" Text="@Security.User?.Name" Icon="account_circle">
                 <RadzenMenuItem Path="profile" Icon="settings" Text="Profile" />
                 <RadzenMenuItem Path="application-users" Icon="person" Text="Users" />
                 <RadzenMenuItem Path="application-roles" Icon="security" Text="Roles" />
@@ -73,14 +82,24 @@
     </RadzenBody>
 </RadzenLayout>
 
-    @code {
-    void OnParentClicked(MenuItemEventArgs args)
-    {
-        
-    }
+@code {
 
-    void OnChildClicked(MenuItemEventArgs args)
-    {
-        
-    }
+        ICollection<T_Societe> societes;
+
+        protected override void OnInitialized()
+        {
+            LoadData();
         }
+        private void LoadData() {
+            societes = db.T_Societe.ToList();
+        }
+        void OnParentClicked(MenuItemEventArgs args)
+        {
+        
+        }
+
+        void OnChildClicked(MenuItemEventArgs args)
+        {
+        
+        }
+}

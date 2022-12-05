@@ -9,8 +9,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Radzen;
-
 using EtendueERP.Data;
+using EtendueERP.Data.SageAPI;
+using EtendueERP.Data.EtendueDB;
 
 namespace EtendueERP
 {
@@ -33,6 +34,7 @@ namespace EtendueERP
             this.navigationManager = navigationManager;
         }
         public SageAPIContext SageAPIContext { get; set; }
+        public EtendueDBContext EtendueDBContext  { get; set; }
         public void Reset() => Context.ChangeTracker.Entries().Where(e => e.Entity != null).ToList().ForEach(e => e.State = EntityState.Detached);
 
 

@@ -6,7 +6,7 @@
    "FilterSchemas": false,
    "IncludeConnectionString": true,
    "ModelNamespace": null,
-   "OutputContextPath": "Data",
+   "OutputContextPath": "Data\/SageAPI",
    "OutputPath": "Models\/SageAPI",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "EtendueERP",

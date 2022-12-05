@@ -26,9 +26,13 @@ builder.Services.AddDbContext<EtendueERP.Data.EtendueERPContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("EtendueERPConnection"));
 });
-builder.Services.AddDbContext<EtendueERP.Data.SageAPIContext>(options =>
+builder.Services.AddDbContext<EtendueERP.Data.SageAPI.SageAPIContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SageAPIConnection"));
+});
+builder.Services.AddDbContext<EtendueERP.Data.EtendueDB.EtendueDBContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("EtendueERPConnection"));
 });
 builder.Services.AddHttpClient("EtendueERP").AddHeaderPropagation(o => o.Headers.Add("Cookie"));
 builder.Services.AddHeaderPropagation(o => o.Headers.Add("Cookie"));
