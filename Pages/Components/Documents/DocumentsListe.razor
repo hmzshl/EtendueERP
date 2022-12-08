@@ -7,13 +7,15 @@
 @inject SageAPIContext db
 @using AntDesign
 
-                        
-<Layout>
-    <Sider Breakpoint="@BreakpointType.Lg"
-           CollapsedWidth="64"
-           @bind-Collapsed=@collapsed>
-        <div class="logo" />
-        <RadzenPanelMenu Style="height: 100%;" Click="@(args => MenuClicked(args.Value.ToString()))">
+        <RadzenLayout class="rz-shadow-3">
+            <RadzenHeader>
+                <div class="d-flex align-items-center">
+                    <RadzenSidebarToggle Click="@(() => sidebar1Expanded = !sidebar1Expanded)" />
+                    <RadzenLabel Text="Header" />
+                </div>
+            </RadzenHeader>
+            <RadzenSidebar @bind-Expanded="@sidebar1Expanded">
+                <RadzenPanelMenu Style="height: 100%;" Click="@(args => MenuClicked(args.Value.ToString()))">
             @if (DO_Domaine == 0) {
              <RadzenPanelMenuItem Text="Devis" Icon="account_circle" Value="0" Selected="IsSelected(0)"></RadzenPanelMenuItem>
             <RadzenPanelMenuItem Text="Bon de commande" Icon="line_weight" Value="1" Selected="IsSelected(1)"></RadzenPanelMenuItem>
@@ -39,9 +41,10 @@
             }
 
         </RadzenPanelMenu>     
-    </Sider>
-    <Layout>
-        <Content Style=" margin: 10px 10px 0;">
+            </RadzenSidebar>
+            <RadzenBody>
+                <div class="p-2">
+                   <Content Style=" margin: 10px 10px 0;">
             <div class="site-layout-background" style="padding: 24px; min-height: 360px">
                 <Tabs DefaultActiveKey="0" Type="@TabType.EditableCard" HideAdd @bind-ActiveKey="activekey">
                     <TabPane Key="0"  Tab="@Title" Closable="false">
@@ -109,8 +112,10 @@
                 </Tabs>
             </div>
         </Content>
-    </Layout>
-</Layout>
+                </div>
+            </RadzenBody>
+        </RadzenLayout>
+                        
 <style>
     #components-layout-demo-responsive .logo {
         height: 32px;
@@ -151,7 +156,7 @@
     [Parameter] public string Title { get; set; } = "";
     //End Parameters
 
-
+    bool sidebar1Expanded = true;
     bool collapsed;
     string vl_text;
     short? vl_solde = 0;

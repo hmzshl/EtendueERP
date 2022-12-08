@@ -64,9 +64,7 @@
                 <RadzenMenuItem Text="Traçabilité" Icon="manage_search" />
                 <RadzenMenuItem Text="Utilisateurs connectés" Icon="people" />
             </RadzenMenuItem>
-            <FormItem Label="Suivi de stock">
-                <Select DataSource="@societes" TItem="T_Societe" TItemValue="short?" ValueName="@nameof(T_Societe.id)" LabelName="@nameof(T_Societe.Intitule)" class="profile-item rz-navigation-item" />
-            </FormItem>
+            <Select DataSource="@societes" TItem="T_Societe" TItemValue="short?" ValueName="@nameof(T_Societe.id)" LabelName="@nameof(T_Societe.Intitule)" class="profile-item rz-navigation-item" />
             <RadzenMenuItem Visible="@Security.IsAuthenticated()" Text="@Security.User?.Name" Icon="account_circle">
                 <RadzenMenuItem Path="profile" Icon="settings" Text="Profile" />
                 <RadzenMenuItem Path="application-users" Icon="person" Text="Users" />
